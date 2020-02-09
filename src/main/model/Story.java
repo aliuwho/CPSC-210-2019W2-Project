@@ -39,4 +39,9 @@ public class Story {
         }
 
     }
+
+    // EFFECTS: returns story name
+    public String getName() {
+        return name;
+    }
 }
