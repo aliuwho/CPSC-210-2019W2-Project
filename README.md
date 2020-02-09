@@ -28,6 +28,6 @@ huge impact on people, and I want to mitigate its impact on a developing brain.
 
 ####User Stories
 1. As a user, I want to be remembered by name.
-2. As a user, I want to be able to add text to a story.
-3. As a user, I want to be able to see test my memory with a shopping game.
-4. As a user, I want to receive writing prompts if I need ideas.
+2. As a user, I want to be receive a writing prompt.
+3. As a user, I want to be able to care for/interact with a pet.
+4. As a user, I want to be able to view my stories.
