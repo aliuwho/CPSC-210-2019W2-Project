@@ -20,9 +20,6 @@ public class GamesApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads acconts from ACCOUNTS_FILE, if that
-
-    // MODIFIES: this
     // EFFECTS: processes user input
     private void runGames() {
         try {
@@ -79,7 +76,121 @@ public class GamesApp {
         }
     }
 
+    // EFFECTS: runs the Writing Desk
+    private void writingDesk() {
+        System.out.println("Welcome to the Writing Desk, " + username + "!");
+        displayWritingMenu();
+
+        boolean keepGoing = true;
+        String command;
+
+        try {
+            while (keepGoing) {
+
+                command = input.next();
+                command = command.toLowerCase();
+
+
+                if (command.equals("q")) {
+                    keepGoing = false;
+                } else {
+                    processWritingCommand(command);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("This is the Writing Menu error.");
+        }
+        System.out.println("Returning to main menu!");
+
+    }
+
+    // EFFECTS: processes user command wrt Writing Options
+    private void processWritingCommand(String command) {
+        switch (command) {
+            case "p":
+                WritingPrompt p = new WritingPrompt();
+                System.out.println(p.getPrompt());
+                displayWritingMenu();
+                break;
+            case "c":
+                createStory();
+                break;
+            case "v":
+                viewStory();
+                break;
+            case "e":
+                editStory();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
+        }
+    }
+
+    // EFFECTS: runs the Pet Room
+    private void petRoom() {
+        System.out.println("Welcome to the Pet Room, " + username + "!");
+        displayPetMenu();
+
+        boolean keepGoing = true;
+        String command;
+
+        try {
+            while (keepGoing) {
+
+                command = input.next();
+                command = command.toLowerCase();
+
+
+                if (command.equals("q")) {
+                    keepGoing = false;
+                } else {
+                    processPetCommand(command);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("This is the Pet Room error.");
+        }
+        System.out.println("Returning to main menu!");
+
+    }
+
+    // EFFECTS: processes user command wrt Pet Options
+    private void processPetCommand(String command) {
+        switch (command) {
+            case "c":
+                break;
+            case "n":
+                namePet();
+                break;
+            case "f":
+                feedPet(1);
+                break;
+            case "p":
+                playWithPet();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
+        }
+    }
+
+    private void feedPet(int i) {
+    }
+
+    private void namePet() {
+    }
+
+    private void editStory() {
+        notReady();
+    }
+
+    private void viewStory() {
+        notReady();
+    }
+
     private void customizeAvatar() {
+        notReady();
     }
 
     private void playWithPet() {

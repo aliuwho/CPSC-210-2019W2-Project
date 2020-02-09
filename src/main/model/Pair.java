@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Pair {
-    private String word;
+    /*private String word;
     private BufferedImage img;
 
     public Pair(String word, String filePath) {
@@ -27,7 +27,7 @@ public class Pair {
         return word;
     }
 
-/*    //@Override
+   //@Override
     public void paint() {
         Graphics g = img.getGraphics();
         //super.paintComponent(g);

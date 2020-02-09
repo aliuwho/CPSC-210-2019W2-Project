@@ -1,8 +1,6 @@
 package ui;
 
-import model.Pair;
-
-import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Main {
