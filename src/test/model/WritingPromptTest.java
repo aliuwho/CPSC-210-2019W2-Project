@@ -6,19 +6,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class PromptTest {
-    private Prompt p1;
-    private Prompt p2;
-    private Prompt shortP;
-    private Prompt longP;
-    private String[] verbs = Prompt.VERBS;
+class WritingPromptTest {
+    private WritingPrompt p1;
+    private WritingPrompt p2;
+    private WritingPrompt shortP;
+    private WritingPrompt longP;
+    private String[] verbs = WritingPrompt.VERBS;
 
     @BeforeEach
     public void runBefore() {
-        p1 = new Prompt();
-        p2 = new Prompt();
-        shortP = new Prompt("short");
-        longP = new Prompt("long");
+        p1 = new WritingPrompt();
+        p2 = new WritingPrompt();
+        shortP = new WritingPrompt("short");
+        longP = new WritingPrompt("long");
     }
 
     @Test
