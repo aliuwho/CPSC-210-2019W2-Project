@@ -102,11 +102,14 @@ public class GamesApp {
         System.out.println("Enter your story here. Type 'the_end' on a new line when you're finished! \n");
         boolean writing = true;
         String storyLine;
+
+        int num = 0;
         while (writing) {
             storyLine = input.next();
+            num++;
             if (storyLine.toLowerCase().equals("the_end")) {
                 story.write(substance);
-                System.out.println("Ok! Returning to main menu.");
+                System.out.println("Your story has been saved. You wrote " + (num - 1) + " words!");
                 writing = false;
             } else {
                 substance += storyLine + " ";
