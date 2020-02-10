@@ -89,8 +89,9 @@ public class AnimalTest {
     @Test
     public void testSleepWithoutException() {
         try {
+            lizard.play();
             lizard.sleep();
-        } catch (NotTiredException e) {
+        } catch (NotTiredException | TiredException e) {
             fail();
         }
     }
@@ -99,15 +100,9 @@ public class AnimalTest {
     public void testSleepWithExceptions() {
         try {
             lizard.sleep();
-        } catch (NotTiredException e) {
-            fail();
-        }
-
-        try {
-            lizard.sleep();
             fail();
         } catch (NotTiredException e) {
-            System.out.println("error caught!");
+            System.out.print("error caught!");
         }
     }
 }

@@ -18,15 +18,41 @@ public abstract class Animal {
         this.tired = false;
     }
 
-    // MODIFIES: this
-    // EFFECTS: if hungry, returns true and animal is fed.
-    //          otherwise, returns false
-    public void feed() throws NotHungryException {
+    // EFFECTS: returns true if the animal is hungry; false otherwise
+    public boolean isHungry() {
+        return hungry;
+    }
 
+    // EFFECTS: returns true if the animal is tired; false otherwise
+    public boolean isTired() {
+        return tired;
     }
 
     // EFFECTS: makes an animal noise
     public abstract void speak();
+
+    // REQUIRES: animal is tired
+    // MODIFIES: this
+    // EFFECTS: animal is not tired
+    public void sleep() throws NotTiredException {
+        if (isTired()) {
+            tired = false;
+        } else {
+            throw new NotTiredException();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if hungry, returns true and animal is fed.
+    //          otherwise, returns false
+    public void feed() throws NotHungryException {
+        if (isHungry()) {
+            hungry = false;
+        } else {
+            throw new NotHungryException();
+        }
+
+    }
 
     // MODIFIES: this
     // EFFECTS: if the animal is not tired,
@@ -40,23 +66,6 @@ public abstract class Animal {
             System.out.println(name + " enjoyed playing with you!");
         }
 
-    }
-
-    // EFFECTS: returns true if the animal is hungry; false otherwise
-    public boolean isHungry() {
-        return hungry;
-    }
-
-    // EFFECTS: returns true if the animal is tired; false otherwise
-    public boolean isTired() {
-        return tired;
-    }
-
-    // REQUIRES: animal is tired
-    // MODIFIES: this
-    // EFFECTS: animal is not tired
-    public void sleep() throws NotTiredException {
-        tired = false;
     }
 
     // EFFECTS: shows the status of the animal
@@ -76,5 +85,8 @@ public abstract class Animal {
         }
 
         System.out.println(name + " is " + h + " and " + t + ".");
+        if (isHungry() && isTired()) {
+            System.out.print("Make sure to feed your pet and let them rest! " + name + " is a little sad...");
+        }
     }
 }
