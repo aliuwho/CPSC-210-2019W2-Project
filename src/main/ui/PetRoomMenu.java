@@ -11,11 +11,13 @@ public class PetRoomMenu extends Menu {
     //private ArrayList<Animal> pets;
     private Animal pet;
 
+    // EFFECTS: creates a new PetRoom Menu
     public PetRoomMenu() {
         setName("Pet Room");
         //pets = new ArrayList<>();
     }
 
+    // EFFECTS: processes command for Pet Room
     @Override
     public void processCommand(String command) {
         switch (command) {
@@ -38,6 +40,7 @@ public class PetRoomMenu extends Menu {
         displayMenu();
     }
 
+    // EFFECTS: allows user to select a pet
     private void choosePet(Scanner input) {
         System.out.println("What animal would you like to be your pet?");
         PetSelectMenu ps = new PetSelectMenu();
@@ -80,6 +83,7 @@ public class PetRoomMenu extends Menu {
         }
     }
 
+    // EFFECTS: displays pet room options
     @Override
     protected void displayMenu() {
         if (pet == null) {
@@ -93,6 +97,7 @@ public class PetRoomMenu extends Menu {
         System.out.println("\tq -> Return to main menu");
     }
 
+    // EFFECTS: end of program message to user
     @Override
     protected void farewell() {
         System.out.println("Returning to main menu.");

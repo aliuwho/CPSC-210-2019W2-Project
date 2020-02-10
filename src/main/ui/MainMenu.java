@@ -58,7 +58,7 @@ public class MainMenu extends Menu {
 
     }
 
-
+    // EFFECTS: bids farewell to user
     @Override
     protected void farewell() {
         System.out.println("\nSee you next time! ☆");

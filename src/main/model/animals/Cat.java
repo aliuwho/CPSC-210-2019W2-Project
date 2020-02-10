@@ -9,11 +9,13 @@ public class Cat extends Animal {
         super(name);
     }
 
+    // EFFECTS: prints out cat noises
     @Override
     public void speak() {
         System.out.println("Meow meow!");
     }
 
+    // EFFECT: shows cat status
     @Override
     public void status() {
         super.status();

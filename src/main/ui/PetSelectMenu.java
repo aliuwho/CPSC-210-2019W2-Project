@@ -5,10 +5,12 @@ import model.animals.*;
 public class PetSelectMenu extends Menu {
     private Animal pet;
 
+    // EFFECTS: creates a new PetSelectMenu
     public PetSelectMenu() {
         setName("Pet Selection");
     }
 
+    // EFFECTS: returns pet
     public Animal getPet() {
         return pet;
     }
@@ -40,6 +42,7 @@ public class PetSelectMenu extends Menu {
         }
     }
 
+    // EFFECTS: displays pet options
     @Override
     protected void displayMenu() {
         super.displayMenu();
@@ -51,11 +54,13 @@ public class PetSelectMenu extends Menu {
         System.out.println("\tq -> Quit");
     }
 
+    // EFFECTS: end of program message to user
     @Override
     protected void farewell() {
         System.out.println("You have selected a pet!");
     }
 
+    // EFFECTS: names pet
     private String namePet() {
         System.out.println("What would you like to call your pet? (Make it one word!)");
         return input.next();

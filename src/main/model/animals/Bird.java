@@ -9,11 +9,13 @@ public class Bird extends Animal {
         super(name);
     }
 
+    // EFFECTS: prints bird noises
     @Override
     public void speak() {
         System.out.println("Chirp chirp!");
     }
 
+    // EFFECTS: shows bird status
     @Override
     public void status() {
         super.status();
