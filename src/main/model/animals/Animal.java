@@ -82,7 +82,7 @@ public abstract class Animal {
         if (isHungry()) {
             h = "hungry";
         } else {
-            h = "not hungry";
+            h = "full";
         }
 
         String t;

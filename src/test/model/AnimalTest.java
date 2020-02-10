@@ -107,15 +107,9 @@ public class AnimalTest {
     }
 
     @Test
-    public void testSadStatus() {
-        assertEquals("Hachi",dog.getName());
+    public void testNameCorrectInStatus() {
+        System.out.println(dog.getName());
         dog.status();
-        try {
-            dog.play();
-            dog.status();
-        }catch (Exception e) {
-            fail();
-        }
     }
 
     @Test
@@ -135,7 +129,56 @@ public class AnimalTest {
 
             lizard.feed();
             lizard.status();
-        }catch (Exception e) {
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testSadStatus() {
+        try {
+            bird.play();
+            bird.status();
+
+            cat.play();
+            cat.status();
+
+            dog.play();
+            dog.status();
+
+            horse.play();
+            horse.status();
+
+            lizard.play();
+            lizard.status();
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testBetweenStatus() {
+        try {
+            bird.play();
+            bird.feed();
+            bird.status();
+
+            cat.play();
+            cat.feed();
+            cat.status();
+
+            dog.play();
+            dog.feed();
+            dog.status();
+
+            horse.play();
+            horse.feed();
+            horse.status();
+
+            lizard.play();
+            lizard.feed();
+            lizard.status();
+        } catch (Exception e) {
             fail();
         }
     }
