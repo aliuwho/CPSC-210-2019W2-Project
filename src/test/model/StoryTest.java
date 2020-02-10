@@ -44,6 +44,12 @@ public class StoryTest {
     }
 
     @Test
+    public void testWriteException() {
+        Story s3 = new Story("./story/story.txt");
+        s3.write("heeho");
+    }
+
+    @Test
     public void testWriteOneLine() {
         story1.write("your substance is filth");
         try {
