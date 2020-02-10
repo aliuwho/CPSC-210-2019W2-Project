@@ -12,14 +12,17 @@ public class WritingPrompt {
     public static final String[] ANIMALS = {"dog", "cat", "horse", "fox", "hamster", "turtle", "dinosaur", "bird"};
     public static final String[] PEOPLE = {"girl", "boy", "wizard",
             "witch", "teacher", "mom", "dad", "grandpa", "grandma", "uncle", "aunt"};
-    public static final String[] CREATURES = {"goblin", "dragon", "fairy"};
-    public static final String[] OBJECTS = {"book", "car", "truck"};
+    public static final String[] CREATURES = {"goblin", "dragon", "fairy", "orc", "ogre", "mermaid", "elf"};
+    public static final String[] OBJECTS = {"boat", "car", "truck"};
     public static final String[][] NOUNS = {ANIMALS, PEOPLE, CREATURES, OBJECTS};
 
-    public static final String[] VERBS = {"playing", "running", "fighting", "sitting", "floating", "sleeping"};
+    public static final String[] ACTIVE = {"playing", "running", "fighting", "walking", "joking", "cooking"};
+    public static final String[] PASSIVE = {"sleeping", "sitting", "reading", "chatting","eating"};
+    public static final String[][] VERBS = {ACTIVE, PASSIVE};
+
     //private String[] adjectives = {};
 
-    public static final String[] OUTDOORS = {"at the beach", "in the woods", "on a mountain", "in a desert"};
+    public static final String[] OUTDOORS = {"at the beach", "in the woods", "on a mountain", "in a desert", "outside"};
     public static final String[] INDOORS = {"in a basement", "in a kitchen", "on a couch", "in a bed"};
     public static final String[][] LOCATIONS = {INDOORS, OUTDOORS};
 
@@ -87,8 +90,9 @@ public class WritingPrompt {
 
     // EFFECTS: selects a verb from verbs
     public String selectVerb() {
-        int verb = (int) (Math.random() * VERBS.length);
-        return VERBS[verb];
+        int type = (int) (Math.random() * VERBS.length);
+        int verb = (int) (Math.random() * VERBS[type].length);
+        return VERBS[type][verb];
     }
 
     // EFFECTS: returns noun1

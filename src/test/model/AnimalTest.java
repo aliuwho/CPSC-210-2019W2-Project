@@ -105,4 +105,38 @@ public class AnimalTest {
             System.out.print("error caught!");
         }
     }
+
+    @Test
+    public void testSadStatus() {
+        assertEquals("Hachi",dog.getName());
+        dog.status();
+        try {
+            dog.play();
+            dog.status();
+        }catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testHappyStatus() {
+        try {
+            bird.feed();
+            bird.status();
+
+            cat.feed();
+            cat.status();
+
+            dog.feed();
+            dog.status();
+
+            horse.feed();
+            horse.status();
+
+            lizard.feed();
+            lizard.status();
+        }catch (Exception e) {
+            fail();
+        }
+    }
 }

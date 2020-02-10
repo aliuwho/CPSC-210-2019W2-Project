@@ -20,7 +20,7 @@ public class Cat extends Animal {
     public void status() {
         super.status();
         if (!isHungry() && !isTired()) {
-            System.out.print(name + " purrs happily. You are taking good care of your cat!");
+            System.out.println(name + " purrs happily. You are taking good care of your cat!");
         }
     }
 }

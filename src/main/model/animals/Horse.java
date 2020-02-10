@@ -20,7 +20,7 @@ public class Horse extends Animal {
     public void status() {
         super.status();
         if (!isHungry() && !isTired()) {
-            System.out.print(name + " does a happy dance. You are taking good care of your horse!");
+            System.out.println(name + " does a happy dance. You are taking good care of your horse!");
         }
     }
 }

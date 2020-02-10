@@ -20,7 +20,7 @@ public class Dog extends Animal {
     public void status() {
         super.status();
         if (!isHungry() && !isTired()) {
-            System.out.print(name + " excitedly licks your face. You are taking good care of your dog!");
+            System.out.println(name + " excitedly licks your face. You are taking good care of your dog!");
         }
     }
 }

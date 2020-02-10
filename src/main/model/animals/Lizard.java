@@ -20,7 +20,7 @@ public class Lizard extends Animal {
     public void status() {
         super.status();
         if (!isHungry() && !isTired()) {
-            System.out.print(name + " hugs your finger. You are taking good care of your lizard!");
+            System.out.println(name + " hugs your finger. You are taking good care of your lizard!");
         }
     }
 }

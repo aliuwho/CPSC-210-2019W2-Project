@@ -20,7 +20,7 @@ public class Bird extends Animal {
     public void status() {
         super.status();
         if (!isHungry() && !isTired()) {
-            System.out.print(name + " whistles a happy tune. You are taking good care of your bird!");
+            System.out.println(name + " whistles a happy tune. You are taking good care of your bird!");
         }
     }
 
