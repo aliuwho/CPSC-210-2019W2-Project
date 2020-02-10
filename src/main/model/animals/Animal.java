@@ -36,9 +36,10 @@ public abstract class Animal {
     // EFFECTS: makes an animal noise
     public abstract void speak();
 
-    // REQUIRES: animal is tired
     // MODIFIES: this
-    // EFFECTS: animal is not tired
+    // EFFECTS: if animal is tired,
+    //          animal becomes well-rested;
+    //          otherwise, throws NotTiredException
     public void sleep() throws NotTiredException {
         if (isTired()) {
             tired = false;
@@ -49,8 +50,8 @@ public abstract class Animal {
     }
 
     // MODIFIES: this
-    // EFFECTS: if hungry, returns true and animal is fed.
-    //          otherwise, returns false
+    // EFFECTS: if hungry, animal is fed.
+    //          otherwise, throws NotHungryException
     public void feed() throws NotHungryException {
         if (isHungry()) {
             hungry = false;
@@ -64,7 +65,7 @@ public abstract class Animal {
     // MODIFIES: this
     // EFFECTS: if the animal is not tired,
     //          playing makes the animal tired.
-    //          otherwise, the animal will refuse to play.
+    //          otherwise, throw TiredException
     public void play() throws TiredException {
         if (isTired()) {
             throw new TiredException();
