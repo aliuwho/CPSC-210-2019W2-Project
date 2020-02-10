@@ -11,7 +11,6 @@ class WritingPromptTest {
     private WritingPrompt p2;
     private WritingPrompt shortP;
     private WritingPrompt longP;
-    private String[] verbs = WritingPrompt.VERBS;
 
     @BeforeEach
     public void runBefore() {
