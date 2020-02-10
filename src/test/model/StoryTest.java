@@ -39,6 +39,11 @@ public class StoryTest {
     }
 
     @Test
+    public void testConstructorException() {
+        Story s3 = new Story("./story/story.txt");
+    }
+
+    @Test
     public void testWriteOneLine() {
         story1.write("your substance is filth");
         try {
@@ -52,6 +57,18 @@ public class StoryTest {
         } catch (Exception e) {
             System.out.println("An error occurred!");
             fail();
+        }
+    }
+
+    @Test
+    public void testWriteOneLineException() {
+        story1.write("your substance is filth");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("filler_text"));
+            System.out.println(br.read());
+            fail();
+        } catch (Exception e) {
+            System.out.println("An error occurred!");
         }
     }
 

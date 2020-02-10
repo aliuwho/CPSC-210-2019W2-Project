@@ -21,9 +21,8 @@ public class Story {
                 System.out.println("That name already exists! Your story will be saved as " + name + "_1 instead!");
                 this.name = name + "_1";
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("An error occurred.");
-            e.printStackTrace();
         }
     }
 
