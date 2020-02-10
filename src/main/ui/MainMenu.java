@@ -14,7 +14,7 @@ public class MainMenu extends Menu {
         setName("Main Menu");
         setInput(input);
         username = "new user";
-        runApp();
+        //runApp();
     }
 
     // EFFECTS: processes user command wrt Main Menu

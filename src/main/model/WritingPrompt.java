@@ -46,7 +46,7 @@ public class WritingPrompt {
     // EFFECTS: creates a prompt that either has 1 noun or 2 nouns
     public String makePrompt() {
         int promptType = (int) (Math.random() * 2);
-        if (promptType == 2) {
+        if (promptType == 1) {
             return makePromptShort();
         } else {
             return makePromptLong();
