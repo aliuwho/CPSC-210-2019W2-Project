@@ -5,6 +5,7 @@ import model.WritingPrompt;
 
 public class WritingDeskMenu extends Menu {
 
+    // EFFECTS: creates new WritingDesk app
     public WritingDeskMenu() {
         setName("Writing Desk");
     }
@@ -30,18 +31,16 @@ public class WritingDeskMenu extends Menu {
             case "v":
                 viewStory();
                 break;
-            case "e":
-                editStory();
-                break;
             default:
                 System.out.println("Selection not valid...");
                 break;
         }
     }
 
+    // EFFECTS: displays Writing Desk options
     @Override
     protected void displayMenu() {
-        System.out.println("Choose from:");
+        super.displayMenu();
         System.out.println("\tp -> Get a simple writing prompt");
         System.out.println("\tc -> Create a story");
         System.out.println("\tq -> Return to main menu");
@@ -85,11 +84,14 @@ public class WritingDeskMenu extends Menu {
     }
 
     // TODO: implement notReady methods
-    private void editStory() {
+    // EFFECTS: select a story
+    private void selectStory() {
         notReady();
     }
 
+    // EFFECTS: view a story you have written
     private void viewStory() {
+        selectStory();
         notReady();
     }
 }

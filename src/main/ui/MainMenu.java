@@ -49,9 +49,8 @@ public class MainMenu extends Menu {
             System.out.println("What's your name?");
             username = input.next();
         }
-        System.out.println("\nHello, " + username + "!");
-        System.out.println("Choose from:");
-        System.out.println("\tw -> Writing Desk (recommended for 8 years old or older");
+        super.displayMenu();
+        System.out.println("\tw -> Writing Desk (recommended for 8 years old or older)");
         System.out.println("\tp -> Pet Care");
         System.out.println("\ta -> Avatar Customization (not ready yet!)");
         System.out.println("\tq -> Quit");

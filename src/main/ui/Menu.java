@@ -2,12 +2,19 @@ package ui;
 
 import java.util.Scanner;
 
+// implementation of console based off TellerApp from:
+// https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// specifically:
+//     - runApp() -> runTeller()
+//     - processCommand() -> runCommand()
+//     - displayMenu() -> displayMenu()
+
 public abstract class Menu {
     protected Scanner input;
     private String appName;
     protected String username;
 
-    // MODIFIES: THIS
+    // MODIFIES: this
     protected void setInput(Scanner input) {
         this.input = input;
     }
@@ -26,7 +33,7 @@ public abstract class Menu {
 
     // EFFECTS: runs app for user input
     public void runApp() {
-        greet();
+        welcome();
         displayMenu();
 
         boolean keepGoing = true;
@@ -56,12 +63,22 @@ public abstract class Menu {
     public abstract void processCommand(String command);
 
     // EFFECTS: display application menu options
-    protected abstract void displayMenu();
+    protected void displayMenu() {
+        greet();
+        System.out.println("Choose from:");
+    }
 
-    protected void greet() {
+    // EFFECTS: welcomes user to app
+    protected void welcome() {
         System.out.println("Welcome to " + appName + ", " + username + "!");
     }
 
+    // EFFECTS: greets user
+    protected void greet() {
+        System.out.println("\nHello, " + username + "!");
+    }
+
+    // EFFECTS: says farewell to user
     protected abstract void farewell();
 
     // EFFECTS: informs user that option is not available

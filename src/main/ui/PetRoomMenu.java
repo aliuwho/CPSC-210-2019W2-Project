@@ -1,6 +1,6 @@
 package ui;
 
-import model.Animal;
+import model.animals.Animal;
 
 import java.util.Scanner;
 
@@ -18,15 +18,20 @@ public class PetRoomMenu extends Menu {
         switch (command) {
             case "c":
                 choosePet(input);
+                displayMenu();
                 break;
             case "n":
                 namePet();
+                displayMenu();
                 break;
             case "f":
-                feedPet(1);
+                feedPet();
                 break;
             case "p":
                 playWithPet();
+                break;
+            case "s":
+                napWithPet();
                 break;
             default:
                 System.out.println("Selection not valid...");
@@ -46,9 +51,12 @@ public class PetRoomMenu extends Menu {
         notReady();
     }
 
-    private void feedPet(int i) {
+    private void napWithPet() {
+
+    }
+
+    private void feedPet() {
         notReady();
-        i = i + 1;
     }
 
     private void namePet() {
@@ -57,7 +65,7 @@ public class PetRoomMenu extends Menu {
 
     @Override
     protected void displayMenu() {
-        System.out.println("Choose from:");
+        super.displayMenu();
         System.out.println("\tc -> Choose an animal");
         System.out.println("\tn -> Name your animal");
         System.out.println("\tf -> Feed your animal");
