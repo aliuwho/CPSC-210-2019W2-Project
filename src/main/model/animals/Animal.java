@@ -18,6 +18,11 @@ public abstract class Animal {
         this.tired = false;
     }
 
+    // EFFECTS: returns the pet's name
+    public String getName() {
+        return name;
+    }
+
     // EFFECTS: returns true if the animal is hungry; false otherwise
     public boolean isHungry() {
         return hungry;
@@ -37,6 +42,7 @@ public abstract class Animal {
     public void sleep() throws NotTiredException {
         if (isTired()) {
             tired = false;
+            System.out.println("You and " + name + " took a lovely nap. You both feel well-rested!");
         } else {
             throw new NotTiredException();
         }
@@ -48,6 +54,7 @@ public abstract class Animal {
     public void feed() throws NotHungryException {
         if (isHungry()) {
             hungry = false;
+            System.out.println(name + " enjoyed the meal! Yummy!");
         } else {
             throw new NotHungryException();
         }
@@ -63,6 +70,7 @@ public abstract class Animal {
             throw new TiredException();
         } else {
             tired = true;
+            hungry = true;
             System.out.println(name + " enjoyed playing with you!");
         }
 
@@ -81,12 +89,12 @@ public abstract class Animal {
         if (isTired()) {
             t = "tired";
         } else {
-            t = "not tired";
+            t = "feeling energetic";
         }
 
         System.out.println(name + " is " + h + " and " + t + ".");
         if (isHungry() && isTired()) {
-            System.out.print("Make sure to feed your pet and let them rest! " + name + " is a little sad...");
+            System.out.println("Make sure to feed your pet and let them rest! " + name + " is a little sad...");
         }
     }
 }

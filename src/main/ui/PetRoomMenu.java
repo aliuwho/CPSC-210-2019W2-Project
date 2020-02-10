@@ -1,6 +1,9 @@
 package ui;
 
-import model.animals.Animal;
+import model.animals.*;
+import model.exceptions.NotHungryException;
+import model.exceptions.NotTiredException;
+import model.exceptions.TiredException;
 
 import java.util.Scanner;
 
@@ -17,12 +20,7 @@ public class PetRoomMenu extends Menu {
     public void processCommand(String command) {
         switch (command) {
             case "c":
-                choosePet(input);
-                displayMenu();
-                break;
-            case "n":
-                namePet();
-                displayMenu();
+                pet.status();
                 break;
             case "f":
                 feedPet();
@@ -30,13 +28,14 @@ public class PetRoomMenu extends Menu {
             case "p":
                 playWithPet();
                 break;
-            case "s":
+            case "n":
                 napWithPet();
                 break;
             default:
                 System.out.println("Selection not valid...");
                 break;
         }
+        displayMenu();
     }
 
     private void choosePet(Scanner input) {
@@ -45,31 +44,52 @@ public class PetRoomMenu extends Menu {
         ps.setInput(input);
         ps.setUsername(username);
         ps.runApp();
+        pet = ps.getPet();
     }
 
+    // MODIFIES: this
+    // EFFECTS: if pet is not tired, play with pet and make it tired and hungry.
+    //          otherwise, don't play
     private void playWithPet() {
-        notReady();
+        try {
+            pet.play();
+        } catch (TiredException e) {
+            System.out.println(pet.getName() + " is too tired to play. Try taking a nap!");
+        }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if pet is tired, take nap with pet and make it not tired.
+    //          otherwise, don't nap
     private void napWithPet() {
-
+        try {
+            pet.sleep();
+        } catch (NotTiredException e) {
+            System.out.println(pet.getName() + " isn't tired! " + pet.getName() + " wants to play!");
+        }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if pet is hungry, feed pet and make it not hungry.
+    //          otherwise, don't feed
     private void feedPet() {
-        notReady();
-    }
-
-    private void namePet() {
-        notReady();
+        try {
+            pet.feed();
+        } catch (NotHungryException e) {
+            System.out.println(pet.getName() + " isn't hungry!");
+        }
     }
 
     @Override
     protected void displayMenu() {
+        if (pet == null) {
+            choosePet(input);
+        }
         super.displayMenu();
-        System.out.println("\tc -> Choose an animal");
-        System.out.println("\tn -> Name your animal");
-        System.out.println("\tf -> Feed your animal");
-        System.out.println("\tp -> Play with your animal");
+        System.out.println("\tc -> Check on your pet");
+        System.out.println("\tf -> Feed your pet");
+        System.out.println("\tp -> Play with your pet");
+        System.out.println("\tn -> Nap with your pet");
         System.out.println("\tq -> Return to main menu");
     }
 

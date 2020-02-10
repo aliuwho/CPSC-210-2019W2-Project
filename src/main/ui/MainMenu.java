@@ -13,6 +13,7 @@ public class MainMenu extends Menu {
     public MainMenu(Scanner input) {
         setName("Main Menu");
         setInput(input);
+        username = "new user";
         runApp();
     }
 
@@ -25,7 +26,6 @@ public class MainMenu extends Menu {
                 w.setUsername(username);
                 w.setInput(input);
                 w.runApp();
-                displayMenu();
                 break;
             case "p":
                 PetRoomMenu p = new PetRoomMenu();
@@ -40,12 +40,13 @@ public class MainMenu extends Menu {
                 System.out.println("Selection not valid...");
                 break;
         }
+        displayMenu();
     }
 
     // EFFECTS: displays menu
     @Override
     protected void displayMenu() {
-        if (username == null) {
+        if (username.equals("new user")) {
             System.out.println("What's your name?");
             username = input.next();
         }
