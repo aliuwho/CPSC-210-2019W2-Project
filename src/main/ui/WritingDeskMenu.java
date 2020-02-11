@@ -31,13 +31,22 @@ public class WritingDeskMenu extends Menu {
                 createStory(library);
                 break;
             case "v":
-                library.selectStory(input);
+                selectStory();
                 break;
             default:
                 System.out.println("Selection not valid...");
                 break;
         }
         displayMenu();
+    }
+
+    // EFFECTS: enables user to select a story from library
+    public void selectStory() {
+        System.out.println("Here are your stories:");
+        library.getStories();
+        System.out.println("What story you would like to view?");
+        String title = input.next();
+        library.viewStory(library.findStory(title));
     }
 
     // EFFECTS: displays Writing Desk options

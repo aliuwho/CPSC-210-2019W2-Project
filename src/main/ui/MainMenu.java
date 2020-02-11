@@ -43,9 +43,9 @@ public class MainMenu extends Menu {
             case "p":
                 petRoomMenu.runApp();
                 break;
-            case "a":
+           /* case "a":
                 notReady();
-                break;
+                break;*/
             default:
                 System.out.println("Selection not valid...");
                 break;
@@ -65,7 +65,7 @@ public class MainMenu extends Menu {
         super.displayMenu();
         System.out.println("\tw -> Writing Desk (recommended for 8 years old or older)");
         System.out.println("\tp -> Pet Care");
-        System.out.println("\ta -> Avatar Customization (not ready yet!)");
+        //System.out.println("\ta -> Avatar Customization (not ready yet!)");
         System.out.println("\tq -> Quit");
 
     }

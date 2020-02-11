@@ -27,15 +27,6 @@ public class Library {
         }
     }
 
-    // EFFECTS: enables user to select a story from library
-    public void selectStory(Scanner input) {
-        System.out.println("Here are your stories:");
-        getStories();
-        System.out.println("What story you would like to view?");
-        String title = input.next();
-        viewStory(findStory(title));
-    }
-
     // EFFECTS: displays story
     public void viewStory(Story story) {
         try {
