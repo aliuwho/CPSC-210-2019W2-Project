@@ -1,8 +1,13 @@
 package ui;
 
+import model.Library;
+
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
+    private WritingDeskMenu writingDeskMenu;
+    private PetRoomMenu petRoomMenu;
+    private Library library;
 
     // EFFECTS: returns username
     public String getUsername() {
@@ -14,7 +19,17 @@ public class MainMenu extends Menu {
         setName("Main Menu");
         setInput(input);
         username = "new user";
-        //runApp();
+        library = new Library();
+
+        writingDeskMenu = new WritingDeskMenu();
+        writingDeskMenu.setUsername(username);
+        writingDeskMenu.setLibrary(library);
+        writingDeskMenu.setInput(input);
+
+        petRoomMenu = new PetRoomMenu();
+        petRoomMenu.setUsername(username);
+        petRoomMenu.setInput(input);
+
     }
 
     // EFFECTS: processes user command wrt Main Menu
@@ -22,16 +37,11 @@ public class MainMenu extends Menu {
     public void processCommand(String command) {
         switch (command) {
             case "w":
-                WritingDeskMenu w = new WritingDeskMenu();
-                w.setUsername(username);
-                w.setInput(input);
-                w.runApp();
+                writingDeskMenu.setUsername(username);
+                writingDeskMenu.runApp();
                 break;
             case "p":
-                PetRoomMenu p = new PetRoomMenu();
-                p.setUsername(username);
-                p.setInput(input);
-                p.runApp();
+                petRoomMenu.runApp();
                 break;
             case "a":
                 notReady();
@@ -49,6 +59,8 @@ public class MainMenu extends Menu {
         if (username.equals("new user")) {
             System.out.println("What's your name?");
             username = input.next();
+            writingDeskMenu.setUsername(username);
+            petRoomMenu.setUsername(username);
         }
         super.displayMenu();
         System.out.println("\tw -> Writing Desk (recommended for 8 years old or older)");
@@ -62,5 +74,10 @@ public class MainMenu extends Menu {
     @Override
     protected void farewell() {
         System.out.println("\nSee you next time! ☆");
+    }
+
+    // EFFECTS: returns Library
+    public Library getLibrary() {
+        return library;
     }
 }

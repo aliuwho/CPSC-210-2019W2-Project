@@ -8,18 +8,21 @@ public class Story {
     // delete or rename this class!
     private String name;
     public static final String WRITE_TO = "./data/";
+    private String path;
 
     // EFFECTS: creates a blank story called name
     public Story(String name) {
         try {
-            File f = new File(WRITE_TO + name + ".txt");
+            path = WRITE_TO + name + ".txt";
+            File f = new File(path);
             if (f.createNewFile()) {
                 System.out.println("Your story will be saved as " + name + "!");
                 this.name = name;
             } else {
-
-                System.out.println("That name already exists! Your story will be saved as " + name + "_1 instead!");
+                path = WRITE_TO + name + "_1.txt";
                 this.name = name + "_1";
+                System.out.println("That name already exists! Your story will be saved as " + this.name + " instead!");
+
             }
         } catch (Exception e) {
             System.out.println("An error occurred.");
@@ -29,7 +32,7 @@ public class Story {
     // EFFECTS: adds substance to a new line of your story!
     public void write(String substance) {
         try {
-            FileWriter f = new FileWriter(WRITE_TO + name + ".txt",true);
+            FileWriter f = new FileWriter(path,true);
             f.write(substance + "\n");
             f.close();
         } catch (IOException e) {
@@ -42,5 +45,10 @@ public class Story {
     // EFFECTS: returns story name
     public String getName() {
         return name;
+    }
+
+    // EFFECTS: returns path to story
+    public String getPath() {
+        return path;
     }
 }

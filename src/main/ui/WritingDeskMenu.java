@@ -1,9 +1,11 @@
 package ui;
 
+import model.Library;
 import model.Story;
 import model.WritingPrompt;
 
 public class WritingDeskMenu extends Menu {
+    private Library library;
 
     // EFFECTS: creates new WritingDesk app
     public WritingDeskMenu() {
@@ -26,15 +28,16 @@ public class WritingDeskMenu extends Menu {
                 displayMenu();
                 break;
             case "c":
-                createStory();
+                createStory(library);
                 break;
             case "v":
-                viewStory();
+                library.selectStory(input);
                 break;
             default:
                 System.out.println("Selection not valid...");
                 break;
         }
+        displayMenu();
     }
 
     // EFFECTS: displays Writing Desk options
@@ -43,16 +46,17 @@ public class WritingDeskMenu extends Menu {
         super.displayMenu();
         System.out.println("\tp -> Get a simple writing prompt");
         System.out.println("\tc -> Create a story");
+        System.out.println("\tv -> View your stories");
         System.out.println("\tq -> Return to main menu");
     }
 
     // EFFECTS: creates a new story with a name
-    private void createStory() {
+    private void createStory(Library l) {
         try {
             System.out.println("What would you like to call your story? \n");
             String storyName = input.next();
             Story story = new Story(storyName);
-            writeStory(story);
+            writeStory(story, l);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error occurred.");
@@ -61,7 +65,7 @@ public class WritingDeskMenu extends Menu {
 
     // MODIFIES: story
     // EFFECTS: adds user input to story
-    private void writeStory(Story story) {
+    private void writeStory(Story story, Library l) {
         String substance = "\n";
         System.out.println("Enter your story here. Type 'the_end' on a new line when you're finished! \n");
         boolean writing = true;
@@ -73,25 +77,22 @@ public class WritingDeskMenu extends Menu {
             num++;
             if (storyLine.toLowerCase().equals("the_end")) {
                 story.write(substance);
-                System.out.println("Your story has been saved. You wrote " + (num - 1) + " words!");
+                System.out.println("You wrote " + (num - 1) + " words. " + story.getName() + " has been saved!");
+                StoryAddMenu storyAddMenu = new StoryAddMenu(story);
+                storyAddMenu.setLibrary(l);
+                storyAddMenu.setInput(input);
+                storyAddMenu.setUsername(username);
+                storyAddMenu.runApp();
                 writing = false;
             } else {
                 substance += storyLine + " ";
             }
         }
-        displayMenu();
 
     }
 
-    // TODO: implement notReady methods
-    // EFFECTS: select a story
-    private void selectStory() {
-        notReady();
-    }
-
-    // EFFECTS: view a story you have written
-    private void viewStory() {
-        selectStory();
-        notReady();
+    // EFFECTS: sets the library as l
+    public void setLibrary(Library l) {
+        library = l;
     }
 }

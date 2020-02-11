@@ -32,4 +32,5 @@ introduce creativity and responsibility in children.
 1. As a user, I want to be remembered by name.
 2. As a user, I want to be receive a writing prompt.
 3. As a user, I want to be able to care for/interact with a pet.
+5. As a user, I want to be able to add a story to my library.
 4. As a user, I want to be able to view my stories.
