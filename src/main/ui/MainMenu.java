@@ -75,9 +75,4 @@ public class MainMenu extends Menu {
     protected void farewell() {
         System.out.println("\nSee you next time! ☆");
     }
-
-    // EFFECTS: returns Library
-    public Library getLibrary() {
-        return library;
-    }
 }

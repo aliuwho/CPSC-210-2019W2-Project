@@ -26,6 +26,8 @@ This project was inspired by many of the children I've seen playing on phones or
 huge impact on people, and I want to mitigate its impact on a developing brain.
 The initial games/activities I've selected are accessible in a console program, and they also help 
 introduce creativity and responsibility in children.
+At the current stage, the project allows users to write & save stories (although not yet with persistence),
+as well as care for a pet.
 
 
 ####User Stories

@@ -50,7 +50,6 @@ public class LibraryTest {
     @Test
     public void testFindExistingStory() {
         Story story;
-        Story story2;
         try {
             File f1 = new File("./data/story.txt");
             assertTrue(f1.delete());
