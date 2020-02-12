@@ -41,6 +41,23 @@ public class StoryTest {
     }
 
     @Test
+    public void testConstructorNoException() {
+        File file = new File("./data/TEST_FILE_NO_EXCEPTION.txt");
+        try {
+            if(!file.createNewFile()) {
+                assertTrue(file.delete());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Story testStory = new Story("TEST_FILE_NO_EXCEPTION");
+        } catch (StoryNameDuplicateException | IOException e) {
+            fail();
+        }
+    }
+
+    @Test
     public void testConstructorDuplicateName() {
         try {
             Story story3 = new Story("TEST_FILE_FOR_STORY2");
@@ -57,8 +74,10 @@ public class StoryTest {
         try {
             Story s3 = new Story("./story/TEST_FILE_FOR_STORY2.txt");
             fail();
-        } catch (Exception e) {
-            System.out.println("error! caught!");
+        } catch (IOException e) {
+            System.out.println("ioerror! caught!");
+        } catch (StoryNameDuplicateException e) {
+            fail();
         }
     }
 
