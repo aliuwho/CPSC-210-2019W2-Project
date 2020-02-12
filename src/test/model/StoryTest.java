@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.StoryNameDuplicateException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -12,9 +13,9 @@ public class StoryTest {
     private static Story story1;
     private static Story story2;
 
-    // NOTE: Due to file appending, test files must be deleted before running each test.
-    @BeforeAll
-    static void runBefore() {
+    // NOTE: Due to file appending, test files must be deleted before running tests.
+    @BeforeEach
+    public void runBefore() {
         try {
             File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
             assertTrue(f1.delete());

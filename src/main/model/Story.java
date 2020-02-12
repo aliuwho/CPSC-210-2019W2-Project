@@ -12,7 +12,9 @@ public class Story {
     public static final String WRITE_TO = "./data/";
     private String path;
 
-    // EFFECTS: creates a blank story called name
+    // EFFECTS: if file with name already exists, throws StoryNameDuplicateException;
+    //          otherwise, if file cannot be read, throws IOException;
+    //          otherwise, creates a blank story called name
     public Story(String name) throws StoryNameDuplicateException, IOException {
         path = WRITE_TO + name + ".txt";
         File f = new File(path);
@@ -25,7 +27,8 @@ public class Story {
         }
     }
 
-    // EFFECTS: adds substance to a new line of your story!
+    // EFFECTS: if file cannot be read, throws IOException;
+    //          otherwise, adds substance to a new line of your story!
     public void write(String substance) throws IOException {
         FileWriter f = new FileWriter(path,true);
         f.write(substance + "\n");

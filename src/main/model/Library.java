@@ -22,39 +22,45 @@ public class Library {
         stories.add(s);
     }
 
-    // EFFECTS: lists stories in library
-    public void getStories() throws EmptyLibraryException {
+    // EFFECTS: if no stories in library, throws EmptyLibraryException;
+    //          else, lists stories in library
+    public StringBuilder getStories() throws EmptyLibraryException {
+        StringBuilder storyList = new StringBuilder();
         if (stories.size() == 0) {
             throw new EmptyLibraryException();
         } else {
             for (Story s : stories) {
-                System.out.println(s.getName());
+                storyList.append("\t- ").append(s.getName());
             }
         }
+        return storyList;
     }
 
-    // EFFECTS: displays story
-    public void viewStory(Story story) throws EmptyLibraryException, NotAStoryException {
+    // EFFECTS: if library is empty, throw EmptyLibraryException;
+    //          if library is not empty but Story is not in library, throw NotAStoryException;
+    //          else returns the text;
+    public StringBuilder getStoryText(Story story) throws EmptyLibraryException, NotAStoryException {
+        StringBuilder fullText = new StringBuilder();
         if (size() == 0) {
             throw new EmptyLibraryException();
         } else if (stories.contains(story)) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
                 String line;
-                StringBuilder fullText = new StringBuilder();
                 while ((line = br.readLine()) != null) {
                     fullText.append(line).append("\n");
                 }
-                System.out.println(fullText);
+                return fullText;
             } catch (IOException e) {
                 System.out.println("Could not read story.");
             }
         } else {
             throw new NotAStoryException();
         }
+        return fullText;
     }
 
-    // EFFECTS: finds story in library witch matching title; returns null if dne
+    // EFFECTS: finds story in library witch matching title; returns null if story is not in library
     public Story findStory(String title) {
         for (Story story : stories) {
             if (story.getName().equals(title)) {

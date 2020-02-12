@@ -164,17 +164,17 @@ public class AnimalTest {
             assertFalse(cat.isHappy());
 
             dog.play();
-            dog.feed();
+            dog.sleep();
             assertFalse(dog.isSad());
             assertFalse(dog.isHappy());
 
             horse.play();
-            horse.feed();
+            horse.sleep();
             assertFalse(horse.isSad());
             assertFalse(horse.isHappy());
 
             lizard.play();
-            lizard.feed();
+            lizard.sleep();
             assertFalse(lizard.isHappy());
             assertFalse(lizard.isSad());
 

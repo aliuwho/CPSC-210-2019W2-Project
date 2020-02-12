@@ -2,25 +2,64 @@ package model;
 
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
+import model.exceptions.StoryNameDuplicateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
     private Library library;
+    private Story story1;
+    private Story story2;
+    private Story story3;
+    private Story story4;
 
+    // NOTE: Due to file appending, test files must be deleted before running each test.
     @BeforeEach
     public void runBefore() {
         library = new Library();
+        try {
+            File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
+            assertTrue(f1.delete());
+
+            File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
+            assertTrue(f2.delete());
+
+            File f3 = new File("./data/TEST_FILE_FOR_STORY3.txt");
+            assertTrue(f3.delete());
+
+            File f4 = new File("./data/TEST_FILE_FOR_STORY4.txt");
+            assertTrue(f4.delete());
+
+            story1 = new Story("TEST_FILE_FOR_STORY1");
+            story2 = new Story("TEST_FILE_FOR_STORY2");
+            story3 = new Story("TEST_FILE_FOR_STORY3");
+            story4 = new Story("TEST_FILE_FOR_STORY4");
+        } catch (Exception e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testSize() {
+        assertEquals(0,library.size());
+
+        library.addStory(story1);
+        assertEquals(1,library.size());
+
+        library.addStory(story2);
+        assertEquals(2,library.size());
     }
 
     @Test
     public void testAdd1Story() {
         try {
-            library.addStory(new Story("story"));
+            library.addStory(story1);
         } catch (Exception e) {
             fail();
         }
@@ -30,9 +69,9 @@ public class LibraryTest {
     @Test
     public void testAddMultiStory() {
         try {
-            library.addStory(new Story("story_1"));
-            library.addStory(new Story("truck"));
-            library.addStory(new Story("story"));
+            library.addStory(story2);
+            library.addStory(story1);
+            library.addStory(story3);
         } catch (Exception e) {
             fail();
         }
@@ -41,64 +80,59 @@ public class LibraryTest {
 
     @Test
     public void testViewStory() {
-        Story story = null;
         try {
-            story = new Story("story");
-            library.addStory(story);
-            library.addStory(new Story("story_1"));
-        } catch (Exception e) {
-            fail();
-        }
-        try {
-            library.viewStory(story);
+            library.addStory(story4);
+            System.out.println(library.getStoryText(story4));
         } catch (EmptyLibraryException | NotAStoryException e) {
             fail();
         }
     }
 
     @Test
-    public void testViewStoryException() {
+    public void testViewStoryEmptyLibraryException() {
         Story story;
         try {
-            story = new Story("story");
-            library.addStory(story);
-            library.addStory(new Story("story_1"));
-        } catch (Exception e) {
+            story = new Story("VIEW_STORY_TEST");
+            library.getStoryText(story);
+        } catch (StoryNameDuplicateException | NotAStoryException | IOException e) {
             fail();
+        } catch (EmptyLibraryException e) {
+            System.out.println("No books to view in library!");
+        } finally {
+            File deleteViewTest = new File("./data/VIEW_STORY_TEST.txt");
+            assertTrue(deleteViewTest.delete());
         }
+    }
+
+    @Test
+    public void testViewStoryNotInLibraryException() {
+        Story story;
         try {
-            library.viewStory(new Story("dne"));
-        } catch (NotAStoryException e) {
-            System.out.println("Error caught!");
-        } catch (Exception e) {
+            library.addStory(story1);
+            library.addStory(story2);
+            story = new Story("VIEW_STORY_TEST");
+            library.getStoryText(story);
+        } catch (StoryNameDuplicateException | IOException | EmptyLibraryException e) {
             fail();
+        } catch (NotAStoryException e) {
+            System.out.println("thats not in the library!");
+        } finally {
+            File deleteViewTest = new File("./data/VIEW_STORY_TEST.txt");
+            assertTrue(deleteViewTest.delete());
         }
     }
 
     @Test
     public void testFindExistingStory() {
-        Story story;
         try {
-            File f1 = new File("./data/story.txt");
-            assertTrue(f1.delete());
-
-            File f2 = new File("./data/story_1.txt");
-            assertTrue(f2.delete());
+            library.addStory(story4);
+            library.addStory(story2);
+            library.addStory(story1);
+            library.addStory(story3);
+            assertEquals(story1.getName(), library.findStory("TEST_FILE_FOR_STORY1").getName());
         } catch (Exception e) {
-            System.out.println("An error occurred in runBefore.");
-        } finally {
-            try {
-                story = new Story("story");
-                assertEquals("story", story.getName());
-                library.addStory(story);
-                assertEquals(story.getName(), library.findStory("story").getName());
-
-            } catch (Exception e) {
-                fail();
-            }
-
+            fail();
         }
-
     }
 
     @Test

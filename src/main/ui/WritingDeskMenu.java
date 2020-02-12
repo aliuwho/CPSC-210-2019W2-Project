@@ -30,7 +30,6 @@ public class WritingDeskMenu extends Menu {
             case "p":
                 WritingPrompt p = new WritingPrompt();
                 System.out.println(p.getPrompt());
-                displayMenu();
                 break;
             case "c":
                 createStory(library);
@@ -50,10 +49,10 @@ public class WritingDeskMenu extends Menu {
         try {
             System.out.println("What story you would like to view?");
             System.out.println("Here are your stories:");
-            library.getStories();
+            System.out.println(library.getStories());
             String title = input.next();
 
-            library.viewStory(library.findStory(title));
+            System.out.println(library.getStoryText(library.findStory(title)));
         } catch (EmptyLibraryException e) {
             System.out.println("There are no stories in your library.");
         } catch (NotAStoryException e) {
@@ -75,7 +74,7 @@ public class WritingDeskMenu extends Menu {
     // EFFECTS: creates a new story with a name
     private void createStory(Library l) {
         try {
-            System.out.println("What would you like to call your story? \n");
+            System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
             String storyName = input.next();
             Story story = new Story(storyName);
             System.out.println("Alright, your story will be called " + story.getName() + ".");
@@ -92,26 +91,24 @@ public class WritingDeskMenu extends Menu {
     // MODIFIES: story
     // EFFECTS: adds user input to story
     private void writeStory(Story story, Library l) {
-        String substance = "\n";
+        String substance = "";
         System.out.println("Enter your story here. Type 'the_end' on a new line when you're finished! \n");
         boolean writing = true;
-        String storyLine;
 
-        int num = 0;
         while (writing) {
-            storyLine = input.next();
-            num++;
+            String storyLine = input.nextLine();
             if (storyLine.toLowerCase().equals("the_end")) {
                 try {
                     story.write(substance);
                 } catch (IOException e) {
                     System.out.println("An error occurred when saving your story :( Please quit and report the bug.");
                 }
+                int num = substance.split(" |\n").length;
                 System.out.println("You wrote " + (num - 1) + " words. " + story.getName() + " has been saved!");
-                addStory(l,story);
+                addStory(l, story);
                 writing = false;
             } else {
-                substance += storyLine + " ";
+                substance += storyLine + "\n";
             }
         }
 
