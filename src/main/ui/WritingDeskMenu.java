@@ -58,6 +58,8 @@ public class WritingDeskMenu extends Menu {
         } catch (NotAStoryException e) {
             System.out.println("That's not a valid story!");
             selectStory();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

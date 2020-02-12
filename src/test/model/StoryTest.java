@@ -1,7 +1,6 @@
 package model;
 
 import model.exceptions.StoryNameDuplicateException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +17,15 @@ public class StoryTest {
     public void runBefore() {
         try {
             File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
-            assertTrue(f1.delete());
+            if (!f1.createNewFile()) {
+                assertTrue(f1.delete());
+            }
 
             File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
-            assertTrue(f2.delete());
+            if (!f2.createNewFile()) {
+                assertTrue(f2.delete());
+            }
+
         } catch (Exception e) {
             fail();
         } finally {
@@ -29,7 +33,7 @@ public class StoryTest {
                 story1 = new Story("TEST_FILE_FOR_STORY1");
                 assertEquals("TEST_FILE_FOR_STORY1", story1.getName());
                 story2 = new Story("TEST_FILE_FOR_STORY2");
-                assertEquals("TEST_FILE_FOR_STORY2",story2.getName());
+                assertEquals("TEST_FILE_FOR_STORY2", story2.getName());
             } catch (Exception e) {
                 fail();
             }
@@ -41,8 +45,10 @@ public class StoryTest {
         try {
             Story story3 = new Story("TEST_FILE_FOR_STORY2");
             fail();
-        } catch (Exception e) {
+        } catch (StoryNameDuplicateException e) {
             System.out.println("duplicate file error caught :^)");
+        } catch (IOException e) {
+            fail();
         }
     }
 

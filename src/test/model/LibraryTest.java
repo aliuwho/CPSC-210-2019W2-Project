@@ -24,16 +24,23 @@ public class LibraryTest {
         library = new Library();
         try {
             File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
-            assertTrue(f1.delete());
+            if (!f1.createNewFile()) {
+                assertTrue(f1.delete());
+            }
 
             File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
-            assertTrue(f2.delete());
-
+            if (!f2.createNewFile()) {
+                assertTrue(f2.delete());
+            }
             File f3 = new File("./data/TEST_FILE_FOR_STORY3.txt");
-            assertTrue(f3.delete());
-
+            if (!f3.createNewFile()) {
+                assertTrue(f3.delete());
+            }
             File f4 = new File("./data/TEST_FILE_FOR_STORY4.txt");
-            assertTrue(f4.delete());
+            if (!f4.createNewFile()) {
+                assertTrue(f4.delete());
+            }
+
 
             story1 = new Story("TEST_FILE_FOR_STORY1");
             story2 = new Story("TEST_FILE_FOR_STORY2");
@@ -47,13 +54,13 @@ public class LibraryTest {
 
     @Test
     public void testSize() {
-        assertEquals(0,library.size());
+        assertEquals(0, library.size());
 
         library.addStory(story1);
-        assertEquals(1,library.size());
+        assertEquals(1, library.size());
 
         library.addStory(story2);
-        assertEquals(2,library.size());
+        assertEquals(2, library.size());
     }
 
     @Test
@@ -83,7 +90,7 @@ public class LibraryTest {
         try {
             library.addStory(story4);
             System.out.println(library.getStoryText(story4));
-        } catch (EmptyLibraryException | NotAStoryException e) {
+        } catch (EmptyLibraryException | NotAStoryException | IOException e) {
             fail();
         }
     }
@@ -140,13 +147,107 @@ public class LibraryTest {
         assertNull(library.findStory("dne"));
     }
 
-   /* @Test
-    public void testSelectStory() {
-        Scanner input = new Scanner(System.in);
-        Story story = new Story("story");
-        library.addStory(story);
-        library.addStory(new Story("truck"));
-        library.selectStory(input);
-        input.close();
-    }*/
+    @Test
+    public void testGetStoryTextNoException() {
+        try {
+            library.addStory(story1);
+            story1.write("this is a test!");
+            StringBuilder sb = new StringBuilder();
+            sb.append("this is a test!\n");
+            assertEquals(sb.substring(0), library.getStoryText(story1).substring(0));
+        } catch (EmptyLibraryException | NotAStoryException | IOException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testGetStoryTextEmptyLibraryException() {
+        try {
+            story1.write("this is a test!");
+            StringBuilder sb = new StringBuilder();
+            sb.append("this is a test!\n");
+            assertEquals(sb.substring(0), library.getStoryText(story1).substring(0));
+            fail();
+        } catch (EmptyLibraryException e) {
+            System.out.println("caught library error :|!");
+        } catch (NotAStoryException | IOException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testGetStoryTextNotAStoryException() {
+        try {
+            library.addStory(story1);
+            story2.write("this is a test!");
+            StringBuilder sb = new StringBuilder();
+            sb.append("this is a test!\n");
+            assertEquals(sb.substring(0), library.getStoryText(story2).substring(0));
+            fail();
+        } catch (NotAStoryException e) {
+            System.out.println("caught story error :|!");
+        } catch (EmptyLibraryException | IOException e) {
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testGetStoryTextIOException() {
+        try {
+
+            File testFile = new File("./data/TEST_FILE_READ_EXCEPTION.txt");
+            if (!testFile.createNewFile()) {
+                assertTrue(testFile.delete());
+            }
+
+            Story testStory = new Story("TEST_FILE_READ_EXCEPTION");
+            testStory.write("this is a test!");
+            assertTrue(testFile.setReadable(false));
+
+            library.addStory(testStory);
+            StringBuilder sb = new StringBuilder();
+            sb.append("this is a test!\n");
+            assertEquals(sb.substring(0), library.getStoryText(testStory).substring(0));
+            fail();
+        } catch (NotAStoryException | StoryNameDuplicateException | EmptyLibraryException e) {
+            fail();
+        } catch (IOException e) {
+            System.out.println("io exception");
+        }
+    }
+
+    @Test
+    public void testGetStoriesNoException() {
+        library.addStory(story1);
+        library.addStory(story2);
+        library.addStory(story3);
+        library.addStory(story4);
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t- ");
+        sb.append(story1.getName());
+        sb.append("\t- ");
+        sb.append(story2.getName());
+        sb.append("\t- ");
+        sb.append(story3.getName());
+        sb.append("\t- ");
+        sb.append(story4.getName());
+
+        try {
+            assertEquals(sb.substring(0), library.getStories().substring(0));
+        } catch (EmptyLibraryException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testGetStoriesEmptyLibException() {
+        try {
+            library.getStories().substring(0);
+        } catch (EmptyLibraryException e) {
+            System.out.println("library is empty");
+        }
+    }
 }

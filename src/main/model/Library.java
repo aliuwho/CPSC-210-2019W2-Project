@@ -39,25 +39,21 @@ public class Library {
     // EFFECTS: if library is empty, throw EmptyLibraryException;
     //          if library is not empty but Story is not in library, throw NotAStoryException;
     //          else returns the text;
-    public StringBuilder getStoryText(Story story) throws EmptyLibraryException, NotAStoryException {
+    public StringBuilder getStoryText(Story story) throws EmptyLibraryException, NotAStoryException, IOException {
         StringBuilder fullText = new StringBuilder();
         if (size() == 0) {
             throw new EmptyLibraryException();
         } else if (stories.contains(story)) {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    fullText.append(line).append("\n");
-                }
-                return fullText;
-            } catch (IOException e) {
-                System.out.println("Could not read story.");
+
+            BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
+            String line;
+            while ((line = br.readLine()) != null) {
+                fullText.append(line).append("\n");
             }
+            return fullText;
         } else {
             throw new NotAStoryException();
         }
-        return fullText;
     }
 
     // EFFECTS: finds story in library witch matching title; returns null if story is not in library
