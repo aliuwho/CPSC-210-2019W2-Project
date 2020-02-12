@@ -3,6 +3,11 @@ package ui;
 import model.Library;
 import model.Story;
 import model.WritingPrompt;
+import model.exceptions.EmptyLibraryException;
+import model.exceptions.NotAStoryException;
+import model.exceptions.StoryNameDuplicateException;
+
+import java.io.IOException;
 
 public class WritingDeskMenu extends Menu {
     private Library library;
@@ -42,11 +47,19 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: enables user to select a story from library
     public void selectStory() {
-        System.out.println("Here are your stories:");
-        library.getStories();
-        System.out.println("What story you would like to view?");
-        String title = input.next();
-        library.viewStory(library.findStory(title));
+        try {
+            System.out.println("What story you would like to view?");
+            System.out.println("Here are your stories:");
+            library.getStories();
+            String title = input.next();
+
+            library.viewStory(library.findStory(title));
+        } catch (EmptyLibraryException e) {
+            System.out.println("There are no stories in your library.");
+        } catch (NotAStoryException e) {
+            System.out.println("That's not a valid story!");
+            selectStory();
+        }
     }
 
     // EFFECTS: displays Writing Desk options
@@ -65,10 +78,14 @@ public class WritingDeskMenu extends Menu {
             System.out.println("What would you like to call your story? \n");
             String storyName = input.next();
             Story story = new Story(storyName);
+            System.out.println("Alright, your story will be called " + story.getName() + ".");
             writeStory(story, l);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("An error occurred.");
+        } catch (StoryNameDuplicateException e) {
+            System.out.println("That name is already being used!");
+            createStory(l);
         }
     }
 
@@ -85,19 +102,28 @@ public class WritingDeskMenu extends Menu {
             storyLine = input.next();
             num++;
             if (storyLine.toLowerCase().equals("the_end")) {
-                story.write(substance);
+                try {
+                    story.write(substance);
+                } catch (IOException e) {
+                    System.out.println("An error occurred when saving your story :( Please quit and report the bug.");
+                }
                 System.out.println("You wrote " + (num - 1) + " words. " + story.getName() + " has been saved!");
-                StoryAddMenu storyAddMenu = new StoryAddMenu(story);
-                storyAddMenu.setLibrary(l);
-                storyAddMenu.setInput(input);
-                storyAddMenu.setUsername(username);
-                storyAddMenu.runApp();
+                addStory(l,story);
                 writing = false;
             } else {
                 substance += storyLine + " ";
             }
         }
 
+    }
+
+    // EFFECTS: runs Story Add option
+    public void addStory(Library l, Story story) {
+        StoryAddMenu storyAddMenu = new StoryAddMenu(story);
+        storyAddMenu.setLibrary(l);
+        storyAddMenu.setInput(input);
+        storyAddMenu.setUsername(username);
+        storyAddMenu.runApp();
     }
 
     // EFFECTS: sets the library as l

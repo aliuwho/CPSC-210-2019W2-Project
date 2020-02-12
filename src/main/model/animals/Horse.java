@@ -11,16 +11,7 @@ public class Horse extends Animal {
 
     // EFFECTS: prints horse noises
     @Override
-    public void speak() {
-        System.out.println("Neigh neigh!");
-    }
-
-    // EFFECTS: shows horse status
-    @Override
-    public void status() {
-        super.status();
-        if (!isHungry() && !isTired()) {
-            System.out.println(name + " does a happy dance. You are taking good care of your horse!");
-        }
+    public String speak() {
+        return "Neigh neigh!";
     }
 }

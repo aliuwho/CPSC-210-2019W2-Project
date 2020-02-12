@@ -1,10 +1,11 @@
 package model;
 
+import model.exceptions.EmptyLibraryException;
+import model.exceptions.NotAStoryException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,33 +19,60 @@ public class LibraryTest {
 
     @Test
     public void testAdd1Story() {
-        library.addStory(new Story("story"));
-        library.getStories();
+        try {
+            library.addStory(new Story("story"));
+        } catch (Exception e) {
+            fail();
+        }
         assertEquals(1, library.size());
     }
 
     @Test
     public void testAddMultiStory() {
-        library.addStory(new Story("story"));
-        library.addStory(new Story("story_1"));
-        library.getStories();
-        assertEquals(2, library.size());
+        try {
+            library.addStory(new Story("story_1"));
+            library.addStory(new Story("truck"));
+            library.addStory(new Story("story"));
+        } catch (Exception e) {
+            fail();
+        }
+        assertEquals(3, library.size());
     }
 
     @Test
     public void testViewStory() {
-        Story story = new Story("story");
-        library.addStory(story);
-        library.addStory(new Story("story_1"));
-        library.viewStory(story);
+        Story story = null;
+        try {
+            story = new Story("story");
+            library.addStory(story);
+            library.addStory(new Story("story_1"));
+        } catch (Exception e) {
+            fail();
+        }
+        try {
+            library.viewStory(story);
+        } catch (EmptyLibraryException | NotAStoryException e) {
+            fail();
+        }
     }
 
     @Test
     public void testViewStoryException() {
-        Story story = new Story("story");
-        library.addStory(story);
-        library.addStory(new Story("story_1"));
-        library.viewStory(new Story("dne"));
+        Story story;
+        try {
+            story = new Story("story");
+            library.addStory(story);
+            library.addStory(new Story("story_1"));
+        } catch (Exception e) {
+            fail();
+        }
+        try {
+            library.viewStory(new Story("dne"));
+        } catch (NotAStoryException e) {
+            System.out.println("Error caught!");
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
@@ -59,12 +87,18 @@ public class LibraryTest {
         } catch (Exception e) {
             System.out.println("An error occurred in runBefore.");
         } finally {
-            story = new Story("story");
-            assertEquals("story", story.getName());
+            try {
+                story = new Story("story");
+                assertEquals("story", story.getName());
+                library.addStory(story);
+                assertEquals(story.getName(), library.findStory("story").getName());
+
+            } catch (Exception e) {
+                fail();
+            }
+
         }
 
-        library.addStory(story);
-        assertEquals(story.getName(), library.findStory("story").getName());
     }
 
     @Test

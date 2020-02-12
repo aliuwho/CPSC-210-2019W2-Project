@@ -3,6 +3,8 @@ package ui;
 import model.Library;
 import model.Story;
 
+import java.io.File;
+
 public class StoryAddMenu extends Menu {
     private Library library;
     private Story story;
@@ -25,9 +27,16 @@ public class StoryAddMenu extends Menu {
         if ("y".equals(command)) {
             library.addStory(story);
             System.out.println("Your story has been added to your library! Press q to return.");
+        } else if ("n".equals(command)) {
+            System.out.println("Alright, your story will be deleted. One moment...");
+            File f1 = new File(story.getPath());
+            if (f1.delete()) {
+                System.out.println("Your story has been deleted.");
+            }
         } else {
             System.out.println("Selection not valid...");
         }
+        System.out.println("Press 'q' to return to the Writing Desk.");
     }
 
     // EFFECTS: bids farewell to user
@@ -41,7 +50,8 @@ public class StoryAddMenu extends Menu {
     public void displayMenu() {
         super.displayMenu();
         System.out.println("\ty -> Yes, add my story to my library");
-        System.out.println("\tq -> Don't add my story to my library");
+        System.out.println("\tn -> No, don't add my story to my library");
+//        System.out.println("\tq -> Don't add my story to my library");
     }
 
     // EFFECTS: sets the library as l

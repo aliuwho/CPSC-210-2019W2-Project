@@ -11,17 +11,7 @@ public class Bird extends Animal {
 
     // EFFECTS: prints bird noises
     @Override
-    public void speak() {
-        System.out.println("Chirp chirp!");
+    public String speak() {
+        return "Chirp chirp!";
     }
-
-    // EFFECTS: shows bird status
-    @Override
-    public void status() {
-        super.status();
-        if (!isHungry() && !isTired()) {
-            System.out.println(name + " whistles a happy tune. You are taking good care of your bird!");
-        }
-    }
-
 }

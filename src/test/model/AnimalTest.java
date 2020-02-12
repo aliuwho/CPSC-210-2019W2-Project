@@ -19,19 +19,19 @@ public class AnimalTest {
     @BeforeEach
     public void runBefore() {
         bird = new Bird("Astryd");
-        bird.status();
+        assertEquals("Astryd",bird.getName());
 
         cat = new Cat("Rai");
-        cat.status();
+        assertEquals("Rai",cat.getName());
 
         dog = new Dog("Hachi");
-        dog.status();
+        assertEquals("Hachi",dog.getName());
 
         horse = new Horse("Billy");
-        horse.status();
+        assertEquals("Billy",horse.getName());
 
         lizard = new Lizard("Mocha");
-        lizard.status();
+        assertEquals("Mocha",lizard.getName());
 
     }
 
@@ -107,28 +107,22 @@ public class AnimalTest {
     }
 
     @Test
-    public void testNameCorrectInStatus() {
-        System.out.println(dog.getName());
-        dog.status();
-    }
-
-    @Test
     public void testHappyStatus() {
         try {
             bird.feed();
-            bird.status();
+            assertTrue(bird.isHappy());
 
             cat.feed();
-            cat.status();
+            assertTrue(cat.isHappy());
 
             dog.feed();
-            dog.status();
+            assertTrue(dog.isHappy());
 
             horse.feed();
-            horse.status();
+            assertTrue(horse.isHappy());
 
             lizard.feed();
-            lizard.status();
+            assertTrue(lizard.isHappy());
         } catch (Exception e) {
             fail();
         }
@@ -138,19 +132,19 @@ public class AnimalTest {
     public void testSadStatus() {
         try {
             bird.play();
-            bird.status();
+            assertTrue(bird.isSad());
 
             cat.play();
-            cat.status();
+            assertTrue(cat.isSad());
 
             dog.play();
-            dog.status();
+            assertTrue(dog.isSad());
 
             horse.play();
-            horse.status();
+            assertTrue(horse.isSad());
 
             lizard.play();
-            lizard.status();
+            assertTrue(lizard.isSad());
         } catch (Exception e) {
             fail();
         }
@@ -161,23 +155,29 @@ public class AnimalTest {
         try {
             bird.play();
             bird.feed();
-            bird.status();
+            assertFalse(bird.isHungry());
+            assertFalse(bird.isSad());
 
             cat.play();
             cat.feed();
-            cat.status();
+            assertFalse(cat.isSad());
+            assertFalse(cat.isHappy());
 
             dog.play();
             dog.feed();
-            dog.status();
+            assertFalse(dog.isSad());
+            assertFalse(dog.isHappy());
 
             horse.play();
             horse.feed();
-            horse.status();
+            assertFalse(horse.isSad());
+            assertFalse(horse.isHappy());
 
             lizard.play();
             lizard.feed();
-            lizard.status();
+            assertFalse(lizard.isHappy());
+            assertFalse(lizard.isSad());
+
         } catch (Exception e) {
             fail();
         }

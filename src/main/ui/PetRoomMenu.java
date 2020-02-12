@@ -22,7 +22,7 @@ public class PetRoomMenu extends Menu {
     public void processCommand(String command) {
         switch (command) {
             case "c":
-                pet.status();
+                checkStatus();
                 break;
             case "f":
                 feedPet();
@@ -56,6 +56,8 @@ public class PetRoomMenu extends Menu {
     private void playWithPet() {
         try {
             pet.play();
+            System.out.println(pet.speak());
+            System.out.println(pet.getName() + " enjoyed playing with you!");
         } catch (TiredException e) {
             System.out.println(pet.getName() + " is too tired to play. Try taking a nap!");
         }
@@ -67,6 +69,7 @@ public class PetRoomMenu extends Menu {
     private void napWithPet() {
         try {
             pet.sleep();
+            System.out.println("You and " + pet.getName() + " took a lovely nap. You both feel well-rested!");
         } catch (NotTiredException e) {
             System.out.println(pet.getName() + " isn't tired! " + pet.getName() + " wants to play!");
         }
@@ -78,9 +81,62 @@ public class PetRoomMenu extends Menu {
     private void feedPet() {
         try {
             pet.feed();
+            System.out.println(pet.getName() + " enjoyed the meal! Yummy!");
         } catch (NotHungryException e) {
             System.out.println(pet.getName() + " isn't hungry!");
         }
+    }
+
+    // EFFECTS: shows the status of the animal
+    public void checkStatus() {
+        String h;
+        if (pet.isHungry()) {
+            h = "hungry";
+        } else {
+            h = "full";
+        }
+
+        String t;
+        if (pet.isTired()) {
+            t = "tired";
+        } else {
+            t = "feeling energetic";
+        }
+        String msg = pet.getName() + " is " + h + " and " + t + ".\n";
+        System.out.println(msg);
+        petIsSad();
+    }
+
+    // EFFECTS: informs user if pet is hungry and tired; otherwise,
+    //          checks if pet is happy
+    public void petIsSad() {
+        if (pet.isSad()) {
+            System.out.println(pet.getName() + " is a little sad... Make sure to feed them and let them rest!\n");
+        } else {
+            petIsHappy();
+        }
+    }
+
+    // EFFECTS: if pet is not hungry and not tired, it performs a special action;
+    //          otherwise, informs user that pet is doing okay
+    public void petIsHappy() {
+        String msg = "";
+        if (pet.isHappy()) {
+            if (pet instanceof Lizard) {
+                msg = pet.getName() + " hugs your finger. You are taking good care of your lizard!";
+            } else if (pet instanceof Horse) {
+                msg = pet.getName() + " does a happy dance. You are taking good care of your horse!";
+            } else if (pet instanceof Dog) {
+                msg = pet.getName() + " excitedly licks your face. You are taking good care of your dog!";
+            } else if (pet instanceof Cat) {
+                msg = pet.getName() + " purrs happily. You are taking good care of your cat!";
+            } else if (pet instanceof Bird) {
+                msg = pet.getName() + " whistles a happy tune. You are taking good care of your bird!";
+            }
+        } else {
+            msg = pet.getName() + " is doing okay.";
+        }
+        System.out.println(msg);
     }
 
     // EFFECTS: displays pet room options

@@ -11,16 +11,8 @@ public class Dog extends Animal {
 
     // EFFECTS: prints dog noises
     @Override
-    public void speak() {
-        System.out.println("Woof woof!");
+    public String speak() {
+        return "Woof woof!";
     }
 
-    // EFFECTS: shows status of dog
-    @Override
-    public void status() {
-        super.status();
-        if (!isHungry() && !isTired()) {
-            System.out.println(name + " excitedly licks your face. You are taking good care of your dog!");
-        }
-    }
 }

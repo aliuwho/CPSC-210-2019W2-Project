@@ -1,59 +1,82 @@
 package model;
 
+import model.exceptions.StoryNameDuplicateException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StoryTest {
     private static Story story1;
     private static Story story2;
-    //private Story story2;
 
-    // NOTE: Due to file appending, you MUST NOT HAVE an existing story.txt or story1.txt before running tests
-    //       To solve this issue, BeforeAll deletes any existing story.txt and story1.txt files
+    // NOTE: Due to file appending, test files must be deleted before running each test.
     @BeforeAll
     static void runBefore() {
         try {
-            File f1 = new File("./data/story.txt");
+            File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
             assertTrue(f1.delete());
 
-            File f2 = new File("./data/story_1.txt");
+            File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
             assertTrue(f2.delete());
         } catch (Exception e) {
-            System.out.println("An error occurred in runBefore.");
+            fail();
         } finally {
-            story1 = new Story("story");
-            assertEquals("story", story1.getName());
-            story2 = new Story("story");
+            try {
+                story1 = new Story("TEST_FILE_FOR_STORY1");
+                assertEquals("TEST_FILE_FOR_STORY1", story1.getName());
+                story2 = new Story("TEST_FILE_FOR_STORY2");
+                assertEquals("TEST_FILE_FOR_STORY2",story2.getName());
+            } catch (Exception e) {
+                fail();
+            }
         }
     }
 
     @Test
     public void testConstructorDuplicateName() {
-        assertEquals("story_1", story2.getName());
+        try {
+            Story story3 = new Story("TEST_FILE_FOR_STORY2");
+            fail();
+        } catch (Exception e) {
+            System.out.println("duplicate file error caught :^)");
+        }
     }
 
     @Test
     public void testConstructorException() {
-        Story s3 = new Story("./story/story.txt");
+        try {
+            Story s3 = new Story("./story/TEST_FILE_FOR_STORY2.txt");
+            fail();
+        } catch (Exception e) {
+            System.out.println("error! caught!");
+        }
     }
 
     @Test
     public void testWriteException() {
-        Story s3 = new Story("./story/story.txt");
-        s3.write("heeho");
+        Story s3;
+        try {
+            s3 = new Story("TEST_FILE_WRITE_EXCEPTION");
+            FileInputStream in = new FileInputStream(s3.getPath());
+            java.nio.channels.FileLock lock = in.getChannel().lock();
+            s3.write("heeho");
+        } catch (Exception e) {
+            System.out.println("error!!!");
+        }
     }
 
     @Test
     public void testWriteOneLine() {
-        story1.write("your substance is filth");
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./data/story.txt"));
+            story1.write("your substance is filth");
+        } catch (IOException e) {
+            fail();
+        }
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(story1.getPath()));
             String line;
             StringBuilder fullText = new StringBuilder();
             while ((line = br.readLine()) != null) {
@@ -67,24 +90,17 @@ public class StoryTest {
     }
 
     @Test
-    public void testWriteOneLineException() {
-        story1.write("your substance is filth");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("filler_text"));
-            System.out.println(br.read());
-            fail();
-        } catch (Exception e) {
-            System.out.println("An error occurred!");
-        }
-    }
-
-    @Test
     public void testWriteMultiLine() {
-        story2.write("who are they to say what the truth is anyway?");
-        story2.write("play the game, but don't believe in it--that much you owe yourself.");
+        try {
+            story2.write("who are they to say what the truth is anyway?");
+            story2.write("play the game, but don't believe in it--that much you owe yourself.");
+
+        } catch (Exception e) {
+            fail();
+        }
         //story2.write("i AM an invisible man.");
         try {
-            BufferedReader br = new BufferedReader(new FileReader("./data/story_1.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(story2.getPath()));
             String line;
             StringBuilder fullText = new StringBuilder();
             while ((line = br.readLine()) != null) {

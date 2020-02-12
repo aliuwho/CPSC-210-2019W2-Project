@@ -1,5 +1,8 @@
 package model;
 
+import model.exceptions.EmptyLibraryException;
+import model.exceptions.NotAStoryException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,24 +23,34 @@ public class Library {
     }
 
     // EFFECTS: lists stories in library
-    public void getStories() {
-        for (Story s : stories) {
-            System.out.println(s.getName());
+    public void getStories() throws EmptyLibraryException {
+        if (stories.size() == 0) {
+            throw new EmptyLibraryException();
+        } else {
+            for (Story s : stories) {
+                System.out.println(s.getName());
+            }
         }
     }
 
     // EFFECTS: displays story
-    public void viewStory(Story story) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
-            String line;
-            StringBuilder fullText = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                fullText.append(line).append("\n");
+    public void viewStory(Story story) throws EmptyLibraryException, NotAStoryException {
+        if (size() == 0) {
+            throw new EmptyLibraryException();
+        } else if (stories.contains(story)) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
+                String line;
+                StringBuilder fullText = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    fullText.append(line).append("\n");
+                }
+                System.out.println(fullText);
+            } catch (IOException e) {
+                System.out.println("Could not read story.");
             }
-            System.out.println(fullText);
-        } catch (IOException e) {
-            System.out.println("Could not read story.");
+        } else {
+            throw new NotAStoryException();
         }
     }
 

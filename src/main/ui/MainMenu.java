@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class MainMenu extends Menu {
     private WritingDeskMenu writingDeskMenu;
     private PetRoomMenu petRoomMenu;
-    private Library library;
 
     // EFFECTS: returns username
     public String getUsername() {
@@ -19,7 +18,7 @@ public class MainMenu extends Menu {
         setName("Main Menu");
         setInput(input);
         username = "new user";
-        library = new Library();
+        Library library = new Library();
 
         writingDeskMenu = new WritingDeskMenu();
         writingDeskMenu.setUsername(username);

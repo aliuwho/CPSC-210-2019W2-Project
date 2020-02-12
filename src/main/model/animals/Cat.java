@@ -11,16 +11,7 @@ public class Cat extends Animal {
 
     // EFFECTS: prints out cat noises
     @Override
-    public void speak() {
-        System.out.println("Meow meow!");
-    }
-
-    // EFFECT: shows cat status
-    @Override
-    public void status() {
-        super.status();
-        if (!isHungry() && !isTired()) {
-            System.out.println(name + " purrs happily. You are taking good care of your cat!");
-        }
+    public String speak() {
+        return "Meow meow!";
     }
 }
