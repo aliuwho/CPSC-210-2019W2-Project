@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FourBoardTest {
 
     private FourBoard board;
+    private Chip red = Chip.RED;
+    private Chip blue = Chip.BLUE;
+    private Chip empty = Chip.EMPTY;
 
     // note: can use x's and filled circles
     // empty spaces are represented using 0
@@ -24,38 +27,41 @@ public class FourBoardTest {
     @Test
     public void testAdd1Chip() {
         try {
-            board.addChip(1, 0);
+            board.addChip(red, 0);
         } catch (ColumnFullException e) {
             fail("unexpected column full error");
         }
-        assertEquals(1, board.getChipType(0, 0));
+        assertEquals(red, board.getChipType(0, 0));
     }
 
     @Test
     public void testAddChipException() {
         try {
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            assertFalse(board.canAddChip(0));
+            board.addChip(red, 0);
         } catch (ColumnFullException e) {
-            fail("unexpected column full error");
+            System.out.println("caught column full error");
         }
     }
 
     @Test
     public void testAddMultiChip() {
         try {
-            board.addChip(1, 0);
-            board.addChip(1, 1);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(blue, 1);
+            board.addChip(red, 3);
+            board.addChip(red, 0);
 
-            assertEquals(1, board.getChipType(0, 0));
-            assertEquals(2, board.getChipType(1, 0));
-            assertEquals(1, board.getChipType(3, 0));
+            assertEquals(red, board.getChipType(0, 0));
+            assertEquals(blue, board.getChipType(0, 1));
+            assertEquals(red, board.getChipType(0, 3));
+            assertEquals(red, board.getChipType(1, 0));
         } catch (ColumnFullException e) {
             fail("unexpected column full error");
         }
@@ -64,10 +70,10 @@ public class FourBoardTest {
     @Test
     public void testIsFourAcross() {
         try {
-            board.addChip(1, 0);
-            board.addChip(1, 1);
-            board.addChip(1, 2);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(red, 1);
+            board.addChip(red, 2);
+            board.addChip(red, 3);
         } catch (ColumnFullException e) {
             fail("unexpected column full error");
         }
@@ -77,10 +83,10 @@ public class FourBoardTest {
     @Test
     public void testIsNotFourAcross() {
         try {
-            board.addChip(1, 0);
-            board.addChip(2, 1);
-            board.addChip(1, 2);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(blue, 1);
+            board.addChip(red, 2);
+            board.addChip(red, 3);
         } catch (ColumnFullException e) {
             fail("unexpected column full exception");
         }
@@ -90,10 +96,10 @@ public class FourBoardTest {
     @Test
     public void isNotFourUpDown() {
         try {
-            board.addChip(1, 0);
-            board.addChip(2, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
+            board.addChip(red, 0);
+            board.addChip(blue, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
         } catch (ColumnFullException e) {
             fail("unexpected column full exception");
         }
@@ -103,10 +109,10 @@ public class FourBoardTest {
     @Test
     public void testIsFourUpDown() {
         try {
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
-            board.addChip(1, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
+            board.addChip(red, 0);
         } catch (ColumnFullException e) {
             fail();
         }
@@ -116,20 +122,20 @@ public class FourBoardTest {
     @Test
     public void testIsFourDiagonal() {
         try {
-            board.addChip(1, 0);
-            board.addChip(2, 1);
-            board.addChip(1, 2);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(blue, 1);
+            board.addChip(red, 2);
+            board.addChip(red, 3);
 
-            board.addChip(1, 0);
-            board.addChip(1, 1);
-            board.addChip(2, 0);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(red, 1);
+            board.addChip(blue, 0);
+            board.addChip(red, 3);
 
-            board.addChip(1, 2);
-            board.addChip(2, 3);
-            board.addChip(1, 3);
-            board.addChip(1, 2);
+            board.addChip(red, 2);
+            board.addChip(blue, 3);
+            board.addChip(red, 3);
+            board.addChip(red, 2);
         } catch (ColumnFullException e) {
             fail();
         }
@@ -139,25 +145,89 @@ public class FourBoardTest {
     @Test
     public void testIsNotFourDiagonal() {
         try {
-            board.addChip(1, 0);
-            board.addChip(2, 1);
-            board.addChip(1, 2);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(blue, 1);
+            board.addChip(red, 2);
+            board.addChip(red, 3);
 
-            board.addChip(1, 0);
-            board.addChip(1, 1);
-            board.addChip(2, 0);
-            board.addChip(1, 3);
+            board.addChip(red, 0);
+            board.addChip(red, 1);
+            board.addChip(blue, 0);
+            board.addChip(red, 3);
 
-            board.addChip(1, 2);
-            board.addChip(2, 3);
-            board.addChip(1, 3);
-            board.addChip(2, 2);
+            board.addChip(red, 2);
+            board.addChip(blue, 3);
+            board.addChip(red, 3);
+            board.addChip(blue, 2);
         } catch (ColumnFullException e) {
             fail();
         }
         assertFalse(board.isFourDiagonal());
     }
 
+    @Test
+    public void testIsDiagonal() {
+        Chip[][] test1 = new Chip[6][7];
+        test1[0][0] = red;
+        test1[0][1] = blue;
+        test1[1][0] = red;
+        test1[1][1] = red;
+        test1[2][2] = red;
+        test1[3][3] = red;
+        assertTrue(isDiagonal(test1, 0, 0, red));
+        assertFalse(isDiagonal(test1, 0, 0, blue));
+
+        Chip[][] test2 = new Chip[6][7];
+        test2[0][1] = blue;
+        test2[1][2] = blue;
+        test2[2][3] = blue;
+        test2[3][4] = blue;
+        test2[0][3] = blue;
+        assertTrue(isDiagonal(test2, 0, 1, blue));
+        assertFalse(isDiagonal(test2, 0, 0, blue));
+
+        Chip[][] test3 = new Chip[6][7];
+        test3[3][1] = blue;
+        test3[2][2] = blue;
+        test3[1][3] = blue;
+        test3[0][4] = blue;
+        assertTrue(isDiagonal(test3, 0, 4, blue));
+        assertFalse(isDiagonal(test3, 0, 1, blue));
+    }
+
+    public boolean isDiagonal(Chip[][] nums, int row, int col, Chip target) {
+        boolean ret = false;
+        int r = row;
+        int c = col;
+        int count = 0;
+        while (r < nums.length && c < nums[r].length) {
+            if (nums[r][c] == target) {
+                count++;
+            } else {
+                count = 0;
+            }
+            if (count == 4) {
+                ret = true;
+            }
+            r++;
+            c++;
+        }
+        count = 0;
+        r = row;
+        c = col;
+        while (r >= 0 && c >=0) {
+            if (nums[r][c] == target) {
+                count++;
+            } else {
+                count = 0;
+            }
+            if (count == 4) {
+                ret = true;
+            }
+            r++;
+            c--;
+        }
+        return ret;
+    }
 
 }
