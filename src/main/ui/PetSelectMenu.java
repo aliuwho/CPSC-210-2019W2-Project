@@ -4,7 +4,7 @@ import model.animals.*;
 
 public class PetSelectMenu extends Menu {
     private Animal pet;
-    private String animalType;
+ //   private String animalType;
 
     // EFFECTS: creates a new PetSelectMenu
     public PetSelectMenu() {

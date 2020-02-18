@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public class Story {
     // delete or rename this class!
-    private String name;
-    private String path;
+    private final String name;
+    private final String path;
 
     // EFFECTS: if file with name already exists, throws StoryNameDuplicateException;
     //          otherwise, if file cannot be read, throws IOException;

@@ -2,7 +2,6 @@ package model;
 
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
-import model.exceptions.StoryNameDuplicateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -104,6 +103,7 @@ public class LibraryTest {
     public void testViewStory() {
         try {
             library.addStory(story4);
+            assertEquals(1, library.getSize());
             System.out.println(library.getStoryText(story4));
         } catch (EmptyLibraryException e) {
             fail();
@@ -150,7 +150,7 @@ public class LibraryTest {
             System.out.println("that's not in the library!");
         } finally {
             File deleteViewTest = new File("./data/VIEW_STORY_TEST.txt");
-//            assertTrue(deleteViewTest.delete());
+            assertFalse(deleteViewTest.delete());
         }
     }
 

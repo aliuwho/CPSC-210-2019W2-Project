@@ -1,11 +1,11 @@
 package model;
 
 public class WritingPrompt {
-    private String prompt;
+    private final String prompt;
     private String noun1;
     private String noun2;
-    private String verb = selectVerb();
-    private String location = selectLocation();
+    private final String verb = selectVerb();
+    private final String location = selectLocation();
 
     public static final String PROMPT_START = "Here's your prompt:\nWrite about a ";
 
