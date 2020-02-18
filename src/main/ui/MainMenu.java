@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
-    private WritingDeskMenu writingDeskMenu;
-    private PetRoomMenu petRoomMenu;
+    //    private WritingDeskMenu writingDeskMenu;
+//    private PetRoomMenu petRoomMenu;
+    //    private UserProfileMenu userProfileMenu;
     //    private Library library;
     private File file;
     private Saveable saveable;
@@ -25,17 +26,9 @@ public class MainMenu extends Menu {
         setInput(input);
         System.out.println("What's your name?");
         this.username = input.next();
-        file = new File("./data/" + username + ".json");
+        this.file = new File("./data/" + username + ".json");
         try {
-            if (file.length() == 0) {
-                saveable = new Saveable(file.getPath(), username);
-            } else {
-                if (file.createNewFile()) {
-                    saveable = new Saveable(file.getPath(), username);
-                } else {
-                    saveable = new Saveable(file.getPath());
-                }
-            }
+            setFile();
         } catch (IOException e) {
             System.out.println("An error occurred! Please quit and report the following:");
             e.printStackTrace();
@@ -44,28 +37,47 @@ public class MainMenu extends Menu {
             // add ability to delete that file entirely or create new user
         }
 
-        writingDeskMenu = new WritingDeskMenu(saveable);
-        writingDeskMenu.setInput(input);
+//        writingDeskMenu = new WritingDeskMenu(saveable);
+//        writingDeskMenu.setInput(input);
+//
+//        petRoomMenu = new PetRoomMenu();
+//        petRoomMenu.setUsername(username);
+//        petRoomMenu.setInput(input);
 
-        petRoomMenu = new PetRoomMenu();
-        petRoomMenu.setUsername(username);
-        petRoomMenu.setInput(input);
+    }
 
+    private void setFile() throws IOException, ParseException {
+        if (file.length() == 0) {
+            saveable = new Saveable(file.getPath(), username);
+        } else {
+            if (file.createNewFile()) {
+                saveable = new Saveable(file.getPath(), username);
+            } else {
+                saveable = new Saveable(file.getPath());
+            }
+        }
     }
 
     // EFFECTS: processes user command wrt Main Menu
     @Override
     public void processCommand(String command) {
         switch (command) {
+            case "u":
+//                userProfileMenu.runApp();
+                System.out.println("You have " + saveable.getPoints() + " points! Good job.");
+                break;
             case "w":
+                WritingDeskMenu writingDeskMenu = new WritingDeskMenu(saveable);
+                writingDeskMenu.setInput(input);
                 writingDeskMenu.runApp();
                 break;
             case "p":
+                PetRoomMenu petRoomMenu = new PetRoomMenu();
+                petRoomMenu.setUsername(username);
+                petRoomMenu.setInput(input);
+
                 petRoomMenu.runApp();
                 break;
-           /* case "a":
-                notReady();
-                break;*/
             case "4":
                 ConnectFourMenu c4 = new ConnectFourMenu();
                 break;
@@ -80,9 +92,9 @@ public class MainMenu extends Menu {
     @Override
     protected void displayMenu() {
         super.displayMenu();
+        System.out.println("\tu -> User profile");
         System.out.println("\tw -> Writing Desk (recommended for 8 years old or older)");
         System.out.println("\tp -> Pet Care");
-        //System.out.println("\ta -> Avatar Customization (not ready yet!)");
         //System.out.println("\t4 -> Play Connect4");
         System.out.println("\tq -> Quit");
 

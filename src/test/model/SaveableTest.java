@@ -15,17 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class SaveableTest {
-    private File starter1;
     private File file1;
 
-    private File starter2;
     private File file2;
 
     @BeforeEach
     public void runBefore() {
         try {
             file1 = new File("./data/TEST_elib_nzpts.json");
-            starter1 = new File("./data/starters/STARTER_emptylib_nonzeropts.json");
+            File starter1 = new File("./data/starters/STARTER_emptylib_nonzeropts.json");
             FileWriter fw = new FileWriter(file1);
 
             JSONParser jsonParser = new JSONParser();
@@ -41,7 +39,7 @@ public class SaveableTest {
 
         try {
             file2 = new File("./data/TEST_nelib_nzpts.json");
-            starter2 = new File("./data/starters/STARTER_nonemptylib_nonzeropts.json");
+            File starter2 = new File("./data/starters/STARTER_nonemptylib_nonzeropts.json");
             FileWriter fw = new FileWriter(file2);
 
             JSONParser jsonParser = new JSONParser();

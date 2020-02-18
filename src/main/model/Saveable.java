@@ -1,7 +1,6 @@
 package model;
 
 import model.animals.Animal;
-import model.exceptions.StoryNameDuplicateException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 public class Saveable {
 
-    private int points;
+    private long points;
     private String name;
     private Library library;
     //    private ArrayList<Animal> pets;
@@ -40,8 +39,7 @@ public class Saveable {
         JSONObject temp = (JSONObject) obj;
 
         this.name = (String) temp.get("name");
-//        this.points = (long) temp.get("points");
-        this.points = 0;
+        this.points = (long) temp.get("points");
         JSONArray lib = (JSONArray) temp.get("library");
         this.library = toLibrary(lib);
         this.pet = null;
@@ -57,12 +55,14 @@ public class Saveable {
         this.name = name;
     }
 
-    public int getPoints() {
+    public long getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    // MODIFIES: this
+    // EFFECTS: adds amount to points
+    public void addPoints(int amount) {
+        this.points += amount;
     }
 
     public Library getLibrary() {
@@ -81,7 +81,7 @@ public class Saveable {
     public void write() throws IOException {
         JSONObject profile = new JSONObject();
         profile.put("name", name);
-        profile.put("points", (long) points);
+        profile.put("points", points);
         JSONArray libraryObj = libToJsonArray(library);
         profile.put("library", libraryObj);
         FileWriter fw = new FileWriter(file.getPath(), false);
@@ -92,6 +92,7 @@ public class Saveable {
     // EFFECTS: transforms Library into a JSONArray
     public JSONArray libToJsonArray(Library library) {
         JSONArray jarr = new JSONArray();
+//        ArrayList<JSONObject> jarr = new ArrayList<>();
         for (Story s : library.getStoryList()) {
             jarr.add(storyToJsonObj(s));
         }
@@ -119,15 +120,6 @@ public class Saveable {
 
     // EFFECTS: transforms parsed JSONObject into a Story
     private Story toStory(JSONObject o) {
-        try {
-            Story s = new Story((String) o.get("name"), (String) o.get("path"));
-            return s;
-        } catch (StoryNameDuplicateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("io");
-            e.printStackTrace();
-        }
-        return null;
+        return new Story((String) o.get("name"), (String) o.get("path"));
     }
 }

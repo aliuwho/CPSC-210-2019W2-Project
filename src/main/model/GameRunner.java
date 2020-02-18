@@ -1,17 +1,15 @@
 package model;
 
-import java.util.ArrayList;
-
 public class GameRunner {
-    private ArrayList<String> players;
+//    private ArrayList<String> players;
 
     public GameRunner() {
-        players = new ArrayList<>();
+//        players = new ArrayList<>();
     }
 
-    public void runGame() {
-        
-    }
+    /*public void runGame() {
 
-    ;
+    }*/
+
+
 }

@@ -6,7 +6,6 @@ import model.Story;
 import model.WritingPrompt;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
-import model.exceptions.StoryNameDuplicateException;
 
 import java.io.IOException;
 
@@ -81,19 +80,11 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: creates a new story with a name
     private void createStory(Library l) {
-        try {
-            System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
-            String storyName = input.next();
-            Story story = new Story(storyName, "./data/" + username + "_" + storyName + ".txt");
-            System.out.println("Alright, your story will be called " + story.getName() + ".");
-            writeStory(story, l);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("An error occurred.");
-        } catch (StoryNameDuplicateException e) {
-            System.out.println("That name is already being used!");
-            createStory(l);
-        }
+        System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
+        String storyName = input.next();
+        Story story = new Story(storyName, "./data/" + username + "_" + storyName + ".txt");
+        System.out.println("Alright, your story will be called " + story.getName() + ".");
+        writeStory(story, l);
     }
 
     // MODIFIES: story
@@ -113,7 +104,7 @@ public class WritingDeskMenu extends Menu {
                 }
                 int num = substance.split(" |\n").length;
                 System.out.println("You wrote " + (num - 1) + " words. " + story.getName() + " has been saved!");
-                saveable.setPoints((int) (saveable.getPoints() + num - 1));
+                saveable.addPoints(num - 1);
                 addStory(l, story);
                 writing = false;
             } else {

@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.StoryNameDuplicateException;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +15,7 @@ public class Story {
     // EFFECTS: if file with name already exists, throws StoryNameDuplicateException;
     //          otherwise, if file cannot be read, throws IOException;
     //          otherwise, creates a blank story called name
-    public Story(String name, String path) throws StoryNameDuplicateException, IOException {
+    public Story(String name, String path) {
 //        storyObj = new JSONObject();
 //        text = new JSONArray();
 //        this.storyFile = storyFile;
@@ -46,7 +44,7 @@ public class Story {
             this.name = "error";
             this.path = "";
             throw new StoryNameDuplicateException();
-            // TODO: remove storyname duplicate from story constructor
+            // TO-DO: remove storyname duplicate from story constructor
         }*/
     }
 
