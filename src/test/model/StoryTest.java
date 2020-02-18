@@ -1,6 +1,5 @@
 package model;
 
-import model.exceptions.StoryNameDuplicateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +12,8 @@ public class StoryTest {
     private static Story story2;
     private static final String STORY1_PATH = "./data/TEST_FILE_STORY1.txt";
     private static final String STORY2_PATH = "./data/TEST_FILE_STORY2.txt";
-    private static final String STORY3_PATH = "./data/TEST_FILE_STORY3.txt";
-    private static final String STORY4_PATH = "./data/TEST_FILE_STORY4.txt";
+    // --Commented out by Inspection (2/18/20, 10:05 AM):private static final String STORY3_PATH = "./data/TEST_FILE_STORY3.txt";
+    // --Commented out by Inspection (2/18/20, 10:05 AM):private static final String STORY4_PATH = "./data/TEST_FILE_STORY4.txt";
 
     // NOTE: Due to file appending, test files must be deleted before running tests.
     @BeforeEach
@@ -46,7 +45,7 @@ public class StoryTest {
 
     @Test
     public void testConstructorNoException() {
-        File file = new File("./data/TEST_FILE_NO_EXCEPTION.txt");
+        //File file = new File("./data/TEST_FILE_NO_EXCEPTION.txt");
         /*try {
             if (!file.createNewFile()) {
                 assertTrue(file.delete());
@@ -55,8 +54,8 @@ public class StoryTest {
             e.printStackTrace();
         }*/
         Story testStory = new Story("TEST_FILE_NO_EXCEPTION", "./data/TEST_FILE_NO_EXCEPTION.txt");
-        assertEquals("TEST_FILE_NO_EXCEPTION",testStory.getName());
-        assertEquals("./data/TEST_FILE_NO_EXCEPTION.txt",testStory.getPath());
+        assertEquals("TEST_FILE_NO_EXCEPTION", testStory.getName());
+        assertEquals("./data/TEST_FILE_NO_EXCEPTION.txt", testStory.getPath());
     }
 
 //    @Test
@@ -91,6 +90,7 @@ public class StoryTest {
             FileInputStream in = new FileInputStream(s3.getPath());
             java.nio.channels.FileLock lock = in.getChannel().lock();
             s3.write("heeho");
+            lock.close();
         } catch (Exception e) {
             System.out.println("error!!!");
         }

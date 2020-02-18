@@ -81,9 +81,9 @@ public abstract class Menu {
     // EFFECTS: says farewell to user
     protected abstract void farewell();
 
-    // EFFECTS: informs user that option is not available
-    public void notReady() {
-        System.out.println("That option isn't available yet!");
-    }
+//    // EFFECTS: informs user that option is not available
+//    public void notReady() {
+//        System.out.println("That option isn't available yet!");
+//    }
 
 }

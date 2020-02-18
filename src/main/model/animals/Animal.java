@@ -6,7 +6,7 @@ import model.exceptions.TiredException;
 
 public abstract class Animal {
     protected boolean hungry;
-    protected String name;
+    protected final String name;
     protected boolean tired;
 
     // EFFECTS: creates a new animal with a name which is:

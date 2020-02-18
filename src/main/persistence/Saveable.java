@@ -52,10 +52,12 @@ public class Saveable {
         return name;
     }
 
-    //TODO: add ability to change username?
-    public void setName(String name) {
-        this.name = name;
-    }
+// --Commented out by Inspection START (2/18/20, 10:04 AM):
+//    //TODO: add ability to change username?
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+// --Commented out by Inspection STOP (2/18/20, 10:04 AM)
 
     public long getPoints() {
         return points;
@@ -71,13 +73,13 @@ public class Saveable {
         return library;
     }
 
-    public Animal getPet() {
-        return pet;
-    }
-
-    public File getFile() {
-        return file;
-    }
+//    public Animal getPet() {
+//        return pet;
+//    }
+//
+//    public File getFile() {
+//        return file;
+//    }
 
     // EFFECTS: writes JSON file using Saveable data
     public void write() throws IOException {
@@ -93,12 +95,12 @@ public class Saveable {
 
     // EFFECTS: transforms Library into a JSONArray
     public JSONArray libToJsonArray(Library library) {
-        JSONArray jarr = new JSONArray();
+        JSONArray array = new JSONArray();
 //        ArrayList<JSONObject> jarr = new ArrayList<>();
         for (Story s : library.getStoryList()) {
-            jarr.add(storyToJsonObj(s));
+            array.add(storyToJsonObj(s));
         }
-        return jarr;
+        return array;
 
     }
 
@@ -113,10 +115,15 @@ public class Saveable {
     // EFFECTS: transforms a parsed JSONArray into a library
     private Library toLibrary(JSONArray lib) {
         Library temp = new Library();
-        for (Object o : lib) {
-            Story s = toStory((JSONObject) o);
+        for (Object value : lib) {
+            JSONObject o = (JSONObject) value;
+            Story s = toStory(o);
             temp.addStory(s);
         }
+//        for (JSONObject o : lib) {
+//            Story s = toStory(o);
+//            temp.addStory(s);
+//        }
         return temp;
     }
 

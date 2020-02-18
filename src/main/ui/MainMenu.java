@@ -1,7 +1,7 @@
 package ui;
 
-import persistence.Saveable;
 import org.json.simple.parser.ParseException;
+import persistence.Saveable;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +12,13 @@ public class MainMenu extends Menu {
 //    private PetRoomMenu petRoomMenu;
     //    private UserProfileMenu userProfileMenu;
     //    private Library library;
-    private File file;
+    private final File file;
     private Saveable saveable;
 
-    // EFFECTS: returns username
-    public String getUsername() {
-        return username;
-    }
+//    // EFFECTS: returns username
+//    public String getUsername() {
+//        return username;
+//    }
 
     // EFFECTS: runs the Main Menu application
     public MainMenu(Scanner input) {
@@ -79,7 +79,7 @@ public class MainMenu extends Menu {
                 petRoomMenu.runApp();
                 break;
             case "4":
-                ConnectFourMenu c4 = new ConnectFourMenu();
+                //  ConnectFourMenu c4 = new ConnectFourMenu();
                 break;
             default:
                 System.out.println("Selection not valid...");

@@ -6,8 +6,8 @@ import model.Story;
 import java.io.File;
 
 public class StoryAddMenu extends Menu {
-    private Library library;
-    private Story story;
+    private final Library library;
+    private final Story story;
 
     // EFFECTS: creates a new StoryAdd menu with a story
     public StoryAddMenu(Story story, Library library) {
@@ -55,8 +55,10 @@ public class StoryAddMenu extends Menu {
 //        System.out.println("\tq -> Don't add my story to my library");
     }
 
-    // EFFECTS: sets the library as l
-    public void setLibrary(Library l) {
-        library = l;
-    }
+// --Commented out by Inspection START (2/18/20, 10:04 AM):
+//    // EFFECTS: sets the library as l
+//    public void setLibrary(Library l) {
+//        library = l;
+//    }
+// --Commented out by Inspection STOP (2/18/20, 10:04 AM)
 }

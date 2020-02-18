@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Library {
-    private ArrayList<Story> stories;
+    private final ArrayList<Story> stories;
     //private File libraryFile;
     // private JSONArray libraryObj = new JSONArray();
 
@@ -71,7 +71,7 @@ public class Library {
     //          else returns the text;
     public StringBuilder getStoryText(Story story) throws EmptyLibraryException, NotAStoryException, IOException {
         StringBuilder fullText = new StringBuilder();
-        if (size() == 0) {
+        if (getSize() == 0) {
             throw new EmptyLibraryException();
         } else if (findStory(story.getName()) != null) {
 
@@ -108,7 +108,7 @@ public class Library {
     }
 
     // EFFECTS: returns number of stories in library
-    public int size() {
+    public int getSize() {
         return stories.size();
     }
 
