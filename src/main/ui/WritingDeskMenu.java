@@ -1,29 +1,26 @@
 package ui;
 
 import model.Library;
+import model.Saveable;
 import model.Story;
 import model.WritingPrompt;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
 import model.exceptions.StoryNameDuplicateException;
-import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 
 public class WritingDeskMenu extends Menu {
+    private Saveable saveable;
     private Library library;
-    private File file;
+//    private File file;
 
     // EFFECTS: creates new WritingDesk app
-    public WritingDeskMenu(File file) {
+    public WritingDeskMenu(Saveable s) {
         setName("Writing Desk");
-        this.file = file;
-        try {
-            this.library = new Library(file);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        saveable = s;
+        this.library = s.getLibrary();
+        this.username = s.getName();
     }
 
     // EFFECTS: prints out farewell for Writing Desk
@@ -87,7 +84,7 @@ public class WritingDeskMenu extends Menu {
         try {
             System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
             String storyName = input.next();
-            Story story = new Story(storyName, file.getPath());
+            Story story = new Story(storyName, "./data/" + username + "_" + storyName + ".txt");
             System.out.println("Alright, your story will be called " + story.getName() + ".");
             writeStory(story, l);
         } catch (IOException e) {
@@ -116,6 +113,7 @@ public class WritingDeskMenu extends Menu {
                 }
                 int num = substance.split(" |\n").length;
                 System.out.println("You wrote " + (num - 1) + " words. " + story.getName() + " has been saved!");
+                saveable.setPoints((int) (saveable.getPoints() + num - 1));
                 addStory(l, story);
                 writing = false;
             } else {
@@ -127,14 +125,14 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: runs Story Add option
     public void addStory(Library l, Story story) {
-        StoryAddMenu storyAddMenu = new StoryAddMenu(story, file);
+        StoryAddMenu storyAddMenu = new StoryAddMenu(story, l);
         storyAddMenu.setInput(input);
         storyAddMenu.setUsername(username);
         storyAddMenu.runApp();
     }
 
-    // EFFECTS: sets the library as l
-    public void setLibrary(Library l) {
-        library = l;
-    }
+//    // EFFECTS: sets the library as l
+//    public void setLibrary(Library l) {
+//        library = l;
+//    }
 }

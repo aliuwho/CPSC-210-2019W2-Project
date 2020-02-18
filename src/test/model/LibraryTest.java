@@ -3,7 +3,6 @@ package model;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
 import model.exceptions.StoryNameDuplicateException;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +26,18 @@ public class LibraryTest {
     @BeforeEach
     public void runBefore() {
         try {
-            library = new Library(new File("./data/TEST_FILE.json"));
-
+            /*File file = new File("./data/STARTER_emptylib_nonzeropts.json");
+            FileWriter fw = new FileWriter(file);
+            File file2 = new File("./data/STARTER_emptylib_nonzeropts.json");
+            JSONParser jsonParser = new JSONParser();
+            FileReader fileReader = new FileReader(file2);
+            Object obj = jsonParser.parse(fileReader);
+            JSONObject profile = (JSONObject) obj;
+            fw.write(profile.toJSONString());
+            fw.close();
+            library = new Library(file);
+*/
+            library = new Library();
             File f1 = new File(STORY1_PATH);
             if (!f1.createNewFile()) {
                 assertTrue(f1.delete());
@@ -49,9 +58,9 @@ public class LibraryTest {
 
 
             story1 = new Story("STORY1", STORY1_PATH);
-            story2 = new Story("STORY2",STORY2_PATH);
-            story3 = new Story("STORY3",STORY3_PATH);
-            story4 = new Story("STORY4",STORY4_PATH);
+            story2 = new Story("STORY2", STORY2_PATH);
+            story3 = new Story("STORY3", STORY3_PATH);
+            story4 = new Story("STORY4", STORY4_PATH);
         } catch (Exception e) {
             fail();
             e.printStackTrace();
@@ -96,8 +105,12 @@ public class LibraryTest {
         try {
             library.addStory(story4);
             System.out.println(library.getStoryText(story4));
-        } catch (EmptyLibraryException | NotAStoryException | IOException e) {
+        } catch (EmptyLibraryException e) {
             fail();
+        } catch (NotAStoryException e) {
+            fail("notstory");
+        } catch (IOException e) {
+            fail("io");
         }
     }
 
@@ -105,8 +118,9 @@ public class LibraryTest {
     public void testViewStoryEmptyLibraryException() {
         Story story;
         try {
-            story = new Story("VIEW_STORY_TEST","./data/VIEW_STORY_TEST.txt");
+            story = new Story("VIEW_STORY_TEST", "./data/VIEW_STORY_TEST.txt");
             library.getStoryText(story);
+            fail();
         } catch (StoryNameDuplicateException | NotAStoryException | IOException e) {
             fail();
         } catch (EmptyLibraryException e) {
@@ -123,7 +137,7 @@ public class LibraryTest {
         try {
             library.addStory(story1);
             library.addStory(story2);
-            story = new Story("VIEW_STORY_TEST","./data/VIEW_STORY_TEST.txt");
+            story = new Story("VIEW_STORY_TEST", "./data/VIEW_STORY_TEST.txt");
             library.getStoryText(story);
         } catch (StoryNameDuplicateException | IOException | EmptyLibraryException e) {
             fail();
@@ -137,15 +151,11 @@ public class LibraryTest {
 
     @Test
     public void testFindExistingStory() {
-        try {
-            library.addStory(story4);
-            library.addStory(story2);
-            library.addStory(story1);
-            library.addStory(story3);
-            assertEquals(story1.getName(), library.findStory("STORY1").getName());
-        } catch (Exception e) {
-            fail();
-        }
+        library.addStory(story4);
+        library.addStory(story2);
+        library.addStory(story1);
+        library.addStory(story3);
+        assertEquals(story1.getName(), library.findStory("STORY1").getName());
     }
 
     @Test
@@ -161,8 +171,10 @@ public class LibraryTest {
             StringBuilder sb = new StringBuilder();
             sb.append("this is a test!\n");
             assertEquals(sb.substring(0), library.getStoryText(story1).substring(0));
-        } catch (EmptyLibraryException | NotAStoryException | IOException e) {
+        } catch (EmptyLibraryException | IOException e) {
             fail();
+        } catch (NotAStoryException e) {
+            fail("not a story");
         }
 
     }
@@ -209,7 +221,7 @@ public class LibraryTest {
                 assertTrue(testFile.delete());
             }
 
-            Story testStory = new Story("TEST_FILE_READ_EXCEPTION","./data/TEST_FILE_READ_EXCEPTION.txt");
+            Story testStory = new Story("TEST_FILE_READ_EXCEPTION", "./data/TEST_FILE_READ_EXCEPTION.txt");
             testStory.write("this is a test!");
             assertTrue(testFile.setReadable(false));
 

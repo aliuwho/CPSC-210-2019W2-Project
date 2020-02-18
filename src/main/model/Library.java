@@ -2,37 +2,38 @@ package model;
 
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Library {
-    //    private ArrayList<Story> stories;
-    private File libraryFile;
-    private JSONArray libraryObj = new JSONArray();
+    private ArrayList<Story> stories;
+    //private File libraryFile;
+    // private JSONArray libraryObj = new JSONArray();
 
     // EFFECTS: creates a library from JSON file
-    public Library(File libraryFile) throws IOException, ParseException {
-        //stories = new ArrayList<>();
-        this.libraryFile = libraryFile;
+    public Library() {
+        stories = new ArrayList<>();
+        //this.libraryFile = libraryFile;
+/*
 
         JSONParser jsonParser = new JSONParser();
         FileReader fileReader = new FileReader(libraryFile);
         Object obj = jsonParser.parse(fileReader);
-        JSONArray profile = (JSONArray) obj;
-        libraryObj = (JSONArray) profile.get(Profile.keys.get("LIBRARY"));
+        JSONObject profile = (JSONObject) obj;
+        libraryObj = (JSONArray) profile.get("library");
+*/
 
     }
 
     // MODIFIES: this
     // EFFECTS; adds story to library
     public void addStory(Story s) {
-
+/*
         try {
-            FileWriter file = new FileWriter(libraryFile);
+            FileWriter file = new FileWriter(libraryFile, true);
             file.write(libraryObj.toJSONString());
             JSONObject story = new JSONObject();
             story.put("name", s.getName());
@@ -42,22 +43,24 @@ public class Library {
 
         } catch (IOException e) {
             System.out.println("IO Exception occurred");
-        }
-//        stories.add(s);
+        }*/
+        stories.add(s);
     }
 
     // EFFECTS: if no stories in library, throws EmptyLibraryException;
     //          else, lists stories in library
     public StringBuilder getStories() throws EmptyLibraryException {
         StringBuilder storyList = new StringBuilder();
-        if (libraryObj.isEmpty()) {
+        if (isEmpty()) {
             throw new EmptyLibraryException();
         } else {
-            for (Object s : libraryObj) {
+            /*for (Object s : libraryObj) {
                 JSONObject story = (JSONObject) s;
                 String storyName = (String) story.get("name");
                 storyList.append("\t- ").append(storyName);
-//                storyList.append("\t- ").append(s.getName());
+            }*/
+            for (Story s : stories) {
+                storyList.append("\t- ").append(s.getName());
             }
         }
         return storyList;
@@ -85,21 +88,37 @@ public class Library {
 
     // EFFECTS: finds story in library witch matching title; returns null otherwise
     public Story findStory(String title) {
-        for (Object o : libraryObj) {
-            JSONObject story = (JSONObject) o;
-            if (story.get("name").equals(title)) {
-                try {
-                    return new Story((String) story.get("name"), (String) story.get("path"));
-                } catch (Exception e) {
-                    return null;
-                }
+        for (Story story : stories) {
+            if (story.getName().equals(title)) {
+                return story;
             }
         }
         return null;
+//        for (Object o : libraryObj) {
+//            JSONObject story = (JSONObject) o;
+//            if (story.get("name").equals(title)) {
+//                try {
+//                    return new Story((String) story.get("name"), (String) story.get("path"));
+//                } catch (Exception e) {
+//                    return null;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     // EFFECTS: returns number of stories in library
     public int size() {
         return stories.size();
+    }
+
+    // EFFECTS: returns true if there are no stories in library and false otherwise
+    public boolean isEmpty() {
+        return stories.size() == 0;
+    }
+
+    // EFFECTS: returns a list of Stories
+    public ArrayList<Story> getStoryList() {
+        return stories;
     }
 }

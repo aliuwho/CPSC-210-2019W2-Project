@@ -12,14 +12,10 @@ public class StoryAddMenu extends Menu {
     private Story story;
 
     // EFFECTS: creates a new StoryAdd menu with a story
-    public StoryAddMenu(Story story, File file) {
+    public StoryAddMenu(Story story, Library library) {
         setName("StoryAdd Menu");
         this.story = story;
-        try {
-            this.library = new Library(file);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
+        this.library = library;
     }
 
     // EFFECTS: welcomes user

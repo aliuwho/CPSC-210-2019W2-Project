@@ -1,0 +1,15 @@
+{
+  "pets": [],
+  "library": [
+    {
+      "name": "STORY1",
+      "path": ".\/data\/TEST_FILE_STORY1.txt"
+    },
+    {
+      "name": "STORY2",
+      "path": ".\/data\/TEST_FILE_STORY2.txt"
+    }
+  ],
+  "name": "TEST_FILE",
+  "points": 0
+}
