@@ -53,7 +53,7 @@ public class Saveable {
     }
 
 // --Commented out by Inspection START (2/18/20, 10:04 AM):
-//    //TODO: add ability to change username?
+//    //TO-DO: add ability to change username?
 //    public void setName(String name) {
 //        this.name = name;
 //    }

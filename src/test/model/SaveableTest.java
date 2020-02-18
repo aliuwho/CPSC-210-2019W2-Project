@@ -92,4 +92,18 @@ public class SaveableTest {
         }
 
     }
+
+    @Test
+    public void testAddPoints() {
+        try {
+            Saveable s = new Saveable(file2.getPath());
+            assertEquals(69, s.getPoints());
+            s.addPoints(4200);
+            assertEquals(4269, s.getPoints());
+        } catch (IOException | ParseException e) {
+            fail("io/parse");
+            e.printStackTrace();
+        }
+
+    }
 }

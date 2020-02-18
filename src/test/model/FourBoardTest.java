@@ -120,7 +120,7 @@ public class FourBoardTest {
     }
 
     @Test
-    public void testIsFourDiagonal() {
+    public void testIsFourRightDiagonal() {
         try {
             board.addChip(RED, 0);
             board.addChip(BLUE, 1);
@@ -136,6 +136,29 @@ public class FourBoardTest {
             board.addChip(BLUE, 3);
             board.addChip(RED, 3);
             board.addChip(RED, 2);
+        } catch (ColumnFullException e) {
+            fail();
+        }
+        assertTrue(board.isFourDiagonal());
+    }
+
+    @Test
+    public void testIsFourLeftDiagonal() {
+        try {
+            board.addChip(RED, 2);
+            board.addChip(BLUE, 2);
+            board.addChip(RED, 2);
+            board.addChip(RED, 2);
+
+            board.addChip(RED, 2);
+            board.addChip(RED, 3);
+            board.addChip(BLUE, 3);
+            board.addChip(RED, 1);
+
+            board.addChip(RED, 3);
+            board.addChip(BLUE, 4);
+            board.addChip(RED, 4);
+            board.addChip(RED, 5);
         } catch (ColumnFullException e) {
             fail();
         }
