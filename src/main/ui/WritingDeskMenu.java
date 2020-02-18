@@ -6,15 +6,24 @@ import model.WritingPrompt;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
 import model.exceptions.StoryNameDuplicateException;
+import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 
 public class WritingDeskMenu extends Menu {
     private Library library;
+    private File file;
 
     // EFFECTS: creates new WritingDesk app
-    public WritingDeskMenu() {
+    public WritingDeskMenu(File file) {
         setName("Writing Desk");
+        this.file = file;
+        try {
+            this.library = new Library(file);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // EFFECTS: prints out farewell for Writing Desk
@@ -78,7 +87,7 @@ public class WritingDeskMenu extends Menu {
         try {
             System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
             String storyName = input.next();
-            Story story = new Story(storyName);
+            Story story = new Story(storyName, file.getPath());
             System.out.println("Alright, your story will be called " + story.getName() + ".");
             writeStory(story, l);
         } catch (IOException e) {
@@ -118,8 +127,7 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: runs Story Add option
     public void addStory(Library l, Story story) {
-        StoryAddMenu storyAddMenu = new StoryAddMenu(story);
-        storyAddMenu.setLibrary(l);
+        StoryAddMenu storyAddMenu = new StoryAddMenu(story, file);
         storyAddMenu.setInput(input);
         storyAddMenu.setUsername(username);
         storyAddMenu.runApp();

@@ -2,35 +2,62 @@ package model;
 
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 
 public class Library {
-    private ArrayList<Story> stories;
+    //    private ArrayList<Story> stories;
+    private File libraryFile;
+    private JSONArray libraryObj = new JSONArray();
 
-    // EFFECTS: creates an empty library
-    public Library() {
-        stories = new ArrayList<>();
+    // EFFECTS: creates a library from JSON file
+    public Library(File libraryFile) throws IOException, ParseException {
+        //stories = new ArrayList<>();
+        this.libraryFile = libraryFile;
+
+        JSONParser jsonParser = new JSONParser();
+        FileReader fileReader = new FileReader(libraryFile);
+        Object obj = jsonParser.parse(fileReader);
+        JSONArray profile = (JSONArray) obj;
+        libraryObj = (JSONArray) profile.get(Profile.keys.get("LIBRARY"));
+
     }
 
     // MODIFIES: this
     // EFFECTS; adds story to library
     public void addStory(Story s) {
-        stories.add(s);
+
+        try {
+            FileWriter file = new FileWriter(libraryFile);
+            file.write(libraryObj.toJSONString());
+            JSONObject story = new JSONObject();
+            story.put("name", s.getName());
+            story.put("path", s.getPath());
+            libraryObj.add(story);
+            file.close();
+
+        } catch (IOException e) {
+            System.out.println("IO Exception occurred");
+        }
+//        stories.add(s);
     }
 
     // EFFECTS: if no stories in library, throws EmptyLibraryException;
     //          else, lists stories in library
     public StringBuilder getStories() throws EmptyLibraryException {
         StringBuilder storyList = new StringBuilder();
-        if (stories.size() == 0) {
+        if (libraryObj.isEmpty()) {
             throw new EmptyLibraryException();
         } else {
-            for (Story s : stories) {
-                storyList.append("\t- ").append(s.getName());
+            for (Object s : libraryObj) {
+                JSONObject story = (JSONObject) s;
+                String storyName = (String) story.get("name");
+                storyList.append("\t- ").append(storyName);
+//                storyList.append("\t- ").append(s.getName());
             }
         }
         return storyList;
@@ -43,7 +70,7 @@ public class Library {
         StringBuilder fullText = new StringBuilder();
         if (size() == 0) {
             throw new EmptyLibraryException();
-        } else if (stories.contains(story)) {
+        } else if (findStory(story.getName()) != null) {
 
             BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
             String line;
@@ -56,11 +83,16 @@ public class Library {
         }
     }
 
-    // EFFECTS: finds story in library witch matching title; returns null if story is not in library
+    // EFFECTS: finds story in library witch matching title; returns null otherwise
     public Story findStory(String title) {
-        for (Story story : stories) {
-            if (story.getName().equals(title)) {
-                return story;
+        for (Object o : libraryObj) {
+            JSONObject story = (JSONObject) o;
+            if (story.get("name").equals(title)) {
+                try {
+                    return new Story((String) story.get("name"), (String) story.get("path"));
+                } catch (Exception e) {
+                    return null;
+                }
             }
         }
         return null;

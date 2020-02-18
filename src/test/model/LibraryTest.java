@@ -3,6 +3,7 @@ package model;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
 import model.exceptions.StoryNameDuplicateException;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,35 +18,40 @@ public class LibraryTest {
     private Story story2;
     private Story story3;
     private Story story4;
+    private static final String STORY1_PATH = "./data/TEST_FILE_STORY1.txt";
+    private static final String STORY2_PATH = "./data/TEST_FILE_STORY2.txt";
+    private static final String STORY3_PATH = "./data/TEST_FILE_STORY3.txt";
+    private static final String STORY4_PATH = "./data/TEST_FILE_STORY4.txt";
 
     // NOTE: Due to file appending, test files must be deleted before running each test.
     @BeforeEach
     public void runBefore() {
-        library = new Library();
         try {
-            File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
+            library = new Library(new File("./data/TEST_FILE.json"));
+
+            File f1 = new File(STORY1_PATH);
             if (!f1.createNewFile()) {
                 assertTrue(f1.delete());
             }
 
-            File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
+            File f2 = new File(STORY2_PATH);
             if (!f2.createNewFile()) {
                 assertTrue(f2.delete());
             }
-            File f3 = new File("./data/TEST_FILE_FOR_STORY3.txt");
+            File f3 = new File(STORY3_PATH);
             if (!f3.createNewFile()) {
                 assertTrue(f3.delete());
             }
-            File f4 = new File("./data/TEST_FILE_FOR_STORY4.txt");
+            File f4 = new File(STORY4_PATH);
             if (!f4.createNewFile()) {
                 assertTrue(f4.delete());
             }
 
 
-            story1 = new Story("TEST_FILE_FOR_STORY1");
-            story2 = new Story("TEST_FILE_FOR_STORY2");
-            story3 = new Story("TEST_FILE_FOR_STORY3");
-            story4 = new Story("TEST_FILE_FOR_STORY4");
+            story1 = new Story("STORY1", STORY1_PATH);
+            story2 = new Story("STORY2",STORY2_PATH);
+            story3 = new Story("STORY3",STORY3_PATH);
+            story4 = new Story("STORY4",STORY4_PATH);
         } catch (Exception e) {
             fail();
             e.printStackTrace();
@@ -99,7 +105,7 @@ public class LibraryTest {
     public void testViewStoryEmptyLibraryException() {
         Story story;
         try {
-            story = new Story("VIEW_STORY_TEST");
+            story = new Story("VIEW_STORY_TEST","./data/VIEW_STORY_TEST.txt");
             library.getStoryText(story);
         } catch (StoryNameDuplicateException | NotAStoryException | IOException e) {
             fail();
@@ -117,7 +123,7 @@ public class LibraryTest {
         try {
             library.addStory(story1);
             library.addStory(story2);
-            story = new Story("VIEW_STORY_TEST");
+            story = new Story("VIEW_STORY_TEST","./data/VIEW_STORY_TEST.txt");
             library.getStoryText(story);
         } catch (StoryNameDuplicateException | IOException | EmptyLibraryException e) {
             fail();
@@ -136,7 +142,7 @@ public class LibraryTest {
             library.addStory(story2);
             library.addStory(story1);
             library.addStory(story3);
-            assertEquals(story1.getName(), library.findStory("TEST_FILE_FOR_STORY1").getName());
+            assertEquals(story1.getName(), library.findStory("STORY1").getName());
         } catch (Exception e) {
             fail();
         }
@@ -203,7 +209,7 @@ public class LibraryTest {
                 assertTrue(testFile.delete());
             }
 
-            Story testStory = new Story("TEST_FILE_READ_EXCEPTION");
+            Story testStory = new Story("TEST_FILE_READ_EXCEPTION","./data/TEST_FILE_READ_EXCEPTION.txt");
             testStory.write("this is a test!");
             assertTrue(testFile.setReadable(false));
 

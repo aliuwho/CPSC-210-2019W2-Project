@@ -2,17 +2,24 @@ package ui;
 
 import model.Library;
 import model.Story;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.IOException;
 
 public class StoryAddMenu extends Menu {
     private Library library;
     private Story story;
 
     // EFFECTS: creates a new StoryAdd menu with a story
-    public StoryAddMenu(Story story) {
+    public StoryAddMenu(Story story, File file) {
         setName("StoryAdd Menu");
         this.story = story;
+        try {
+            this.library = new Library(file);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // EFFECTS: welcomes user

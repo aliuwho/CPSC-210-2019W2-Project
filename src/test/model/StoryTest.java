@@ -11,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StoryTest {
     private static Story story1;
     private static Story story2;
+    private static final String STORY1_PATH = "./data/TEST_FILE_STORY1.txt";
+    private static final String STORY2_PATH = "./data/TEST_FILE_STORY2.txt";
+    private static final String STORY3_PATH = "./data/TEST_FILE_STORY3.txt";
+    private static final String STORY4_PATH = "./data/TEST_FILE_STORY4.txt";
 
     // NOTE: Due to file appending, test files must be deleted before running tests.
     @BeforeEach
     public void runBefore() {
         try {
-            File f1 = new File("./data/TEST_FILE_FOR_STORY1.txt");
+            File f1 = new File(STORY1_PATH);
             if (!f1.createNewFile()) {
                 assertTrue(f1.delete());
             }
 
-            File f2 = new File("./data/TEST_FILE_FOR_STORY2.txt");
+            File f2 = new File(STORY2_PATH);
             if (!f2.createNewFile()) {
                 assertTrue(f2.delete());
             }
@@ -30,10 +34,10 @@ public class StoryTest {
             fail();
         } finally {
             try {
-                story1 = new Story("TEST_FILE_FOR_STORY1");
-                assertEquals("TEST_FILE_FOR_STORY1", story1.getName());
-                story2 = new Story("TEST_FILE_FOR_STORY2");
-                assertEquals("TEST_FILE_FOR_STORY2", story2.getName());
+                story1 = new Story("STORY1", STORY1_PATH);
+                assertEquals("STORY1", story1.getName());
+                story2 = new Story("STORY2", STORY2_PATH);
+                assertEquals("STORY2", story2.getName());
             } catch (Exception e) {
                 fail();
             }
@@ -44,14 +48,14 @@ public class StoryTest {
     public void testConstructorNoException() {
         File file = new File("./data/TEST_FILE_NO_EXCEPTION.txt");
         try {
-            if(!file.createNewFile()) {
+            if (!file.createNewFile()) {
                 assertTrue(file.delete());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            Story testStory = new Story("TEST_FILE_NO_EXCEPTION");
+            Story testStory = new Story("TEST_FILE_NO_EXCEPTION", "./data/TEST_FILE_NO_EXCEPTION.txt");
         } catch (StoryNameDuplicateException | IOException e) {
             fail();
         }
@@ -60,7 +64,7 @@ public class StoryTest {
     @Test
     public void testConstructorDuplicateName() {
         try {
-            Story story3 = new Story("TEST_FILE_FOR_STORY2");
+            Story story3 = new Story("TEST_FILE_STORY2", STORY2_PATH);
             fail();
         } catch (StoryNameDuplicateException e) {
             System.out.println("duplicate file error caught :^)");
@@ -72,7 +76,7 @@ public class StoryTest {
     @Test
     public void testConstructorException() {
         try {
-            Story s3 = new Story("./story/TEST_FILE_FOR_STORY2.txt");
+            Story s3 = new Story("testing", "./story/TEST_FILE_FOR_STORY2.txt");
             fail();
         } catch (IOException e) {
             System.out.println("ioerror! caught!");
@@ -85,7 +89,7 @@ public class StoryTest {
     public void testWriteException() {
         Story s3;
         try {
-            s3 = new Story("TEST_FILE_WRITE_EXCEPTION");
+            s3 = new Story("TEST_FILE_WRITE_EXCEPTION", "./data/TEST_FILE_WRITE_EXCEPTION.txt");
             FileInputStream in = new FileInputStream(s3.getPath());
             java.nio.channels.FileLock lock = in.getChannel().lock();
             s3.write("heeho");
