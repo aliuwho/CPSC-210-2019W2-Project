@@ -69,13 +69,13 @@ public class LibraryTest {
 
     @Test
     public void testSize() {
-        assertEquals(0, library.size());
+        assertEquals(0, library.getSize());
 
         library.addStory(story1);
-        assertEquals(1, library.size());
+        assertEquals(1, library.getSize());
 
         library.addStory(story2);
-        assertEquals(2, library.size());
+        assertEquals(2, library.getSize());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class LibraryTest {
         } catch (Exception e) {
             fail();
         }
-        assertEquals(1, library.size());
+        assertEquals(1, library.getSize());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class LibraryTest {
         } catch (Exception e) {
             fail();
         }
-        assertEquals(3, library.size());
+        assertEquals(3, library.getSize());
     }
 
     @Test

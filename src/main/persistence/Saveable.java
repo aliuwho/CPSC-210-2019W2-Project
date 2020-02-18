@@ -1,5 +1,7 @@
-package model;
+package persistence;
 
+import model.Library;
+import model.Story;
 import model.animals.Animal;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

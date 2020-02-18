@@ -47,43 +47,41 @@ public class StoryTest {
     @Test
     public void testConstructorNoException() {
         File file = new File("./data/TEST_FILE_NO_EXCEPTION.txt");
-        try {
+        /*try {
             if (!file.createNewFile()) {
                 assertTrue(file.delete());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        try {
-            Story testStory = new Story("TEST_FILE_NO_EXCEPTION", "./data/TEST_FILE_NO_EXCEPTION.txt");
-        } catch (StoryNameDuplicateException | IOException e) {
-            fail();
-        }
+        }*/
+        Story testStory = new Story("TEST_FILE_NO_EXCEPTION", "./data/TEST_FILE_NO_EXCEPTION.txt");
+        assertEquals("TEST_FILE_NO_EXCEPTION",testStory.getName());
+        assertEquals("./data/TEST_FILE_NO_EXCEPTION.txt",testStory.getPath());
     }
 
-    @Test
-    public void testConstructorDuplicateName() {
-        try {
-            Story story3 = new Story("TEST_FILE_STORY2", STORY2_PATH);
-            fail();
-        } catch (StoryNameDuplicateException e) {
-            System.out.println("duplicate file error caught :^)");
-        } catch (IOException e) {
-            fail();
-        }
-    }
+//    @Test
+//    public void testConstructorDuplicateName() {
+//        try {
+//            Story story3 = new Story("TEST_FILE_STORY2", STORY2_PATH);
+//            fail();
+//        } catch (StoryNameDuplicateException e) {
+//            System.out.println("duplicate file error caught :^)");
+//        } catch (IOException e) {
+//            fail();
+//        }
+//    }
 
-    @Test
-    public void testConstructorException() {
-        try {
-            Story s3 = new Story("testing", "./story/TEST_FILE_FOR_STORY2.txt");
-            fail();
-        } catch (IOException e) {
-            System.out.println("ioerror! caught!");
-        } catch (StoryNameDuplicateException e) {
-            fail();
-        }
-    }
+//    @Test
+//    public void testConstructorException() {
+//        try {
+//            Story s3 = new Story("testing", "./story/TEST_FILE_FOR_STORY2.txt");
+//            fail();
+//        } catch (IOException e) {
+//            System.out.println("ioerror! caught!");
+//        } catch (StoryNameDuplicateException e) {
+//            fail();
+//        }
+//    }
 
     @Test
     public void testWriteException() {

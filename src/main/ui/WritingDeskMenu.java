@@ -1,24 +1,25 @@
 package ui;
 
 import model.Library;
-import model.Saveable;
 import model.Story;
 import model.WritingPrompt;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
+import persistence.Saveable;
 
+import java.io.File;
 import java.io.IOException;
 
 public class WritingDeskMenu extends Menu {
-    private Saveable saveable;
-    private Library library;
+    private static Saveable saveable;
+    private static Library library;
 //    private File file;
 
     // EFFECTS: creates new WritingDesk app
     public WritingDeskMenu(Saveable s) {
         setName("Writing Desk");
         saveable = s;
-        this.library = s.getLibrary();
+        library = s.getLibrary();
         this.username = s.getName();
     }
 
@@ -79,10 +80,24 @@ public class WritingDeskMenu extends Menu {
     }
 
     // EFFECTS: creates a new story with a name
+    //
     private void createStory(Library l) {
         System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
         String storyName = input.next();
         Story story = new Story(storyName, "./data/" + username + "_" + storyName + ".txt");
+        File f = new File("./data/" + username + "_" + storyName + ".txt");
+        try {
+            if (f.createNewFile()) {
+                System.out.println("Alright, your story will be called " + story.getName() + ".");
+            } else if (!f.createNewFile()) {
+                System.out.println("A story with that name already exists. Overwrite? \ty-> yes\tn ->no");
+                if (input.next().equals("n")) {
+                    createStory(l);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("That wasn't a valid story name! Redirecting...");
+        }
         System.out.println("Alright, your story will be called " + story.getName() + ".");
         writeStory(story, l);
     }
@@ -122,8 +137,4 @@ public class WritingDeskMenu extends Menu {
         storyAddMenu.runApp();
     }
 
-//    // EFFECTS: sets the library as l
-//    public void setLibrary(Library l) {
-//        library = l;
-//    }
 }
