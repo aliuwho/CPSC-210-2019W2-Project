@@ -57,11 +57,19 @@ public class FourBoardTest {
             board.addChip(BLUE, 1);
             board.addChip(RED, 3);
             board.addChip(RED, 0);
+            board.addChip(RED, 0);
+            board.addChip(RED, 0);
+            board.addChip(RED, 0);
+            board.addChip(BLUE, 0);
 
             assertEquals(RED, board.getChipType(0, 0));
             assertEquals(BLUE, board.getChipType(0, 1));
             assertEquals(RED, board.getChipType(0, 3));
             assertEquals(RED, board.getChipType(1, 0));
+            assertEquals(RED, board.getChipType(2, 0));
+            assertEquals(RED, board.getChipType(3, 0));
+            assertEquals(RED, board.getChipType(4, 0));
+            assertEquals(BLUE, board.getChipType(5, 0));
         } catch (ColumnFullException e) {
             fail("unexpected column full error");
         }

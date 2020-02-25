@@ -4,14 +4,17 @@ import model.Library;
 import model.Story;
 
 import java.io.File;
+import java.util.Scanner;
 
 public class StoryAddMenu extends Menu {
     private final Library library;
     private final Story story;
 
     // EFFECTS: creates a new StoryAdd menu with a story
-    public StoryAddMenu(Story story, Library library) {
-        setName("StoryAdd Menu");
+    public StoryAddMenu(Scanner input, String username, Story story, Library library) {
+        this.input = input;
+        this.username = username;
+        setAppName("StoryAdd Menu");
         this.story = story;
         this.library = library;
     }

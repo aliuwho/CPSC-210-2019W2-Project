@@ -3,10 +3,14 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class StoryTest {
     private static Story story1;
     private static Story story2;
@@ -86,13 +90,16 @@ public class StoryTest {
     public void testWriteException() {
         Story s3;
         try {
-            s3 = new Story("TEST_FILE_WRITE_EXCEPTION", "./data/TEST_FILE_WRITE_EXCEPTION.txt");
-            FileInputStream in = new FileInputStream(s3.getPath());
-            java.nio.channels.FileLock lock = in.getChannel().lock();
+            s3 = new Story("test_file", "./data/TEST_FILE_WRITE_EXCEPTION.txt");
+//            FileInputStream in = new FileInputStream(s3.getPath());
+//            java.nio.channels.FileLock lock = in.getChannel().lock();
+            File temp = new File(s3.getPath());
+            assertTrue(temp.setWritable(false));
             s3.write("heeho");
-            lock.close();
-        } catch (Exception e) {
-            System.out.println("error!!!");
+//            lock.close();
+            fail("hmm");
+        } catch (IOException e) {
+            System.out.println("io error");
         }
     }
 

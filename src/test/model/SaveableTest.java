@@ -11,9 +11,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SaveableTest {
     private File file1;
@@ -81,15 +81,10 @@ public class SaveableTest {
 
     @Test
     public void testConstructorNoData() {
-        try {
-            Saveable s = new Saveable(file1.getPath());
-            assertEquals("TEST_FILE", s.getName());
-            assertEquals(69, s.getPoints());
-            assertEquals(0, s.getLibrary().getSize());
-        } catch (IOException | ParseException e) {
-//            e.printStackTrace();
-            fail("yeet");
-        }
+        Saveable s = new Saveable("./data/NO_DATA.json", "NO_DATA", LocalDateTime.now());
+        assertEquals("NO_DATA", s.getName());
+        assertEquals(0, s.getPoints());
+        assertEquals(0, s.getLibrary().getSize());
 
     }
 
@@ -105,5 +100,31 @@ public class SaveableTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void testWriteNoException() {
+        try {
+            Saveable s = new Saveable("./data/TEST_WNE.json", "TEST_WRITE_NO_E", LocalDateTime.now());
+            s.write();
+            File temp = new File(s.getFile().getPath());
+            assertNotEquals(0, temp.length());
+        } catch (IOException e) {
+            fail("io");
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWriteException() {
+        try {
+            Saveable s = new Saveable("./data/TEST_WE.json", "TEST_WRITE_EXCEPTION", LocalDateTime.now());
+            File temp = new File(s.getFile().getPath());
+            assertTrue(temp.setWritable(false));
+            s.write();
+            fail();
+        } catch (IOException e) {
+            System.out.println("io error!!!");
+        }
     }
 }

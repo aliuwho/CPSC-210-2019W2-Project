@@ -2,11 +2,16 @@ package model.animals;
 
 public class Dog extends Animal {
 
-    // EFFECTS: constructs a bird with a name which is:
-    //          - hungry
-    //          - not tired
+    // EFFECTS: constructs a dog with a name with a certain hunger and energy status
+    public Dog(String name, boolean hungry, boolean tired) {
+        super(name, hungry, tired);
+        species = "dog";
+    }
+
+    // EFFECTS: creates a hungry, not tired dog with a name
     public Dog(String name) {
         super(name);
+        species = "dog";
     }
 
     // EFFECTS: prints dog noises

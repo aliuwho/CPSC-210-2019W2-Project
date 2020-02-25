@@ -5,7 +5,6 @@
 Featuring:
 - a shopping memory game (younger children)
 - a creative writing game (older children)
-- puzzles (all ages!)
 - building (all ages!)
 - and more!
 
@@ -33,6 +32,9 @@ as well as care for a pet.
 ####User Stories
 1. As a user, I want to be remembered by name.
 2. As a user, I want to be receive a writing prompt.
-3. As a user, I want to be able to care for/interact with a pet.
+3. As a user, I want to be able to care for/interact with pets.
 5. As a user, I want to be able to add a story to my library.
 4. As a user, I want to be able to view my stories.
+6. As a user, I want to be able to save my stories to file.
+7. As a user, I want to be able to resume my profile where I left off.
+8. As a user, I want to be able to earn points and levels.

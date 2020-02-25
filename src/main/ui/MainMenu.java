@@ -5,56 +5,47 @@ import persistence.Saveable;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
-    //    private WritingDeskMenu writingDeskMenu;
-//    private PetRoomMenu petRoomMenu;
-    //    private UserProfileMenu userProfileMenu;
-    //    private Library library;
     private final File file;
     private Saveable saveable;
 
-//    // EFFECTS: returns username
-//    public String getUsername() {
-//        return username;
-//    }
-
     // EFFECTS: runs the Main Menu application
     public MainMenu(Scanner input) {
-        setName("Main Menu");
-        setInput(input);
+        setAppName("Main Menu");
+        this.input = input;
         System.out.println("What's your name?");
         this.username = input.next();
         this.file = new File("./data/" + username + ".json");
-        try {
-            setFile();
-        } catch (IOException e) {
-            System.out.println("An error occurred! Please quit and report the following:");
-            e.printStackTrace();
-        } catch (ParseException e) {
-            System.out.println("The data for that user could not be loaded.");
-            // add ability to delete that file entirely or create new user
-        }
-
-//        writingDeskMenu = new WritingDeskMenu(saveable);
-//        writingDeskMenu.setInput(input);
-//
-//        petRoomMenu = new PetRoomMenu();
-//        petRoomMenu.setUsername(username);
-//        petRoomMenu.setInput(input);
-
+        setFile();
     }
 
-    private void setFile() throws IOException, ParseException {
-        if (file.length() == 0) {
-            saveable = new Saveable(file.getPath(), username);
-        } else {
+    private void setFile() {
+        try {
             if (file.createNewFile()) {
-                saveable = new Saveable(file.getPath(), username);
+                saveable = new Saveable(file.getPath(), username, LocalDateTime.now());
             } else {
                 saveable = new Saveable(file.getPath());
             }
+        } catch (ParseException | IOException e) {
+            System.out.println("The data for that user could not be loaded.");
+            System.out.println("Would you like to write a new file with the name '" + username + "'?");
+            System.out.println("\ty -> yes\tn -> no");
+            if (input.next().equals("y")) {
+                if (file.delete()) {
+                    System.out.println("Okay! A new user profile has been created for " + username + ".");
+                    setFile();
+                } else {
+                    System.out.println("An error occurred. Sorry... :[");
+                }
+            } else {
+                System.out.println("Select a different name:");
+                this.username = input.next();
+                runApp();
+            }
+
         }
     }
 
@@ -63,20 +54,16 @@ public class MainMenu extends Menu {
     public void processCommand(String command) {
         switch (command) {
             case "u":
-//                userProfileMenu.runApp();
-                System.out.println("You have " + saveable.getPoints() + " points! Good job.");
+                Levels levels = new Levels(saveable);
+                levels.info();
                 break;
             case "w":
-                WritingDeskMenu writingDeskMenu = new WritingDeskMenu(saveable);
-                writingDeskMenu.setInput(input);
+                WritingDeskMenu writingDeskMenu = new WritingDeskMenu(saveable, input, username);
                 writingDeskMenu.runApp();
                 break;
             case "p":
-                PetRoomMenu petRoomMenu = new PetRoomMenu();
-                petRoomMenu.setUsername(username);
-                petRoomMenu.setInput(input);
-
-                petRoomMenu.runApp();
+                PetSelectMenu petSelectMenu = new PetSelectMenu(saveable, input, username);
+                petSelectMenu.runApp();
                 break;
             case "4":
                 //  ConnectFourMenu c4 = new ConnectFourMenu();

@@ -2,7 +2,7 @@ package persistence;
 
 import model.Library;
 import model.Story;
-import model.animals.Animal;
+import model.animals.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,27 +12,31 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public class Saveable {
 
     private long points;
     private String name;
     private Library library;
-    //    private ArrayList<Animal> pets;
-    private Animal pet;
+    private ArrayList<Animal> pets;
     private File file;
-    //  JSONObject profile;
+    private String start;
 
     // EFFECTS: creates a new user profile
-    public Saveable(String path, String name) {
+    public Saveable(String path, String name, LocalDateTime now) {
         this.file = new File(path);
         this.library = new Library();
         this.name = name;
         this.points = 0;
-        this.pet = null;
+        this.pets = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:m',' MMMM d',' yyyy");
+        this.start = now.format(dtf);
     }
 
-    // TODO: add multiple pets haha....
     // EFFECTS: creates a Saveable object with data from file
     public Saveable(String path) throws IOException, ParseException {
         JSONParser jsonParser = new JSONParser();
@@ -42,25 +46,43 @@ public class Saveable {
 
         this.name = (String) temp.get("name");
         this.points = (long) temp.get("points");
+        this.start = (String) temp.get("start");
         JSONArray lib = (JSONArray) temp.get("library");
         this.library = toLibrary(lib);
-        this.pet = null;
+        JSONArray petList = (JSONArray) temp.get("pets");
+        this.pets = toPets(petList);
         this.file = new File(path);
     }
 
+    // EFFECTS: returns file
+    public File getFile() {
+        return file;
+    }
+
+
+    // EFFECTS: returns library
+    public Library getLibrary() {
+        return library;
+    }
+
+    // EFFECTS: returns name
     public String getName() {
         return name;
     }
 
-// --Commented out by Inspection START (2/18/20, 10:04 AM):
-//    //TO-DO: add ability to change username?
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-// --Commented out by Inspection STOP (2/18/20, 10:04 AM)
+    // EFFECTS: returns pets
+    public ArrayList<Animal> getPets() {
+        return pets;
+    }
 
+    // EFFECTS: returns points
     public long getPoints() {
         return points;
+    }
+
+    // EFFECTS: returns start time
+    public String getStart() {
+        return start;
     }
 
     // MODIFIES: this
@@ -69,34 +91,43 @@ public class Saveable {
         this.points += amount;
     }
 
-    public Library getLibrary() {
-        return library;
-    }
-
-//    public Animal getPet() {
-//        return pet;
-//    }
-//
-//    public File getFile() {
-//        return file;
-//    }
-
     // EFFECTS: writes JSON file using Saveable data
     public void write() throws IOException {
         JSONObject profile = new JSONObject();
         profile.put("name", name);
         profile.put("points", points);
+        profile.put("start", start);
         JSONArray libraryObj = libToJsonArray(library);
         profile.put("library", libraryObj);
+        JSONArray petsObj = petsToJsonArray(pets);
+        profile.put("pets", petsObj);
         FileWriter fw = new FileWriter(file.getPath(), false);
         fw.write(profile.toJSONString());
         fw.close();
     }
 
-    // EFFECTS: transforms Library into a JSONArray
-    public JSONArray libToJsonArray(Library library) {
+    // EFFECTS: transforms pets into a JSONArray
+    private JSONArray petsToJsonArray(ArrayList<Animal> pets) {
         JSONArray array = new JSONArray();
-//        ArrayList<JSONObject> jarr = new ArrayList<>();
+        for (Animal pet : pets) {
+            array.add(petToJsonObj(pet));
+        }
+        return array;
+    }
+
+    // EFFECTS: turns a pet into a JSONObject
+    private JSONObject petToJsonObj(Animal pet) {
+        JSONObject obj = new JSONObject();
+        obj.put("name", pet.getName());
+        obj.put("species", pet.getSpecies());
+        obj.put("tired", pet.isTired());
+        obj.put("hungry", pet.isHungry());
+        return obj;
+    }
+
+    // EFFECTS: transforms Library into a JSONArray
+    private JSONArray libToJsonArray(Library library) {
+        JSONArray array = new JSONArray();
         for (Story s : library.getStoryList()) {
             array.add(storyToJsonObj(s));
         }
@@ -105,9 +136,10 @@ public class Saveable {
     }
 
     // EFFECTS: transforms Story into a JSON Object
-    public JSONObject storyToJsonObj(Story s) {
+    private JSONObject storyToJsonObj(Story s) {
         JSONObject o = new JSONObject();
         o.put("name", s.getName());
+        //noinspection unchecked
         o.put("path", s.getPath());
         return o;
     }
@@ -120,15 +152,47 @@ public class Saveable {
             Story s = toStory(o);
             temp.addStory(s);
         }
-//        for (JSONObject o : lib) {
-//            Story s = toStory(o);
-//            temp.addStory(s);
-//        }
         return temp;
     }
 
     // EFFECTS: transforms parsed JSONObject into a Story
     private Story toStory(JSONObject o) {
         return new Story((String) o.get("name"), (String) o.get("path"));
+    }
+
+
+    // EFFECTS: turns JSONArray into pets
+    private ArrayList<Animal> toPets(JSONArray petList) {
+        ArrayList<Animal> temp = new ArrayList<>();
+        for (Object value : petList) {
+            JSONObject o = (JSONObject) value;
+            Animal animal = toPet(o);
+            temp.add(animal);
+        }
+        return temp;
+    }
+
+    // EFFECTS: turns JSONObject into an Animal
+    private Animal toPet(JSONObject o) {
+        String species = (String) o.get("species");
+        String name = (String) o.get("name");
+        boolean hungry = (boolean) o.get("hungry");
+        boolean tired = (boolean) o.get("tired");
+        switch (species) {
+            case "bird":
+                return new Bird(name, hungry, tired);
+            case "cat":
+                return new Cat(name, hungry, tired);
+            case "dog":
+                return new Dog(name, hungry, tired);
+            case "horse":
+                return new Horse(name, hungry, tired);
+            case "lizard":
+                return new Lizard(name, hungry, tired);
+            default:
+                System.out.println("Unexpected value: " + species);
+                return null;
+
+        }
     }
 }

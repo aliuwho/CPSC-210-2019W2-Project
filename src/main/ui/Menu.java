@@ -5,31 +5,31 @@ import java.util.Scanner;
 // implementation of console based off TellerApp from:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 // specifically:
-//     - runApp() -> runTeller()
-//     - processCommand() -> runCommand()
-//     - displayMenu() -> displayMenu()
+//     - runApp() based on runTeller()
+//     - processCommand() based on runCommand()
+//     - displayMenu() based on displayMenu()
 
 public abstract class Menu {
     protected Scanner input;
     private String appName;
     protected String username;
 
-    // MODIFIES: this
-    protected void setInput(Scanner input) {
-        this.input = input;
-    }
+//    // MODIFIES: this
+//    protected void setInput(Scanner input) {
+//        this.input = input;
+//    }
 
     // MODIFIES: this
     // EFFECTS: sets application name to appName
-    protected void setName(String appName) {
+    protected void setAppName(String appName) {
         this.appName = appName;
     }
-
-    //MODIFIES: this
-    // EFFECTS: sets username to username
-    protected void setUsername(String username) {
-        this.username = username;
-    }
+//
+//    //MODIFIES: this
+//    // EFFECTS: sets username to username
+//    protected void setUsername(String username) {
+//        this.username = username;
+//    }
 
     // EFFECTS: runs app for user input
     public void runApp() {
@@ -54,6 +54,7 @@ public abstract class Menu {
             }
         } catch (Exception e) {
             System.out.println("This is the " + appName + " menu error.");
+            e.printStackTrace();
         }
         farewell();
 

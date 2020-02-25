@@ -4,17 +4,21 @@ import model.animals.*;
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
+import persistence.Saveable;
 
 import java.util.Scanner;
 
 public class PetRoomMenu extends Menu {
-    //private ArrayList<Animal> pets;
-    private Animal pet;
+    private final Animal pet;
+    private final Saveable saveable;
 
     // EFFECTS: creates a new PetRoom Menu
-    public PetRoomMenu() {
-        setName("Pet Room");
-        //pets = new ArrayList<>();
+    public PetRoomMenu(Scanner input, String username, Saveable s, Animal pet) {
+        this.input = input;
+        this.username = username;
+        setAppName("Pet Room");
+        this.saveable = s;
+        this.pet = pet;
     }
 
     // EFFECTS: processes command for Pet Room
@@ -38,16 +42,6 @@ public class PetRoomMenu extends Menu {
                 break;
         }
         displayMenu();
-    }
-
-    // EFFECTS: allows user to select a pet
-    private void choosePet(Scanner input) {
-        System.out.println("What animal would you like to be your pet?");
-        PetSelectMenu ps = new PetSelectMenu();
-        ps.setInput(input);
-        ps.setUsername(username);
-        ps.runApp();
-        pet = ps.getPet();
     }
 
     // MODIFIES: this
@@ -133,6 +127,9 @@ public class PetRoomMenu extends Menu {
             } else if (pet instanceof Bird) {
                 msg = pet.getName() + " whistles a happy tune. You are taking good care of your bird!";
             }
+
+            msg += "\nYou earned 50 points!";
+            saveable.addPoints(50);
         } else {
             msg = pet.getName() + " is doing okay.";
         }
@@ -143,14 +140,14 @@ public class PetRoomMenu extends Menu {
     @Override
     protected void displayMenu() {
         if (pet == null) {
-            choosePet(input);
+            System.out.println("That's not a pet!");
         }
         super.displayMenu();
         System.out.println("\tc -> Check on your pet");
         System.out.println("\tf -> Feed your pet");
         System.out.println("\tp -> Play with your pet");
         System.out.println("\tn -> Nap with your pet");
-        System.out.println("\tq -> Return to main menu");
+        System.out.println("\tq -> Return to pet selection");
     }
 
     // EFFECTS: end of program message to user
@@ -158,4 +155,7 @@ public class PetRoomMenu extends Menu {
     protected void farewell() {
         System.out.println("Returning to main menu.");
     }
+
+    // MODIFIES: this
+    // EFFECTS:
 }

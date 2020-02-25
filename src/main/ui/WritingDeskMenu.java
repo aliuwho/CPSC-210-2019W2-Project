@@ -9,6 +9,7 @@ import persistence.Saveable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class WritingDeskMenu extends Menu {
     private static Saveable saveable;
@@ -16,10 +17,12 @@ public class WritingDeskMenu extends Menu {
 //    private File file;
 
     // EFFECTS: creates new WritingDesk app
-    public WritingDeskMenu(Saveable s) {
-        setName("Writing Desk");
+    public WritingDeskMenu(Saveable s, Scanner input, String username) {
+        setAppName("Writing Desk");
         saveable = s;
         library = s.getLibrary();
+        this.input = input;
+        this.username = username;
         this.username = s.getName();
     }
 
@@ -80,7 +83,6 @@ public class WritingDeskMenu extends Menu {
     }
 
     // EFFECTS: creates a new story with a name
-    //
     private void createStory(Library l) {
         System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
         String storyName = input.next();
@@ -90,7 +92,7 @@ public class WritingDeskMenu extends Menu {
             if (f.createNewFile()) {
                 System.out.println("Alright, your story will be called " + story.getName() + ".");
             } else if (!f.createNewFile()) {
-                System.out.println("A story with that name already exists. Overwrite? \ty-> yes\tn ->no");
+                System.out.println("A story with that name already exists. Overwrite?\n\ty-> yes\tn ->no");
                 if (input.next().equals("n")) {
                     createStory(l);
                 }
@@ -131,9 +133,7 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: runs Story Add option
     public void addStory(Library l, Story story) {
-        StoryAddMenu storyAddMenu = new StoryAddMenu(story, l);
-        storyAddMenu.setInput(input);
-        storyAddMenu.setUsername(username);
+        StoryAddMenu storyAddMenu = new StoryAddMenu(input, username, story, l);
         storyAddMenu.runApp();
     }
 

@@ -8,6 +8,7 @@ public abstract class Animal {
     protected boolean hungry;
     protected final String name;
     protected boolean tired;
+    protected String species;
 
     // EFFECTS: creates a new animal with a name which is:
     //          - hungry
@@ -16,12 +17,32 @@ public abstract class Animal {
         this.name = name;
         this.hungry = true;
         this.tired = false;
+        this.species = null;
+    }
+
+    // EFFECTS: creates a new animal with a name with a certain hunger and energy status
+    public Animal(String name, boolean hungry, boolean tired) {
+        this.name = name;
+        this.hungry = hungry;
+        this.tired = tired;
+        this.species = null;
     }
 
     // EFFECTS: returns the pet's name
     public String getName() {
         return name;
     }
+
+    // EFFECTS: returns pet's species
+    public String getSpecies() {
+        return species;
+    }
+
+//    // MODIFIES: this
+//    // EFFECTS: sets pet species as species
+//    public void setSpecies() {
+//        return species;
+//    }
 
     // EFFECTS: returns true if the animal is hungry; false otherwise
     public boolean isHungry() {
