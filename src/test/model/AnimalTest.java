@@ -19,20 +19,62 @@ public class AnimalTest {
     @BeforeEach
     public void runBefore() {
         bird = new Bird("Astryd");
-        assertEquals("Astryd",bird.getName());
+        assertEquals("Astryd", bird.getName());
+        assertEquals("bird", bird.getSpecies());
+        assertTrue(bird.isHungry());
+        assertFalse(bird.isTired());
 
         cat = new Cat("Rai");
-        assertEquals("Rai",cat.getName());
+        assertEquals("Rai", cat.getName());
+        assertEquals("cat", cat.getSpecies());
+        assertTrue(cat.isHungry());
+        assertFalse(cat.isTired());
 
         dog = new Dog("Hachi");
-        assertEquals("Hachi",dog.getName());
+        assertEquals("Hachi", dog.getName());
+        assertEquals("dog", dog.getSpecies());
+        assertTrue(dog.isHungry());
+        assertFalse(dog.isTired());
 
         horse = new Horse("Billy");
-        assertEquals("Billy",horse.getName());
+        assertEquals("Billy", horse.getName());
+        assertEquals("horse", horse.getSpecies());
+        assertTrue(horse.isHungry());
+        assertFalse(horse.isTired());
 
         lizard = new Lizard("Mocha");
-        assertEquals("Mocha",lizard.getName());
+        assertEquals("Mocha", lizard.getName());
+        assertEquals("lizard", lizard.getSpecies());
+        assertTrue(lizard.isHungry());
+        assertFalse(lizard.isTired());
 
+    }
+
+    @Test
+    public void testOtherConstructor() {
+        Bird bird1 = new Bird("Astryd", true, true);
+//        assertEquals("Astryd", bird1.getName());
+        assertTrue(bird1.isSad());
+
+        Cat cat1 = new Cat("Rai", true, false);
+//        assertEquals("Rai", cat.getName());
+        assertTrue(cat1.isHungry());
+        assertFalse(cat1.isTired());
+
+        Dog dog1 = new Dog("Hachi", false, false);
+//        assertEquals("Hachi", dog.getName());
+        assertTrue(dog1.isHappy());
+//        assertFalse(dog.isTired());
+
+        Horse horse1 = new Horse("Billy", false, true);
+//        assertEquals("Billy", horse.getName());
+        assertFalse(horse1.isHungry());
+        assertTrue(horse1.isTired());
+
+        Lizard lizard1 = new Lizard("Mocha", true, false);
+//        assertEquals("Mocha", lizard.getName());
+        assertTrue(lizard1.isHungry());
+        assertFalse(lizard1.isTired());
     }
 
     @Test

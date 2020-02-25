@@ -28,7 +28,7 @@ public class FourBoard {
     public void addChip(Chip chipType, int column) throws ColumnFullException {
         if (canAddChip(column)) {
             int i = 0;
-            while (i < ROWS && board[i][column] != Chip.EMPTY) {
+            while (/*i < ROWS && */board[i][column] != Chip.EMPTY) {
                 i++;
             }
             board[i][column] = chipType;

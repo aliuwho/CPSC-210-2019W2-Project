@@ -3,6 +3,7 @@ package model;
 import model.animals.Animal;
 import model.animals.Bird;
 import model.animals.Horse;
+import model.animals.Lizard;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -15,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,7 +114,7 @@ public class SaveableTest {
 
         try {
             Saveable s = new Saveable("./data/starters/pets_full.json");
-            assertEquals("TEST_FILE",s.getName());
+            assertEquals("TEST_FILE", s.getName());
             assertEquals(50, s.getPoints());
             assertEquals(0, s.getLibrary().getSize());
             assertEquals(5, s.getPets().size());
@@ -125,9 +127,14 @@ public class SaveableTest {
     @Test
     public void testConstructorNoData() {
         Saveable s = new Saveable("./data/NO_DATA.json", "NO_DATA", LocalDateTime.now());
+
+        DateTimeFormatter dateTimeFormatter = Saveable.DATE_TIME_FORMATTER;
+        LocalDateTime localDateTime = LocalDateTime.now();
+
         assertEquals("NO_DATA", s.getName());
         assertEquals(0, s.getPoints());
         assertEquals(0, s.getLibrary().getSize());
+        assertEquals(localDateTime.format(dateTimeFormatter), s.getStart());
 
     }
 
@@ -152,20 +159,22 @@ public class SaveableTest {
 
             Bird jarod = new Bird("jarod");
             Horse suzie = new Horse("suzie");
+            Lizard anushka = new Lizard("Anushka");
             ArrayList<Animal> pets = s.getPets();
             pets.add(jarod);
             pets.add(suzie);
+            pets.add(anushka);
 
             Library lib = s.getLibrary();
-            Story story = new Story("truck","./data/truck.txt");
+            Story story = new Story("truck", "./data/truck.txt");
             lib.addStory(story);
 
             s.write();
 
             File temp = new File(s.getFile().getPath());
             assertNotEquals(0, temp.length());
-            assertEquals(1,s.getLibrary().getSize());
-            assertEquals(2, s.getPets().size());
+            assertEquals(1, s.getLibrary().getSize());
+            assertEquals(3, s.getPets().size());
         } catch (IOException e) {
             fail("io");
             e.printStackTrace();

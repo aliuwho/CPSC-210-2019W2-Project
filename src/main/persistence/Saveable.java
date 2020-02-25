@@ -25,6 +25,8 @@ public class Saveable {
     private ArrayList<Animal> pets;
     private File file;
     private String start;
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("H:m',' MMMM d',' yyyy");
+
 
     // EFFECTS: creates a new user profile
     public Saveable(String path, String name, LocalDateTime now) {
@@ -33,8 +35,7 @@ public class Saveable {
         this.name = name;
         this.points = 0;
         this.pets = new ArrayList<>();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:m',' MMMM d',' yyyy");
-        this.start = now.format(dtf);
+        this.start = now.format(DATE_TIME_FORMATTER);
     }
 
     // EFFECTS: creates a Saveable object with data from file
@@ -178,21 +179,20 @@ public class Saveable {
         String name = (String) o.get("name");
         boolean hungry = (boolean) o.get("hungry");
         boolean tired = (boolean) o.get("tired");
-        switch (species) {
-            case "bird":
-                return new Bird(name, hungry, tired);
-            case "cat":
-                return new Cat(name, hungry, tired);
-            case "dog":
-                return new Dog(name, hungry, tired);
-            case "horse":
-                return new Horse(name, hungry, tired);
-            case "lizard":
-                return new Lizard(name, hungry, tired);
-            default:
-                System.out.println("Unexpected value: " + species);
-                return null;
-
+        if ("bird".equals(species)) {
+            return new Bird(name, hungry, tired);
+        } else if ("cat".equals(species)) {
+            return new Cat(name, hungry, tired);
+        } else if ("dog".equals(species)) {
+            return new Dog(name, hungry, tired);
+        } else if ("horse".equals(species)) {
+            return new Horse(name, hungry, tired);
+        } else {
+            return new Lizard(name, hungry, tired);
         }
+//            default:
+//                System.out.println("Unexpected value: " + species);
+//                return null;
+//    }
     }
 }
