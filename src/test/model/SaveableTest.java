@@ -99,6 +99,27 @@ public class SaveableTest {
             fail("yeet2");
         }
 
+        try {
+            Saveable s = new Saveable(file3.getPath());
+            assertEquals("TEST_FILE", s.getName());
+            assertEquals(0, s.getPoints());
+            assertEquals(0, s.getLibrary().getSize());
+            assertEquals(0, s.getPets().size());
+        } catch (IOException | ParseException e) {
+//            e.printStackTrace();
+            fail("yeet3");
+        }
+
+        try {
+            Saveable s = new Saveable("./data/starters/pets_full.json");
+            assertEquals("TEST_FILE",s.getName());
+            assertEquals(50, s.getPoints());
+            assertEquals(0, s.getLibrary().getSize());
+            assertEquals(5, s.getPets().size());
+        } catch (ParseException | IOException e) {
+            fail("yeet4");
+        }
+
     }
 
     @Test
@@ -128,14 +149,22 @@ public class SaveableTest {
     public void testWriteNoException() {
         try {
             Saveable s = new Saveable("./data/TEST_WNE.json", "TEST_WRITE_NO_E", LocalDateTime.now());
+
             Bird jarod = new Bird("jarod");
             Horse suzie = new Horse("suzie");
             ArrayList<Animal> pets = s.getPets();
             pets.add(jarod);
             pets.add(suzie);
+
+            Library lib = s.getLibrary();
+            Story story = new Story("truck","./data/truck.txt");
+            lib.addStory(story);
+
             s.write();
+
             File temp = new File(s.getFile().getPath());
             assertNotEquals(0, temp.length());
+            assertEquals(1,s.getLibrary().getSize());
             assertEquals(2, s.getPets().size());
         } catch (IOException e) {
             fail("io");
@@ -146,13 +175,16 @@ public class SaveableTest {
     @Test
     public void testWriteException() {
         try {
-            Saveable s = new Saveable("./data/TEST_WE.json", "TEST_WRITE_EXCEPTION", LocalDateTime.now());
+            Saveable s = new Saveable("./data/TEST_WNE.json", "TEST_WRITE_EXCEPTION", LocalDateTime.now());
             File temp = new File(s.getFile().getPath());
             assertTrue(temp.setWritable(false));
             s.write();
             fail();
         } catch (IOException e) {
             System.out.println("io error!!!");
+        } finally {
+            File temp = new File("./data/TEST_WNE.json");
+            assertTrue(temp.setWritable(true));
         }
     }
 }
