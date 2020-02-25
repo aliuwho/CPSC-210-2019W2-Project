@@ -5,6 +5,30 @@
       "species": "bird",
       "name": "Suzie",
       "tired": false
+    },
+    {
+      "hungry": false,
+      "species": "cat",
+      "name": "Suzie",
+      "tired": false
+    },
+    {
+      "hungry": false,
+      "species": "dog",
+      "name": "Suzie",
+      "tired": false
+    },
+    {
+      "hungry": false,
+      "species": "horse",
+      "name": "Suzie",
+      "tired": false
+    },
+    {
+      "hungry": false,
+      "species": "lizard",
+      "name": "Suzie",
+      "tired": false
     }
   ],
   "library": [],

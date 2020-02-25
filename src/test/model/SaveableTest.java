@@ -1,5 +1,8 @@
 package model;
 
+import model.animals.Animal;
+import model.animals.Bird;
+import model.animals.Horse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,23 +15,24 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SaveableTest {
     private File file1;
-
     private File file2;
+    private File file3;
 
     @BeforeEach
     public void runBefore() {
         try {
             file1 = new File("./data/TEST_elib_nzpts.json");
-            File starter1 = new File("./data/starters/points_full.json");
+            File starter = new File("./data/starters/points_full.json");
             FileWriter fw = new FileWriter(file1);
 
             JSONParser jsonParser = new JSONParser();
-            FileReader fileReader = new FileReader(starter1);
+            FileReader fileReader = new FileReader(starter);
             Object obj = jsonParser.parse(fileReader);
             JSONObject profile = (JSONObject) obj;
             fw.write(profile.toJSONString());
@@ -40,17 +44,33 @@ public class SaveableTest {
 
         try {
             file2 = new File("./data/TEST_nelib_nzpts.json");
-            File starter2 = new File("./data/starters/library_full_points_full.json");
+            File starter = new File("./data/starters/library_full_points_full.json");
             FileWriter fw = new FileWriter(file2);
 
             JSONParser jsonParser = new JSONParser();
-            FileReader fileReader = new FileReader(starter2);
+            FileReader fileReader = new FileReader(starter);
             Object obj = jsonParser.parse(fileReader);
             JSONObject profile = (JSONObject) obj;
             fw.write(profile.toJSONString());
             fw.close();
         } catch (ParseException | IOException e) {
             System.out.println("File2/Starter2 error");
+            e.printStackTrace();
+        }
+
+        try {
+            file3 = new File("./data/TEST_WNE.json");
+            File starter = new File("./data/starters/wne.json");
+            FileWriter fw = new FileWriter(file3);
+
+            JSONParser jsonParser = new JSONParser();
+            FileReader fileReader = new FileReader(starter);
+            Object obj = jsonParser.parse(fileReader);
+            JSONObject profile = (JSONObject) obj;
+            fw.write(profile.toJSONString());
+            fw.close();
+        } catch (ParseException | IOException e) {
+            System.out.println("File3/Starter3 error");
             e.printStackTrace();
         }
     }
@@ -62,6 +82,7 @@ public class SaveableTest {
             assertEquals("TEST_FILE", s.getName());
             assertEquals(69, s.getPoints());
             assertEquals(0, s.getLibrary().getSize());
+            assertEquals(0, s.getPets().size());
         } catch (IOException | ParseException e) {
 //            e.printStackTrace();
             fail("yeet");
@@ -72,6 +93,7 @@ public class SaveableTest {
             assertEquals("TEST_FILE", s.getName());
             assertEquals(69, s.getPoints());
             assertEquals(2, s.getLibrary().getSize());
+            assertEquals(0, s.getPets().size());
         } catch (IOException | ParseException e) {
 //            e.printStackTrace();
             fail("yeet2");
@@ -106,9 +128,15 @@ public class SaveableTest {
     public void testWriteNoException() {
         try {
             Saveable s = new Saveable("./data/TEST_WNE.json", "TEST_WRITE_NO_E", LocalDateTime.now());
+            Bird jarod = new Bird("jarod");
+            Horse suzie = new Horse("suzie");
+            ArrayList<Animal> pets = s.getPets();
+            pets.add(jarod);
+            pets.add(suzie);
             s.write();
             File temp = new File(s.getFile().getPath());
             assertNotEquals(0, temp.length());
+            assertEquals(2, s.getPets().size());
         } catch (IOException e) {
             fail("io");
             e.printStackTrace();
