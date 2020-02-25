@@ -1,0 +1,14 @@
+{
+  "pets": [
+    {
+      "hungry": false,
+      "species": "bird",
+      "name": "Suzie",
+      "tired": false
+    }
+  ],
+  "library": [],
+  "name": "starters\/pets_full",
+  "start": "21:7, February 24, 2020",
+  "points": 50
+}

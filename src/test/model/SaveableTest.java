@@ -24,7 +24,7 @@ public class SaveableTest {
     public void runBefore() {
         try {
             file1 = new File("./data/TEST_elib_nzpts.json");
-            File starter1 = new File("./data/starters/STARTER_emptylib_nonzeropts.json");
+            File starter1 = new File("./data/starters/points_full.json");
             FileWriter fw = new FileWriter(file1);
 
             JSONParser jsonParser = new JSONParser();
@@ -40,7 +40,7 @@ public class SaveableTest {
 
         try {
             file2 = new File("./data/TEST_nelib_nzpts.json");
-            File starter2 = new File("./data/starters/STARTER_nonemptylib_nonzeropts.json");
+            File starter2 = new File("./data/starters/library_full_points_full.json");
             FileWriter fw = new FileWriter(file2);
 
             JSONParser jsonParser = new JSONParser();
