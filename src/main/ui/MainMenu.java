@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ * represents a menu for users to select from different games
+ */
 public class MainMenu extends Menu {
     private final File file;
     private Saveable saveable;

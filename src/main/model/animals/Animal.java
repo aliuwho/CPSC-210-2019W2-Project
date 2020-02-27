@@ -4,6 +4,9 @@ import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
 
+/**
+ * Represents an animal with a name, a hunger status, and an energy status
+ */
 public abstract class Animal {
     protected boolean hungry;
     protected final String name;

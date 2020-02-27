@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * represents data to be saved from the console
+ */
 @SuppressWarnings("unchecked")
 public class Saveable {
 

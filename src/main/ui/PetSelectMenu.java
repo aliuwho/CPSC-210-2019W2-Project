@@ -6,6 +6,9 @@ import persistence.Saveable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * represents a menu for selecting a pet to interact with
+ */
 public class PetSelectMenu extends Menu {
     private final ArrayList<Animal> pets;
     private Animal pet;

@@ -1,5 +1,8 @@
 package model.animals;
 
+/**
+ * Represents a bird animal
+ */
 public class Bird extends Animal {
 
     // EFFECTS: constructs a bird with a name with a certain hunger and energy status

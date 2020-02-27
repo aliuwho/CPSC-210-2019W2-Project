@@ -6,6 +6,9 @@ import model.Story;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * represents a menu for adding a story to a library
+ */
 public class StoryAddMenu extends Menu {
     private final Library library;
     private final Story story;

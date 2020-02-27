@@ -4,6 +4,9 @@ import model.animals.*;
 
 import java.util.Scanner;
 
+/**
+ * represents a menu for getting a new pet
+ */
 public class NewPetMenu extends Menu {
     private Animal pet;
 

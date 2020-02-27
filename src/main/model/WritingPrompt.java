@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * represents a random writing prompt
+ */
 public class WritingPrompt {
     private final String prompt;
     private String noun1;

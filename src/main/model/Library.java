@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * represents a library with stories
+ */
 public class Library {
     private final ArrayList<Story> stories;
     //private File libraryFile;

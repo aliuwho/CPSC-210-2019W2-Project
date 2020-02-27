@@ -3,6 +3,9 @@ package model;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * represents a collection of words; a story
+ */
 public class Story {
     // delete or rename this class!
     private final String name;

@@ -1,5 +1,8 @@
 package model.animals;
 
+/**
+ * Represents a cat animal
+ */
 public class Cat extends Animal {
 
     // EFFECTS: constructs a cat with a name with a certain hunger and energy status

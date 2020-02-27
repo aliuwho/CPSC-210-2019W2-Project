@@ -8,6 +8,9 @@ import persistence.Saveable;
 
 import java.util.Scanner;
 
+/**
+ * represents a menu for interacting with a pet
+ */
 public class PetRoomMenu extends Menu {
     private final Animal pet;
     private final Saveable saveable;

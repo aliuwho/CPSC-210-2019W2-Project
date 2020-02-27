@@ -4,6 +4,9 @@ import model.exceptions.ColumnFullException;
 
 import java.util.Arrays;
 
+/**
+ * represents a Connect4 board and status
+ */
 public class FourBoard {
     // note: can use x's and filled circles
     // empty spaces are represented using 0

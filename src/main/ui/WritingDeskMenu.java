@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * represents a menu for selecting writing desk options
+ */
 public class WritingDeskMenu extends Menu {
     private static Saveable saveable;
     private static Library library;

@@ -2,13 +2,15 @@ package ui;
 
 import java.util.Scanner;
 
+/**
+ * represents a menu with options that a user can select from
+ */
 // implementation of console based off TellerApp from:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 // specifically:
 //     - runApp() based on runTeller()
 //     - processCommand() based on runCommand()
 //     - displayMenu() based on displayMenu()
-
 public abstract class Menu {
     protected Scanner input;
     private String appName;

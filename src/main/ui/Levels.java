@@ -2,6 +2,9 @@ package ui;
 
 import persistence.Saveable;
 
+/**
+ * represents user profile display
+ */
 public class Levels {
     private final Saveable saveable;
 
