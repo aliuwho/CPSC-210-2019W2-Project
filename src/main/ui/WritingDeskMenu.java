@@ -64,7 +64,12 @@ public class WritingDeskMenu extends Menu {
             System.out.println(library.getStories());
             String title = input.next();
 
-            System.out.println(library.getStoryText(library.findStory(title)));
+            Story s = library.findStory(title);
+            if (s != null) {
+                System.out.println(library.getStoryText(s));
+            } else {
+                throw new NotAStoryException();
+            }
         } catch (EmptyLibraryException e) {
             System.out.println("There are no stories in your library.");
         } catch (NotAStoryException e) {
