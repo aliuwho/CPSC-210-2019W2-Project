@@ -1,4 +1,4 @@
-package ui;
+package ui.menu;
 
 import model.animals.*;
 import model.exceptions.NotHungryException;
@@ -13,14 +13,14 @@ import java.util.Scanner;
  */
 public class PetRoomMenu extends Menu {
     private final Animal pet;
-    private final Saveable saveable;
+//    private final Saveable saveable;
 
     // EFFECTS: creates a new PetRoom Menu
     public PetRoomMenu(Scanner input, String username, Saveable s, Animal pet) {
-        this.input = input;
-        this.username = username;
-        setAppName("Pet Room");
+        super(input,"Pet Room");
         this.saveable = s;
+//        this.input = input;
+        this.username = username;
         this.pet = pet;
     }
 

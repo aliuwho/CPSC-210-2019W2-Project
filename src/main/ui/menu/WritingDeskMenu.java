@@ -1,4 +1,4 @@
-package ui;
+package ui.menu;
 
 import model.Library;
 import model.Story;
@@ -15,18 +15,18 @@ import java.util.Scanner;
  * represents a menu for selecting writing desk options
  */
 public class WritingDeskMenu extends Menu {
-    private static Saveable saveable;
+    //        private static Saveable saveable;
     private static Library library;
 //    private File file;
 
     // EFFECTS: creates new WritingDesk app
     public WritingDeskMenu(Saveable s, Scanner input, String username) {
-        setAppName("Writing Desk");
+        super(input, "Writing Desk");
         saveable = s;
         library = s.getLibrary();
-        this.input = input;
+//        this.input = input;
         this.username = username;
-        this.username = s.getName();
+        this.username = s.getUsername();
     }
 
     // EFFECTS: prints out farewell for Writing Desk

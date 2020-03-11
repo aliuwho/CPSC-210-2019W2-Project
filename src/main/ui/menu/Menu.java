@@ -1,4 +1,6 @@
-package ui;
+package ui.menu;
+
+import persistence.Saveable;
 
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public abstract class Menu {
     protected Scanner input;
     private String appName;
     protected String username;
+    protected Saveable saveable;
 
 //    // MODIFIES: this
 //    protected void setInput(Scanner input) {
@@ -23,15 +26,21 @@ public abstract class Menu {
 
     // MODIFIES: this
     // EFFECTS: sets application name to appName
-    protected void setAppName(String appName) {
+    public Menu(Scanner input, String appName) {
         this.appName = appName;
+        this.input = input;
     }
-//
+
+    //
 //    //MODIFIES: this
 //    // EFFECTS: sets username to username
 //    protected void setUsername(String username) {
 //        this.username = username;
 //    }
+    // EFFECTS: sets saveable
+    public void setSaveable(Saveable saveable) {
+        this.saveable = saveable;
+    }
 
     // EFFECTS: runs app for user input
     public void runApp() {

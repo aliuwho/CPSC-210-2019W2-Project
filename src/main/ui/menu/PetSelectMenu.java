@@ -1,4 +1,4 @@
-package ui;
+package ui.menu;
 
 import model.animals.Animal;
 import persistence.Saveable;
@@ -12,15 +12,15 @@ import java.util.Scanner;
 public class PetSelectMenu extends Menu {
     private final ArrayList<Animal> pets;
     private Animal pet;
-    private final Saveable saveable;
+//    private final Saveable saveable;
 
     // EFFECTS: runs pet select menu for a user without any pets
     public PetSelectMenu(Saveable saveable, Scanner input, String username) {
+        super(input, "Pet Select Menu");
         this.saveable = saveable;
         this.pets = saveable.getPets();
         this.input = input;
         this.username = username;
-        setAppName("Pet Select Menu");
     }
 
     // EFFECTS: displays pets (if any)

@@ -81,7 +81,7 @@ public class SaveableTest {
     public void testConstructorExistingData() {
         try {
             Saveable s = new Saveable(file1.getPath());
-            assertEquals("TEST_FILE", s.getName());
+            assertEquals("TEST_FILE", s.getUsername());
             assertEquals(69, s.getPoints());
             assertEquals(0, s.getLibrary().getSize());
             assertEquals(0, s.getPets().size());
@@ -92,7 +92,7 @@ public class SaveableTest {
 
         try {
             Saveable s = new Saveable(file2.getPath());
-            assertEquals("TEST_FILE", s.getName());
+            assertEquals("TEST_FILE", s.getUsername());
             assertEquals(69, s.getPoints());
             assertEquals(2, s.getLibrary().getSize());
             assertEquals(0, s.getPets().size());
@@ -103,7 +103,7 @@ public class SaveableTest {
 
         try {
             Saveable s = new Saveable(file3.getPath());
-            assertEquals("TEST_FILE", s.getName());
+            assertEquals("TEST_FILE", s.getUsername());
             assertEquals(0, s.getPoints());
             assertEquals(0, s.getLibrary().getSize());
             assertEquals(0, s.getPets().size());
@@ -114,7 +114,7 @@ public class SaveableTest {
 
         try {
             Saveable s = new Saveable("./data/starters/pets_full.json");
-            assertEquals("TEST_FILE", s.getName());
+            assertEquals("TEST_FILE", s.getUsername());
             assertEquals(50, s.getPoints());
             assertEquals(0, s.getLibrary().getSize());
             assertEquals(5, s.getPets().size());
@@ -131,7 +131,7 @@ public class SaveableTest {
         DateTimeFormatter dateTimeFormatter = Saveable.DATE_TIME_FORMATTER;
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        assertEquals("NO_DATA", s.getName());
+        assertEquals("NO_DATA", s.getUsername());
         assertEquals(0, s.getPoints());
         assertEquals(0, s.getLibrary().getSize());
         assertEquals(localDateTime.format(dateTimeFormatter), s.getStart());

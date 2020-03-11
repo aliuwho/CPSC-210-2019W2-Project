@@ -1,7 +1,9 @@
-package ui;
+package ui.menu;
 
 import org.json.simple.parser.ParseException;
 import persistence.Saveable;
+import ui.Levels;
+import ui.gui.MainMenuWindow;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +19,8 @@ public class MainMenu extends Menu {
 
     // EFFECTS: runs the Main Menu application
     public MainMenu(Scanner input) {
-        setAppName("Main Menu");
-        this.input = input;
+        super(input, "Main Menu");
+//        this.input = input;
         System.out.println("What's your name?");
         this.username = input.next();
         this.file = new File("./data/" + username + ".json");
@@ -76,6 +78,12 @@ public class MainMenu extends Menu {
                 break;
         }
         displayMenu();
+        try {
+            saveable.write();
+        } catch (IOException e) {
+//            e.printStackTrace();
+            //do nothing lol...
+        }
     }
 
     // EFFECTS: displays menu
@@ -87,6 +95,8 @@ public class MainMenu extends Menu {
         System.out.println("\tp -> Pet Care");
         //System.out.println("\t4 -> Play Connect4");
         System.out.println("\tq -> Quit");
+        MainMenuWindow test = new MainMenuWindow(saveable);
+        test.createFrame();
 
     }
 

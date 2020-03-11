@@ -1,4 +1,4 @@
-package ui;
+package ui.menu;
 
 import model.animals.*;
 
@@ -12,8 +12,8 @@ public class NewPetMenu extends Menu {
 
     // EFFECTS: creates a new PetSelectMenu
     public NewPetMenu(Scanner input, String username) {
-        setAppName("Pet Selection");
-        this.input = input;
+        super(input, "Pet Selection");
+//        this.input = input;
         this.username = username;
     }
 

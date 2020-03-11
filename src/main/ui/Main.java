@@ -1,5 +1,7 @@
 package ui;
 
+import ui.menu.MainMenu;
+
 import java.util.Scanner;
 
 /**
@@ -13,6 +15,8 @@ public class Main {
         Scanner input = new Scanner(System.in);
         MainMenu m = new MainMenu(input);
         m.runApp();
+
+//        MainMenuWindow test = new MainMenuWindow(new Saveable());
     }
 
 }

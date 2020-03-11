@@ -1,4 +1,4 @@
-package ui;
+package ui.menu;
 
 import model.Library;
 import model.Story;
@@ -15,9 +15,9 @@ public class StoryAddMenu extends Menu {
 
     // EFFECTS: creates a new StoryAdd menu with a story
     public StoryAddMenu(Scanner input, String username, Story story, Library library) {
-        this.input = input;
+        super(input, "StoryAdd Menu");
+//        this.input = input;
         this.username = username;
-        setAppName("StoryAdd Menu");
         this.story = story;
         this.library = library;
     }

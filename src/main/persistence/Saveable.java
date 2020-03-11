@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class Saveable {
 
     private long points;
-    private String name;
+    private String username;
     private Library library;
     private ArrayList<Animal> pets;
     private File file;
@@ -32,10 +32,10 @@ public class Saveable {
 
 
     // EFFECTS: creates a new user profile
-    public Saveable(String path, String name, LocalDateTime now) {
+    public Saveable(String path, String username, LocalDateTime now) {
         this.file = new File(path);
         this.library = new Library();
-        this.name = name;
+        this.username = username;
         this.points = 0;
         this.pets = new ArrayList<>();
         this.start = now.format(DATE_TIME_FORMATTER);
@@ -48,7 +48,7 @@ public class Saveable {
         Object obj = jsonParser.parse(fileReader);
         JSONObject temp = (JSONObject) obj;
 
-        this.name = (String) temp.get("name");
+        this.username = (String) temp.get("name");
         this.points = (long) temp.get("points");
         this.start = (String) temp.get("start");
         JSONArray lib = (JSONArray) temp.get("library");
@@ -70,8 +70,8 @@ public class Saveable {
     }
 
     // EFFECTS: returns name
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     // EFFECTS: returns pets
@@ -98,7 +98,7 @@ public class Saveable {
     // EFFECTS: writes JSON file using Saveable data
     public void write() throws IOException {
         JSONObject profile = new JSONObject();
-        profile.put("name", name);
+        profile.put("name", username);
         profile.put("points", points);
         profile.put("start", start);
         JSONArray libraryObj = libToJsonArray(library);
