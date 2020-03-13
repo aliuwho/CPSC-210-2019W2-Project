@@ -133,7 +133,13 @@ public class MainMenuWindow extends Window implements ActionListener {
             WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
             writeDesk.displayFrame();
         } else if (e.getActionCommand().equals("petMenu")) {
-            //filler need to do pet select menu
+            if (saveable.getPets().size() == 0) {
+                PetSelectWindow select = new PetSelectWindow();
+                select.displayFrame();
+            } else {
+                PetRoomWindow room = new PetRoomWindow();
+                room.displayFrame();
+            }
         }
     }
 }
