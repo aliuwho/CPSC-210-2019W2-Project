@@ -1,6 +1,5 @@
 package ui.gui;
 
-import model.Story;
 import model.exceptions.EmptyLibraryException;
 import persistence.Saveable;
 
@@ -17,40 +16,15 @@ public class WritingDeskWindow extends Window implements ActionListener {
     private JPanel panel;
 
     public WritingDeskWindow(Saveable saveable) {
-        super("Writing Desk", (int) (getScreenWidth() * 0.5), (int) (getScreenHeight() * 0.5));
+        super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 2 / 10);
         this.saveable = saveable;
+        frame.setLayout(new BorderLayout());
     }
 
     @Override
     public void createFrame() {
-//        frame.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-//        constraints.gridx=;
-        frame.add(createButton("Create a Story", "createStory", this), constraints);
-        constraints.gridx = 3;
-        JList stories;
-        try {
-            String[] storyNames = saveable.getLibrary().getStoryNames();
-            stories = new JList(storyNames);
-        } catch (EmptyLibraryException e) {
-            e.printStackTrace();
-            String[] storyNames = {"Your library is currently empty!"};
-            stories = new JList(storyNames);
-        }
-        stories.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        stories.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//        stories.setVisibleRowCount(-1);
-
-        DefaultListModel<Story> huh = new DefaultListModel<>();
-        JScrollPane listScroller = new JScrollPane(stories);
-        listScroller.setPreferredSize(new Dimension(250, 80));
-        frame.add(stories, constraints);
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        frame.add(createButton("Return to Main Menu", "quit", this), constraints);
-        constraints.gridx = 2;
-        constraints.gridy = 1;
-//        frame.add(panel, constraints);
+        frame.add(buttonPanel(), BorderLayout.WEST);
+        frame.add(viewPanel(), BorderLayout.EAST);
     }
 
     @Override
@@ -71,4 +45,35 @@ public class WritingDeskWindow extends Window implements ActionListener {
         StoryAddMenu storyAddMenu = new StoryAddMenu(input, username, story, l);
         storyAddMenu.runApp();
     }*/
+
+    public JPanel buttonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+//        constraints.gridx = 0;
+        buttonPanel.add(createButton("Create a Story", "createStory", this), constraints);
+        constraints.gridy = 1;
+        buttonPanel.add(createButton("Return to Main Menu", "quit", this), constraints);
+//        constraints.gridx = 2;
+        return buttonPanel;
+    }
+
+    public JPanel viewPanel() {
+        JPanel viewPanel = new JPanel();
+        JList storyList;
+        try {
+            String[] storyNames = saveable.getLibrary().getStoryNames();
+            storyList = new JList(storyNames);
+        } catch (EmptyLibraryException e) {
+//            e.printStackTrace();
+            String[] storyNames = {"<No Stories to View>"};
+            storyList = new JList(storyNames);
+        }
+        storyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane storyViewer = new JScrollPane(storyList);
+        storyViewer.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        storyViewer.setPreferredSize(new Dimension(200, 120));
+        viewPanel.add(storyViewer);
+        return viewPanel;
+    }
 }

@@ -14,40 +14,74 @@ public class MainMenuWindow extends Window implements ActionListener {
     public MainMenuWindow(Saveable s) {
         super("Main Menu", (int) (getScreenWidth() * 0.7), (int) (getScreenHeight() * 0.7));
         saveable = s;
-        frame.setLayout(new BorderLayout());
+//        frame.setLayout(new BorderLayout());
     }
 
     //TODO: ADD METHOD SPECIFICATION
 
     @Override
     public void createFrame() {
-//        frame.setPreferredSize(new Dimension((int) (getScreenWidth() * 0.7), (int) (screenHeight * 0.7)));
+//        frame.add(new JPanel());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.gridx = 1;
+        frame.add(userInfoPanel(), constraints); //puts panel on top
+//        frame.add(new JPanel());
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        frame.add(buttonPanel(), constraints); //puts panel on left
+//        frame.add(new JPanel());
+//        frame.add(new JPanel());
         //add buttons panel to content pane which by default uses border layout
-        frame.getContentPane().add(userInfoPanel(), BorderLayout.NORTH); //puts panel on top
-        frame.getContentPane().add(buttonPanel(), BorderLayout.WEST); //puts panel on left
+//        frame.getContentPane().add(levelPanel(),BorderLayout.NORTH);
 
     }
 
-    public JPanel userInfoPanel() {
+    /*public JPanel userInfoPanel() {
         JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new GridBagLayout());
-        GridBagConstraints welcomeConstraints = new GridBagConstraints();
-        welcomeConstraints.insets = new Insets(2, 2, 0, 0);
-        welcomeConstraints.gridx = 0;
-        welcomeConstraints.gridy = 0;
-        JLabel greeting = new JLabel("Welcome " + saveable.getUsername() + "!");
-        greeting.setFont(font);
-        welcomePanel.add(greeting, welcomeConstraints);
-        welcomeConstraints.gridy = 1;
-        welcomePanel.add(new JLabel(), welcomeConstraints); //empty space
-        welcomeConstraints.gridy = 2;
-        JLabel levelLabel = new JLabel("Level progress: ");
-        levelLabel.setFont(font);
-        welcomePanel.add(levelLabel, welcomeConstraints);
-        welcomeConstraints.gridx = 1;
-        JProgressBar levels = new JProgressBar();
-        welcomePanel.add(levels, welcomeConstraints);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(2, 2, 0, 0);
+//        constraints.gridx = 1;
+        constraints.gridy = 0;
+        welcomePanel.add(createLabel("Welcome " + saveable.getUsername() + "!"), constraints);
+        constraints.gridy = 1;
+        welcomePanel.add(new JLabel(), constraints); //empty space
+        constraints.gridy = 2;
+        welcomePanel.add(createLabel(saveable.getStart()), constraints);
+        constraints.gridy = 3;
+        constraints.gridx = 0;
+        welcomePanel.add(createLabel("Level Progress:"), constraints);
+        constraints.gridx = 1;
+        JProgressBar levels = new JProgressBar(0, 1000);
+        levels.setValue(Math.toIntExact(saveable.getPoints()));
+        levels.setStringPainted(true);
+        welcomePanel.add(levels, constraints);
         return welcomePanel;
+    }*/
+    public JPanel userInfoPanel() {
+        JPanel welcomePanel = new JPanel();
+        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
+        welcomePanel.add(createLabel("Welcome " + saveable.getUsername() + "!"));
+        welcomePanel.add(createLabel("User since " + saveable.getStart()));
+
+        welcomePanel.add(createLabel("Level Progress:"));
+        JProgressBar levels = new JProgressBar(0, 1000);
+        levels.setValue(Math.toIntExact(saveable.getPoints()));
+        levels.setStringPainted(true);
+        levels.setPreferredSize(new Dimension(getScreenWidth() * 2 / 10, getScreenHeight() * 2 / 10));
+        welcomePanel.add(levels);
+        return welcomePanel;
+    }
+
+    public JPanel levelPanel() {
+        JPanel levelPanel = new JPanel(new FlowLayout());
+        levelPanel.add(createLabel("Level Progress:"));
+        JProgressBar levels = new JProgressBar(0, 1000);
+        levels.setValue(Math.toIntExact(saveable.getPoints()));
+        levels.setStringPainted(true);
+        levelPanel.add(levels);
+        return levelPanel;
     }
 
     public JPanel buttonPanel() {
@@ -95,10 +129,11 @@ public class MainMenuWindow extends Window implements ActionListener {
                 ex.printStackTrace();
             }
         } else if (e.getActionCommand().equals("writingDesk")) {
-            // MAKE IT SO WE CREATE A DESK WINDOW TO INTERACT WITH
-            System.out.println("this is a filler lol");
+//            System.out.println("this is a filler lol");
             WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
             writeDesk.displayFrame();
+        } else if (e.getActionCommand().equals("petMenu")) {
+            //filler need to do pet select menu
         }
     }
 }

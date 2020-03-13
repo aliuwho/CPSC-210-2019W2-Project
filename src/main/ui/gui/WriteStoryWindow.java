@@ -25,32 +25,6 @@ public class WriteStoryWindow extends Window implements ActionListener {
 
     @Override
     protected void createFrame() {
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new GridBagLayout());
-//        GridBagConstraints constraints = new GridBagConstraints();
-//        panel.add(createLabel("Enter your story below:"), constraints);
-//        constraints.gridy = 1;
-//        JTextArea test = new JTextArea(5, 20);
-////        test.setVisible(true);
-//        test.append("You can edit text in this box!");
-//        test.setFont(font);
-//        test.setLineWrap(true);
-//        test.setWrapStyleWord(true);
-//        test.setCaretPosition(test.getDocument().getLength()); //sets cursor to end automatically
-//        JScrollPane areaScrollPane = new JScrollPane(test);
-//        areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        areaScrollPane.setPreferredSize(new Dimension(getScreenWidth() * 3 / 10, getScreenHeight() * 3 / 10));
-//        panel.add(areaScrollPane, constraints);
-//        frame.add(panel, BorderLayout.NORTH);
-//        frame.add(areaScrollPane);
-
-//        JPanel buttonPanel = new JPanel();
-//        buttonPanel.setLayout(new GridBagLayout());
-//        constraints = new GridBagConstraints();
-//        buttonPanel.add(createButton("Save", "save", this), constraints);
-//        constraints.gridx = 1;
-//        buttonPanel.add(createButton("Cancel", "quit", this), constraints);
-//        frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.add(writePanel(), BorderLayout.NORTH);
         frame.add(buttonPanel(), BorderLayout.SOUTH);
     }
