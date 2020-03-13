@@ -69,6 +69,25 @@ public class Library {
         return storyList;
     }
 
+    // EFFECTS: if no stories in library, throws EmptyLibraryException;
+    //          else, lists stories in library
+    public String[] getStoryNames() throws EmptyLibraryException {
+        String[] storyList = new String[stories.size()];
+        if (isEmpty()) {
+            throw new EmptyLibraryException();
+        } else {
+            /*for (Object s : libraryObj) {
+                JSONObject story = (JSONObject) s;
+                String storyName = (String) story.get("name");
+                storyList.append("\t- ").append(storyName);
+            }*/
+            for (int i = 0; i < stories.size(); i++) {
+                storyList[i] = stories.get(i).getName();
+            }
+        }
+        return storyList;
+    }
+
     // EFFECTS: if library is empty, throw EmptyLibraryException;
     //          if library is not empty but Story is not in library, throw NotAStoryException;
     //          else returns the text;

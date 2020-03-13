@@ -3,10 +3,10 @@ package ui.gui;
 import persistence.Saveable;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainMenuWindow extends Window implements ActionListener {
     private Saveable saveable;
@@ -14,6 +14,7 @@ public class MainMenuWindow extends Window implements ActionListener {
     public MainMenuWindow(Saveable s) {
         super("Main Menu", (int) (getScreenWidth() * 0.7), (int) (getScreenHeight() * 0.7));
         saveable = s;
+        frame.setLayout(new BorderLayout());
     }
 
     //TODO: ADD METHOD SPECIFICATION
@@ -21,28 +22,9 @@ public class MainMenuWindow extends Window implements ActionListener {
     @Override
     public void createFrame() {
 //        frame.setPreferredSize(new Dimension((int) (getScreenWidth() * 0.7), (int) (screenHeight * 0.7)));
-        ((JPanel) frame.getContentPane()).setBorder(new EmptyBorder(15, 15, 15, 15));
-
-        //left panel for buttons
-        /*try {
-            File f = new File("./src/tobs.jpg");
-            if (f.setReadable(true)) {
-                JImageComponent ic = new JImageComponent();
-                ic.loadImage(f);
-                BufferedImage myPicture = ImageIO.read(f);
-                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-                frame.add(picLabel);
-            }
-            JImageComponent ic = new JImageComponent();
-            ic.loadImage(f);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         //add buttons panel to content pane which by default uses border layout
         frame.getContentPane().add(userInfoPanel(), BorderLayout.NORTH); //puts panel on top
-        frame.getContentPane().add(buttonsPanel(), BorderLayout.WEST); //puts panel on left
-        displayFrame();
+        frame.getContentPane().add(buttonPanel(), BorderLayout.WEST); //puts panel on left
 
     }
 
@@ -68,7 +50,7 @@ public class MainMenuWindow extends Window implements ActionListener {
         return welcomePanel;
     }
 
-    public JPanel buttonsPanel() {
+    public JPanel buttonPanel() {
         JPanel buttonsPanel = new JPanel();
         //rows equal to num of buttons:
 //        buttonsPanel.setLayout(new GridLayout(4, 1));
@@ -83,7 +65,7 @@ public class MainMenuWindow extends Window implements ActionListener {
 //        writingButton.setActionCommand("writingDesk");
 //        writingButton.addActionListener(this);
 //        writingButton.setFont(font);
-        buttonsPanel.add(createButton("Writing Desk", "writingMenu",
+        buttonsPanel.add(createButton("Writing Desk", "writingDesk",
                 this), buttonConstraints);
         buttonConstraints.gridy = 1;
 //        JButton petButton = new JButton("Pet Room");
@@ -107,9 +89,16 @@ public class MainMenuWindow extends Window implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("quit")) {
             frame.dispose();
-        } else if (e.getActionCommand().equals("writingMenu")) {
+            try {
+                saveable.write();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else if (e.getActionCommand().equals("writingDesk")) {
             // MAKE IT SO WE CREATE A DESK WINDOW TO INTERACT WITH
             System.out.println("this is a filler lol");
+            WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
+            writeDesk.displayFrame();
         }
     }
 }

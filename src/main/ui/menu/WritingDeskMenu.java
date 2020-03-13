@@ -16,16 +16,16 @@ import java.util.Scanner;
  */
 public class WritingDeskMenu extends Menu {
     //        private static Saveable saveable;
-    private static Library library;
+//    private static Library library;
 //    private File file;
 
     // EFFECTS: creates new WritingDesk app
-    public WritingDeskMenu(Saveable s, Scanner input, String username) {
+    public WritingDeskMenu(Saveable s, Scanner input) {
         super(input, "Writing Desk");
         saveable = s;
-        library = s.getLibrary();
+//        library = s.getLibrary();
 //        this.input = input;
-        this.username = username;
+//        this.username = username;
         this.username = s.getUsername();
     }
 
@@ -44,7 +44,7 @@ public class WritingDeskMenu extends Menu {
                 System.out.println(p.getPrompt());
                 break;
             case "c":
-                createStory(library);
+                createStory();
                 break;
             case "v":
                 selectStory();
@@ -58,6 +58,7 @@ public class WritingDeskMenu extends Menu {
 
     // EFFECTS: enables user to select a story from library
     public void selectStory() {
+        Library library = saveable.getLibrary();
         try {
             System.out.println("What story you would like to view?");
             System.out.println("Here are your stories:");
@@ -91,7 +92,7 @@ public class WritingDeskMenu extends Menu {
     }
 
     // EFFECTS: creates a new story with a name
-    private void createStory(Library l) {
+    private void createStory() {
         System.out.println("What would you like to call your story? \n(Make sure the name doesn't have spaces!)");
         String storyName = input.next();
         Story story = new Story(storyName, "./data/" + username + "_" + storyName + ".txt");
@@ -102,19 +103,20 @@ public class WritingDeskMenu extends Menu {
             } else if (!f.createNewFile()) {
                 System.out.println("A story with that name already exists. Overwrite?\n\ty-> yes\tn ->no");
                 if (input.next().equals("n")) {
-                    createStory(l);
+                    createStory();
                 }
             }
         } catch (IOException e) {
             System.out.println("That wasn't a valid story name! Redirecting...");
         }
         System.out.println("Alright, your story will be called " + story.getName() + ".");
-        writeStory(story, l);
+        writeStory(story);
     }
 
     // MODIFIES: story
     // EFFECTS: adds user input to story
-    private void writeStory(Story story, Library l) {
+    private void writeStory(Story story) {
+        Library l = saveable.getLibrary();
         String substance = "";
         System.out.println("Enter your story here. Type 'the_end' on a new line when you're finished! \n");
         boolean writing = true;

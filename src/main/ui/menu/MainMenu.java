@@ -2,8 +2,8 @@ package ui.menu;
 
 import org.json.simple.parser.ParseException;
 import persistence.Saveable;
-import ui.Levels;
 import ui.gui.MainMenuWindow;
+import ui.gui.UsernameWindow;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,8 @@ public class MainMenu extends Menu {
     public MainMenu(Scanner input) {
         super(input, "Main Menu");
 //        this.input = input;
+        UsernameWindow user = new UsernameWindow();
+        user.displayFrame();
         System.out.println("What's your name?");
         this.username = input.next();
         this.file = new File("./data/" + username + ".json");
@@ -57,26 +59,26 @@ public class MainMenu extends Menu {
     // EFFECTS: processes user command wrt Main Menu
     @Override
     public void processCommand(String command) {
-        switch (command) {
-            case "u":
-                Levels levels = new Levels(saveable);
-                levels.info();
-                break;
-            case "w":
-                WritingDeskMenu writingDeskMenu = new WritingDeskMenu(saveable, input, username);
-                writingDeskMenu.runApp();
-                break;
-            case "p":
-                PetSelectMenu petSelectMenu = new PetSelectMenu(saveable, input, username);
-                petSelectMenu.runApp();
-                break;
-            case "4":
-                //  ConnectFourMenu c4 = new ConnectFourMenu();
-                break;
-            default:
-                System.out.println("Selection not valid...");
-                break;
-        }
+//        switch (command) {
+//            case "u":
+//                Levels levels = new Levels(saveable);
+//                levels.info();
+//                break;
+//            case "w":
+//                WritingDeskMenu writingDeskMenu = new WritingDeskMenu(saveable, input, username);
+//                writingDeskMenu.runApp();
+//                break;
+//            case "p":
+//                PetSelectMenu petSelectMenu = new PetSelectMenu(saveable, input, username);
+//                petSelectMenu.runApp();
+//                break;
+//            case "4":
+//                //  ConnectFourMenu c4 = new ConnectFourMenu();
+//                break;
+//            default:
+//                System.out.println("Selection not valid...");
+//                break;
+//        }
         displayMenu();
         try {
             saveable.write();
@@ -95,8 +97,8 @@ public class MainMenu extends Menu {
         System.out.println("\tp -> Pet Care");
         //System.out.println("\t4 -> Play Connect4");
         System.out.println("\tq -> Quit");
-        MainMenuWindow test = new MainMenuWindow(saveable);
-        test.createFrame();
+        MainMenuWindow mainMenuWindow = new MainMenuWindow(saveable);
+        mainMenuWindow.displayFrame();
 
     }
 
