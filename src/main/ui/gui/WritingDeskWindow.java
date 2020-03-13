@@ -1,6 +1,7 @@
 package ui.gui;
 
 import model.Library;
+import model.Story;
 import model.exceptions.EmptyLibraryException;
 import persistence.Saveable;
 
@@ -8,17 +9,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class WritingDeskWindow extends Window implements ActionListener {
 
     private Saveable saveable;
-    private String storyName;
+    //    private String storyName;
     private JTextField enterName;
-    private JPanel panel;
+    //    private JPanel panel;
+    private Library library;
+    private JList<Object> storyList;
+    private DefaultListModel<Object> storyListModel;
 
     public WritingDeskWindow(Saveable saveable) {
         super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 2 / 10);
         this.saveable = saveable;
+        this.library = saveable.getLibrary();
         frame.setLayout(new BorderLayout());
     }
 
@@ -30,22 +36,34 @@ public class WritingDeskWindow extends Window implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "createStory":
-//            CreateStoryWindow csw = new CreateStoryWindow();
-//            csw.displayFrame();
-                createStory();
-                break;
-            case "enterStoryName":
-                storyName = enterName.getText();
-                break;
-            case "quit":
-                frame.dispose();
-                break;
-            case "view":
-                selectStory();
-                break;
+        String cmd = e.getActionCommand();
+        if ("create".equals(cmd)) {
+            String storyName = JOptionPane.showInputDialog(createLabel("What would you like to call your story?"));
+            createStory(storyName);
+        } else if ("quit".equals(cmd)) {
+            try {
+                saveable.write();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            frame.dispose();
+        } else if ("view".equals(cmd)) {
+            selectStory();
+        } else if ("delete".equals(cmd)) {
+            int index = storyList.getSelectedIndex();
+            if (index != -1) {
+                String storyName = (String) storyListModel.get(index);
+                int delete = JOptionPane.showConfirmDialog(frame, createLabel("Are you sure you want "
+                                + "to delete " + storyName + "?"),
+                        "Deleting...?", JOptionPane.YES_NO_OPTION);
+                if (delete == 0) {
+                    storyListModel.remove(index);
+                    Story story = saveable.getLibrary().findStory(storyName);
+                    saveable.getLibrary().getStories().remove(story);
+                }
+            }
         }
+//        storyList.updateUI();
 
     }
 
@@ -62,24 +80,30 @@ public class WritingDeskWindow extends Window implements ActionListener {
         constraints.insets = new Insets(2, 2, 0, 0);
         constraints.fill = GridBagConstraints.HORIZONTAL; //makes buttons same width
 //        constraints.gridx = 0;
-        buttonPanel.add(createButton("Create a Story", "createStory", this), constraints);
+        buttonPanel.add(createButton("Create a Story", "create", this), constraints);
         constraints.gridy = 1;
-        buttonPanel.add(createButton("View a Story", "view", this), constraints);
+        buttonPanel.add(createButton("View Selected Story", "view", this), constraints);
         constraints.gridy = 2;
+        buttonPanel.add(createButton("Delete Selected Story", "delete", this), constraints);
+        constraints.gridy = 3;
         buttonPanel.add(createButton("Return to Main Menu", "quit", this), constraints);
         return buttonPanel;
     }
 
     public JPanel viewPanel() {
         JPanel viewPanel = new JPanel();
-        JList storyList;
+//        JList<Object> storyList;
         try {
-            String[] storyNames = saveable.getLibrary().getStoryNames();
-            storyList = new JList(storyNames);
+//            String[] storyNames = saveable.getLibrary().getStoryNames();
+            storyListModel = new DefaultListModel<>();
+            for (String storyName : saveable.getLibrary().getStoryNames()) {
+                storyListModel.addElement(storyName);
+            }
+            storyList = new JList<>(storyListModel);
         } catch (EmptyLibraryException e) {
 //            e.printStackTrace();
             String[] storyNames = {"<No Stories to View>"};
-            storyList = new JList(storyNames);
+            storyList = new JList<>(storyNames);
         }
         storyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane storyViewer = new JScrollPane(storyList);
@@ -89,49 +113,88 @@ public class WritingDeskWindow extends Window implements ActionListener {
         return viewPanel;
     }
 
-    public void selectStory() {
-//        Object[] storyNames;
-        try {
-            Object[] storyNames = storyOptions();
-            String storyName = (String) JOptionPane.showInputDialog(frame, createLabel("Select a story:"), "Select",
-                    JOptionPane.PLAIN_MESSAGE, null, storyNames, storyNames[0]);
+//    public void selectStory() {
+////        Object[] storyNames;
+//        if (library.getSize() != 0) {
+//            try {
+////                Object[] storyNames = storyOptions();
+//                String storyName = (String) JOptionPane.showInputDialog(frame,
+//                createLabel("Select a story:"), "Select",
+//                        JOptionPane.PLAIN_MESSAGE, null, storyOptions(), storyOptions()[0]);
+//
+//                if (storyName != null) {
+//                    if (!storyName.equals("<Select a story>")) {
+//                        ViewStoryWindow view = new ViewStoryWindow(saveable, storyName);
+//                        view.displayFrame();
+//                    } else {
+//                        JLabel msg = createLabel("Please select a story!");
+//                        JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+//                                JOptionPane.ERROR_MESSAGE);
+//                        selectStory();
+//                    }
+//                }
+//
+//            } catch (HeadlessException e) {
+//                e.printStackTrace();
+//                frame.dispose();
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(frame, createLabel("You don't have any stories."),
+//            "Library Empty No Stories",
+//                    JOptionPane.INFORMATION_MESSAGE);
+//        }
+//    }
 
-            if (storyName != null) {
-                if (!storyName.equals("<Select a story>")) {
-                    ViewStoryWindow view = new ViewStoryWindow();
-                    view.displayFrame();
-                } else {
-                    JLabel msg = createLabel("Please select a story!");
-                    JOptionPane.showMessageDialog(frame, msg, "Selection Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    selectStory();
+    public void selectStory() {
+        if (library.getSize() != 0) {
+            try {
+                int index = storyList.getSelectedIndex();
+                String storyName = (String) storyListModel.get(index);
+                if (storyName != null) {
+                    if (!storyName.equals("<Select a story>")) {
+                        ViewStoryWindow view = new ViewStoryWindow(saveable, storyName);
+                        view.displayFrame();
+                    } else {
+                        JLabel msg = createLabel("Please select a story!");
+                        JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        selectStory();
+                    }
                 }
 
+            } catch (HeadlessException e) {
+                e.printStackTrace();
+                frame.dispose();
             }
-
-        } catch (HeadlessException e) {
-            e.printStackTrace();
-            frame.dispose();
+        } else {
+            JOptionPane.showMessageDialog(frame, createLabel("You don't have any stories."), "Library Empty No Stories",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private Object[] storyOptions() {
-        Library library = saveable.getLibrary();
         Object[] storyNames = new Object[library.getSize() + 1];
         storyNames[0] = "<Select a story>";
         for (int i = 0; i < library.getSize(); i++) {
-            storyNames[i + 1] = library.getStories().get(i);
+            storyNames[i + 1] = library.getStories().get(i).getName();
         }
         return storyNames;
     }
 
-    private void createStory() {
-        String storyName = JOptionPane.showInputDialog("Name your story:");
+    private void createStory(String storyName) {
         if (storyName != null && storyName.length() > 0) {
             storyName = removeSpaces(storyName);
-            WriteStoryWindow wsw = new WriteStoryWindow(storyName);
-            wsw.displayFrame();
+            Story story = new Story(storyName, "./data/" + storyName + ".txt");
+            if (library.addStory(story)) {
+                storyListModel.addElement(story.getName());
+                WriteStoryWindow wsw = new WriteStoryWindow(saveable, story);
+                wsw.displayFrame();
 //            frame.dispose();
+            } else {
+                String newName = JOptionPane.showInputDialog(createLabel("A story with that name already exists!"
+                        + " Choose a different name:"));
+                createStory(newName);
+            }
         }
     }
 

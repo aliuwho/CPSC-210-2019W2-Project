@@ -3,8 +3,6 @@ package model;
 import model.exceptions.EmptyLibraryException;
 import model.exceptions.NotAStoryException;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,8 +30,8 @@ public class Library {
     }
 
     // MODIFIES: this
-    // EFFECTS; adds story to library
-    public void addStory(Story s) {
+    // EFFECTS; adds story to library if no story already has the same name; otherwise returns false
+    public boolean addStory(Story s) {
 /*
         try {
             FileWriter file = new FileWriter(libraryFile, true);
@@ -47,7 +45,12 @@ public class Library {
         } catch (IOException e) {
             System.out.println("IO Exception occurred");
         }*/
-        stories.add(s);
+        if (findStory(s.getName()) == null) {
+            stories.add(s);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //    @Override
@@ -102,16 +105,11 @@ public class Library {
         if (getSize() == 0) {
             throw new EmptyLibraryException();
         } else if (findStory(story.getName()) != null) {
-
-            BufferedReader br = new BufferedReader(new FileReader(story.getPath()));
-            String line;
-            while ((line = br.readLine()) != null) {
-                fullText.append(line).append("\n");
-            }
-            return fullText;
+            story.getStoryText();
         } else {
             throw new NotAStoryException();
         }
+        return fullText;
     }
 
     // EFFECTS: finds story in library witch matching title; returns null otherwise

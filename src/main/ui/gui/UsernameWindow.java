@@ -1,7 +1,6 @@
 package ui.gui;
 
 import persistence.Saveable;
-import ui.gui.error.UsernameErrorWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalDateTime;
-
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class UsernameWindow extends Window implements ActionListener {
     private Saveable saveable;
@@ -49,9 +46,10 @@ public class UsernameWindow extends Window implements ActionListener {
                 runApp();
             }*/
 //            e.printStackTrace();
-            UsernameErrorWindow error = new UsernameErrorWindow(username);
-            error.displayFrame();
-            username = error.getUsername();
+            dealWithError();
+//            UsernameErrorWindow error = new UsernameErrorWindow(username);
+//            error.displayFrame();
+//            username = error.getUsername();
 //            setFile();
         }
     }
@@ -97,6 +95,24 @@ public class UsernameWindow extends Window implements ActionListener {
 //        quit.addActionListener(this);
         frame.add(createButton("Quit", "quit", this), constraints);
 //        displayFrame();
+    }
+
+    private void dealWithError() {
+        String msg = "The data for that user could not be loaded.\nWould you like to write a new "
+                + "profile with the username '" + username + "'?";
+        JLabel errorLabel = createLabel(msg);
+//        frame.add(createLabel("Would you like to write a new file with the name '" + username + "'?"), c);
+        int overwrite = JOptionPane.showConfirmDialog(frame, errorLabel, "Username Error", JOptionPane.YES_NO_OPTION);
+        if (overwrite == 0) {
+            JOptionPane.showMessageDialog(frame,
+                    createLabel("Okay! A new user profile has been created for " + username + "."),
+                    "Overwriting...", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String input = JOptionPane.showInputDialog(frame, createLabel("Enter a different username:"),
+                    "New Username!", JOptionPane.QUESTION_MESSAGE);
+            username = input;
+            setFile();
+        }
     }
 
 

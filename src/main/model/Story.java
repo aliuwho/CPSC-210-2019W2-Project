@@ -1,5 +1,7 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -43,6 +45,17 @@ public class Story {
     // EFFECTS: returns path to story
     public String getPath() {
         return path;
+    }
+
+    // EFFECTS: returns story text
+    public String getStoryText() throws IOException {
+        StringBuilder fullText = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String line;
+        while ((line = br.readLine()) != null) {
+            fullText.append(line).append("\n");
+        }
+        return fullText.toString();
     }
 
 }

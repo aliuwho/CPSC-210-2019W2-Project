@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PetRoomWindow extends Window implements ActionListener {
     private Saveable saveable;
@@ -36,6 +37,11 @@ public class PetRoomWindow extends Window implements ActionListener {
             feed();
         } else {
             frame.dispose();
+            try {
+                saveable.write();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         hungry.setText("hungry = " + pet.isHungry());
         tired.setText("tired = " + pet.isTired());
