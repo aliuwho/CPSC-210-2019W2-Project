@@ -50,24 +50,29 @@ public class Library {
         stories.add(s);
     }
 
+    //    @Override
+    public ArrayList<Story> getStories() {
+        return stories;
+    }
+
     // EFFECTS: if no stories in library, throws EmptyLibraryException;
     //          else, lists stories in library
-    public StringBuilder getStories() throws EmptyLibraryException {
+    /*public StringBuilder getStories() throws EmptyLibraryException {
         StringBuilder storyList = new StringBuilder();
         if (isEmpty()) {
             throw new EmptyLibraryException();
         } else {
-            /*for (Object s : libraryObj) {
+            *//*for (Object s : libraryObj) {
                 JSONObject story = (JSONObject) s;
                 String storyName = (String) story.get("name");
                 storyList.append("\t- ").append(storyName);
-            }*/
+            }*//*
             for (Story s : stories) {
                 storyList.append("\t- ").append(s.getName());
             }
         }
         return storyList;
-    }
+    }*/
 
     // EFFECTS: if no stories in library, throws EmptyLibraryException;
     //          else, lists stories in library
@@ -87,6 +92,7 @@ public class Library {
         }
         return storyList;
     }
+
 
     // EFFECTS: if library is empty, throw EmptyLibraryException;
     //          if library is not empty but Story is not in library, throw NotAStoryException;

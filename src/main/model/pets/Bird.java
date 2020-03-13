@@ -1,9 +1,9 @@
-package model.animals;
+package model.pets;
 
 /**
  * Represents a bird animal
  */
-public class Bird extends Animal {
+public class Bird extends Pet {
 
     // EFFECTS: constructs a bird with a name with a certain hunger and energy status
     public Bird(String name, boolean hungry, boolean tired) {

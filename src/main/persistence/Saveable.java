@@ -2,7 +2,7 @@ package persistence;
 
 import model.Library;
 import model.Story;
-import model.animals.*;
+import model.pets.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -25,7 +25,7 @@ public class Saveable {
     private long points;
     private String username;
     private Library library;
-    private ArrayList<Animal> pets;
+    private ArrayList<Pet> pets;
     private File file;
     private String start;
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("H:m',' MMMM d',' yyyy");
@@ -75,7 +75,7 @@ public class Saveable {
     }
 
     // EFFECTS: returns pets
-    public ArrayList<Animal> getPets() {
+    public ArrayList<Pet> getPets() {
         return pets;
     }
 
@@ -87,6 +87,17 @@ public class Saveable {
     // EFFECTS: returns start time
     public String getStart() {
         return start;
+    }
+
+    // EFFECTS: if pet with name is in pets, returns the pet;
+    //          otherwise, returns null
+    public Pet findPet(String petName) {
+        for (Pet p : pets) {
+            if (p.getName().equals(petName)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     // MODIFIES: this
@@ -111,16 +122,16 @@ public class Saveable {
     }
 
     // EFFECTS: transforms pets into a JSONArray
-    private JSONArray petsToJsonArray(ArrayList<Animal> pets) {
+    private JSONArray petsToJsonArray(ArrayList<Pet> pets) {
         JSONArray array = new JSONArray();
-        for (Animal pet : pets) {
+        for (Pet pet : pets) {
             array.add(petToJsonObj(pet));
         }
         return array;
     }
 
     // EFFECTS: turns a pet into a JSONObject
-    private JSONObject petToJsonObj(Animal pet) {
+    private JSONObject petToJsonObj(Pet pet) {
         JSONObject obj = new JSONObject();
         obj.put("name", pet.getName());
         obj.put("species", pet.getSpecies());
@@ -166,18 +177,18 @@ public class Saveable {
 
 
     // EFFECTS: turns JSONArray into pets
-    private ArrayList<Animal> toPets(JSONArray petList) {
-        ArrayList<Animal> temp = new ArrayList<>();
+    private ArrayList<Pet> toPets(JSONArray petList) {
+        ArrayList<Pet> temp = new ArrayList<>();
         for (Object value : petList) {
             JSONObject o = (JSONObject) value;
-            Animal animal = toPet(o);
-            temp.add(animal);
+            Pet pet = toPet(o);
+            temp.add(pet);
         }
         return temp;
     }
 
     // EFFECTS: turns JSONObject into an Animal
-    private Animal toPet(JSONObject o) {
+    private Pet toPet(JSONObject o) {
         String species = (String) o.get("species");
         String name = (String) o.get("name");
         boolean hungry = (boolean) o.get("hungry");

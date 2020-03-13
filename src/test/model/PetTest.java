@@ -1,6 +1,6 @@
 package model;
 
-import model.animals.*;
+import model.pets.*;
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AnimalTest {
-    private Animal bird;
-    private Animal cat;
-    private Animal dog;
-    private Animal horse;
-    private Animal lizard;
+public class PetTest {
+    private Pet bird;
+    private Pet cat;
+    private Pet dog;
+    private Pet horse;
+    private Pet lizard;
 
     @BeforeEach
     public void runBefore() {

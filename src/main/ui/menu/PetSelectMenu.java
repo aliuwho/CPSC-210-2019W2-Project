@@ -1,6 +1,6 @@
 package ui.menu;
 
-import model.animals.Animal;
+import model.pets.Pet;
 import persistence.Saveable;
 
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.Scanner;
  * represents a menu for selecting a pet to interact with
  */
 public class PetSelectMenu extends Menu {
-    private final ArrayList<Animal> pets;
-    private Animal pet;
+    private final ArrayList<Pet> pets;
+    private Pet pet;
 //    private final Saveable saveable;
 
     // EFFECTS: runs pet select menu for a user without any pets

@@ -1,6 +1,6 @@
 package ui.menu;
 
-import model.animals.*;
+import model.pets.*;
 
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ import java.util.Scanner;
  * represents a menu for getting a new pet
  */
 public class NewPetMenu extends Menu {
-    private Animal pet;
+    private Pet pet;
 
     // EFFECTS: creates a new PetSelectMenu
     public NewPetMenu(Scanner input, String username) {
@@ -18,7 +18,7 @@ public class NewPetMenu extends Menu {
     }
 
     // EFFECTS: returns pet
-    public Animal getPet() {
+    public Pet getPet() {
         return pet;
     }
 

@@ -1,9 +1,9 @@
 package model;
 
-import model.animals.Animal;
-import model.animals.Bird;
-import model.animals.Horse;
-import model.animals.Lizard;
+import model.pets.Pet;
+import model.pets.Bird;
+import model.pets.Horse;
+import model.pets.Lizard;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -160,7 +160,7 @@ public class SaveableTest {
             Bird jarod = new Bird("jarod");
             Horse suzie = new Horse("suzie");
             Lizard anushka = new Lizard("Anushka");
-            ArrayList<Animal> pets = s.getPets();
+            ArrayList<Pet> pets = s.getPets();
             pets.add(jarod);
             pets.add(suzie);
             pets.add(anushka);

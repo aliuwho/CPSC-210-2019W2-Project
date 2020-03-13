@@ -1,9 +1,9 @@
-package model.animals;
+package model.pets;
 
 /**
  * represents a horse animal
  */
-public class Horse extends Animal {
+public class Horse extends Pet {
 
     // EFFECTS: constructs a horse with a name with a certain hunger and energy status
     public Horse(String name, boolean hungry, boolean tired) {

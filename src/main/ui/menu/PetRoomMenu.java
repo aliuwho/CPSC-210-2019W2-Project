@@ -1,6 +1,6 @@
 package ui.menu;
 
-import model.animals.*;
+import model.pets.*;
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
@@ -12,11 +12,11 @@ import java.util.Scanner;
  * represents a menu for interacting with a pet
  */
 public class PetRoomMenu extends Menu {
-    private final Animal pet;
+    private final Pet pet;
 //    private final Saveable saveable;
 
     // EFFECTS: creates a new PetRoom Menu
-    public PetRoomMenu(Scanner input, String username, Saveable s, Animal pet) {
+    public PetRoomMenu(Scanner input, String username, Saveable s, Pet pet) {
         super(input,"Pet Room");
         this.saveable = s;
 //        this.input = input;
