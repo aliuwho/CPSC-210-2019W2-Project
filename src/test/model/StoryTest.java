@@ -149,4 +149,25 @@ public class StoryTest {
         }
     }
 
+    @Test
+    public void testGetStoryText() {
+        Story test = new Story("testStory", "./data/TEST_FILE_GET_TEXT.txt");
+        try {
+            assertEquals("this is\na test!\n", test.getStoryText());
+        } catch (IOException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testGetStoryException() {
+        Story test = new Story("testStory", "./data/TEST_FILE_READ_EXCEPTION.txt");
+        try {
+            assertEquals("this is\na test!\n", test.getStoryText());
+            fail("should not be able to read");
+        } catch (IOException e) {
+            //do nothing
+        }
+    }
+
 }

@@ -97,6 +97,11 @@ public class LibraryTest {
             fail();
         }
         assertEquals(3, library.getSize());
+        String[] temp = {story1.getName(), story2.getName(), story3.getName()};
+        for (int i = 0; i < temp.length; i++) {
+            assertEquals(temp[i], library.getStoryNames()[i]);
+
+        }
     }
 
     @Test
@@ -160,6 +165,7 @@ public class LibraryTest {
         library.addStory(story2);
         library.addStory(story1);
         library.addStory(story3);
+        assertEquals(4, library.getSize());
         assertEquals(story1.getName(), library.findStory("STORY1").getName());
     }
 
@@ -173,9 +179,8 @@ public class LibraryTest {
         try {
             library.addStory(story1);
             story1.write("this is a test!");
-            StringBuilder sb = new StringBuilder();
-            sb.append("this is a test!\n");
-            assertEquals(sb.substring(0), library.getStoryText(story1).substring(0));
+            String test = "this is a test!\n";
+            assertEquals(test, library.getStoryText(story1));
         } catch (EmptyLibraryException | IOException e) {
             fail();
         } catch (NotAStoryException e) {

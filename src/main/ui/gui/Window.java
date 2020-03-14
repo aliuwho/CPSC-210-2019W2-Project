@@ -31,6 +31,7 @@ public abstract class Window {
         JFrame.setDefaultLookAndFeelDecorated(true);
         font = new Font(FONT_NAME, FONT_TYPE, FONT_SIZE);
         frame.setLayout(new GridBagLayout());
+//        displayFrame();
 
     }
 
@@ -54,9 +55,16 @@ public abstract class Window {
         return button;
     }
 
-    // EFFECTS: creates label
+    // EFFECTS: creates label with text
     protected JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
+        label.setFont(font);
+        return label;
+    }
+
+    // EFFECTS: creates label with image
+    protected JLabel createLabel(ImageIcon img) {
+        JLabel label = new JLabel(img);
         label.setFont(font);
         return label;
     }
