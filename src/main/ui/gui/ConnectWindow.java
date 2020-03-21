@@ -1,8 +1,6 @@
 package ui.gui;
 
-import model.Chip;
 import model.FourBoard;
-import model.exceptions.ColumnFullException;
 import persistence.Saveable;
 
 import javax.imageio.ImageIO;
@@ -43,6 +41,8 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         initImages();
         createArrows();
         chooseColor();
+//        label.addKeyListener(this);
+//        frame.addKeyListener(this);
     }
 
     private void chooseColor() {
@@ -52,6 +52,11 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         if (colorName != null) {
             if (!colorName.equals("<Select a color>")) {
                 playerColor = Color.getColor(colorName);
+            } else {
+                JLabel msg = createLabel("Please select a color!");
+                JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+                        JOptionPane.ERROR_MESSAGE);
+                chooseColor();
             }
         } else {
             JLabel msg = createLabel("Please select a color!");
@@ -60,7 +65,6 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
             chooseColor();
         }
     }
-
 
 //    private Object[] getColors() {
 //        Color[] colors = FourBoard.TYPES;
@@ -104,11 +108,9 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
                 break;
             case "help":
                 label.setText("help");
-                updateBoard(moveRight());
                 break;
             case "new":
                 label.setText("new");
-                updateBoard(moveLeft());
                 break;
         }
         updateBoard(column);
@@ -130,7 +132,13 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         }
 //        frame.add(new JPanel());
 //        label = createLabel("temp");
-        frame.add(label);
+        JTextField text = new JTextField("Good luck!", 1);
+        text.setFont(new Font(Window.FONT_NAME, Window.FONT_TYPE, Window.FONT_SIZE));
+        text.addKeyListener(this);
+        text.setOpaque(false);
+        text.setBorder(null);
+        text.setEditable(false);
+        frame.add(text);
         for (int i = 0; i < 48; i++) {
             if (i == 7 | i == 15 | i == 23 /*| i == 31 *//*| i == 39*/ /*| i == 47*/) {
                 frame.add(new JPanel());
@@ -166,46 +174,49 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         return resizedImg;
     }
 
-    // EFFECTS:
     @Override
-    public void keyTyped(KeyEvent e) {
-//        displayInfo(e, "KEY TYPED: ");
-        label.setText("Key: " + e.toString());
-    }
+    public void keyPressed(KeyEvent event) {
 
-    // EFFECTS:
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT:
-                label.setText("left");
-                updateBoard(moveLeft());
-                break;
-            case KeyEvent.VK_RIGHT:
-                updateBoard(moveRight());
-                // move right
-                break;
-            case KeyEvent.VK_ENTER:
-                label.setText("enter");
-                try {
-                    board.addChip(new Chip(playerColor), column);
-                    // TODO: update board chips with correct color
-                } catch (ColumnFullException ex) {
-                    JOptionPane.showConfirmDialog(frame, "You can't put any more chips in this column!",
-                            "Column FULL", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-                }
+//        printEventInfo("Key Pressed", event);
+        if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+            updateBoard(moveLeft());
+        } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+            updateBoard((moveRight()));
+        } else if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+            updateBoard(column);
         }
-        updateBoard(column);
+
     }
 
+    //EFFECTS: none
     @Override
-    public void keyReleased(KeyEvent e) {
-//        displayInfo(e, "KEY RELEASED: ");
+    public void keyReleased(KeyEvent event) {
+//        printEventInfo("Key Released", event);
+//        event.toString();
+    }
+
+    // EFFECTS: none
+    @Override
+    public void keyTyped(KeyEvent event) {
+
     }
 
     public void updateBoard(int newCol) {
         if (isGameOver() != null) {
-            JOptionPane.showMessageDialog(frame, "The game is over! " + isGameOver() + " won!");
+            if (playerColor.equals(isGameOver())) {
+                JOptionPane.showMessageDialog(frame, "The player won! You earned 50 points.");
+                saveable.addPoints(50);
+                try {
+                    saveable.write();
+                } catch (IOException e) {
+//                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, "An error occurred while saving.",
+                            "Uh oh", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
+            }
+//            JOptionPane.showMessageDialog(frame, "The game is over! " + isGameOver() + " won!");
         } else if (column != newCol) {
             arrows[newCol].setVisible(true);
             arrows[column].setVisible(false);
