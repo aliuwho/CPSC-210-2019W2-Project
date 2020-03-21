@@ -19,7 +19,7 @@ public class FourBoard {
     public static final int ROWS = 6;
     public static final int COLS = 7;
     private static Color EMPTY_CHIP = Color.LIGHT_GRAY;
-    private static Color[] TYPES = {Color.RED, Color.BLUE};
+    public static Color[] TYPES = {Color.RED, Color.BLUE};
 
     // EFFECTS: creates a new, empty board
     public FourBoard() {
