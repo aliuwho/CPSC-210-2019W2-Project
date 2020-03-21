@@ -31,7 +31,7 @@ public class MainMenuWindow extends Window implements ActionListener {
 
     public JPanel userInfoPanel() {
         JPanel welcomePanel = new JPanel();
-        welcomePanel.setLayout(new GridLayout(4,1));
+        welcomePanel.setLayout(new GridLayout(4, 1));
         welcomePanel.add(createLabel("Welcome " + saveable.getUsername() + "!"));
         welcomePanel.add(createLabel("User since " + saveable.getStart()));
 
@@ -59,8 +59,9 @@ public class MainMenuWindow extends Window implements ActionListener {
 //        buttonConstraints.gridy = 1;
         buttonsPanel.add(createButton("Pet Room", "petMenu", this));
 //        buttonConstraints.gridy = 2;
-        buttonsPanel.add(createButton("Build Blocks", "buildMenu", this));
+        buttonsPanel.add(createButton("Connect 4", "4menu", this));
 //        buttonConstraints.gridy = 3;
+//        buttonsPanel.add(createButton("Build Blocks", "buildMenu", this));
 //        buttonConstraints.gridy = 4;
         buttonsPanel.add(createButton("Quit", "quit", this));
         return buttonsPanel;
@@ -80,6 +81,9 @@ public class MainMenuWindow extends Window implements ActionListener {
             writeDesk.displayFrame();
         } else if (e.getActionCommand().equals("petMenu")) {
             selectPet();
+        } else if (e.getActionCommand().equals("4menu")) {
+            ConnectWindow connect = new ConnectWindow(saveable);
+            connect.displayFrame();
         }
     }
 

@@ -1,9 +1,6 @@
 package ui;
 
 import ui.gui.UsernameWindow;
-import ui.menu.MainMenu;
-
-import java.util.Scanner;
 
 /**
  * used to run the class

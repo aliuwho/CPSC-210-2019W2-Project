@@ -69,6 +69,13 @@ public abstract class Window {
         return label;
     }
 
+    // EFFECTS: creates label with image and text
+    protected JLabel createLabel(String text, ImageIcon img) {
+        JLabel label = new JLabel(text, img, JLabel.CENTER);
+        label.setFont(font);
+        return label;
+    }
+
     // EFFECTS: returns screen width
     public static int getScreenWidth() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -82,9 +89,9 @@ public abstract class Window {
     }
 
     // EFFECTS: sets frame visibility
-    public void setVisibility(boolean visibility) {
-        frame.setVisible(visibility);
-    }
+//    public void setVisibility(boolean visibility) {
+//        frame.setVisible(visibility);
+//    }
 
     // EFFECTS: a simple error notice pops up
     public void errorWindow(String title, String message) {
