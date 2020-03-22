@@ -248,6 +248,13 @@ public class FourBoardTest {
         assertNull(board.isGameOver());
     }
 
+    @Test
+    public void testSetChip() {
+        board.setChips(new Chip[6][7]);
+        assertEquals(6, board.getChips().length);
+        assertEquals(7, board.getChips()[0].length);
+    }
+
 //    @Test
 //    public void testIsDiagonal() {
 //        Chip[][] test1 = new Chip[6][7];

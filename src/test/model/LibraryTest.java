@@ -69,6 +69,7 @@ public class LibraryTest {
     @Test
     public void testSize() {
         assertEquals(0, library.getSize());
+        assertEquals(0, library.getStoryNames().length);
 
         library.addStory(story1);
         assertEquals(1, library.getSize());
@@ -93,10 +94,12 @@ public class LibraryTest {
             library.addStory(story2);
             library.addStory(story1);
             library.addStory(story3);
+            assertFalse(library.addStory(story1));
         } catch (Exception e) {
             fail();
         }
         assertEquals(3, library.getSize());
+        assertEquals(3, library.getStories().size());
         String[] temp = {story1.getName(), story2.getName(), story3.getName()};
         for (int i = 0; i < temp.length; i++) {
             assertEquals(temp[i], library.getStoryNames()[i]);
