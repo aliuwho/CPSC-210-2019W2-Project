@@ -4,7 +4,6 @@ import model.Chip;
 import model.FourBoard;
 import model.exceptions.ColumnFullException;
 import model.exceptions.EndGameException;
-import org.json.simple.parser.ParseException;
 import persistence.Saveable;
 
 import javax.imageio.ImageIO;
@@ -37,7 +36,7 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     private Color enemyColor;
 
     // EFFECTS: creates a new Connect4 game
-    public ConnectWindow(Saveable saveable) {
+    public ConnectWindow(Saveable saveable, Color player) {
         super("Connect 4", 1, 1);
         if (getScreenHeight() > getScreenWidth()) {
             dimension = getScreenHeight() * 7 / 10;
@@ -47,39 +46,23 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         frame.setPreferredSize(new Dimension(dimension, dimension));
         this.saveable = saveable;
         this.board = new FourBoard();
+        playerColor = player;
+        initEnemy();
         frame.setLayout(new GridLayout(7, 8));
         initImages();
-        chooseColor();
 //        label.addKeyListener(this);
 //        frame.addKeyListener(this);
     }
 
     // MODIFIES: this
-    // EFFECTS: allows player to select blue or red as their color
-    private void chooseColor() {
-        Object[] colors = {"<Select a color>", "RED", "BLUE"};
-        String colorName = (String) JOptionPane.showInputDialog(frame, createLabel("Select a color:"), "Select",
-                JOptionPane.QUESTION_MESSAGE, null, colors, colors[0]);
-        if (colorName != null) {
-            if (colorName.equals("<Select a color>")) {
-                JLabel msg = createLabel("Please select a color!");
-                JOptionPane.showMessageDialog(frame, msg, "Selection Error",
-                        JOptionPane.ERROR_MESSAGE);
-                chooseColor();
-            } else if (colorName.equals("RED")) {
-                playerColor = Color.RED;
-                enemyColor = Color.BLUE;
-            } else {
-                playerColor = Color.BLUE;
-                enemyColor = Color.RED;
-            }
+    // EFFECTS: sets enemy color
+    public void initEnemy() {
+        if (playerColor.equals(Color.RED)) {
+            enemyColor = Color.BLUE;
         } else {
-            JLabel msg = createLabel("Please select a color!");
-            JOptionPane.showMessageDialog(frame, msg, "Selection Error",
-                    JOptionPane.ERROR_MESSAGE);
-            chooseColor();
-        }
+            enemyColor = Color.RED;
 
+        }
     }
 
     // MODIFIES: this
@@ -343,8 +326,8 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     public void updateBoard(int newCol) {
         if (board.isGameOver() != null) {
             if (playerColor.equals(board.isGameOver())) {
-                JOptionPane.showMessageDialog(frame, "The player won! You earned 50 points.");
-                saveable.addPoints(50);
+                JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
+                saveable.addPoints(20);
             } else {
                 JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
                 saveable.addPoints(1);

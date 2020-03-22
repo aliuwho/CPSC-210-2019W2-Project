@@ -12,15 +12,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * A class representing GUI to get a new pet
+ */
 public class NewPetWindow extends Window implements ActionListener {
     private Saveable saveable;
 
+    // EFFECTS: creates new pet window
     public NewPetWindow(Saveable saveable) {
         super("Pet Selection", getScreenWidth() * 3 / 10, getScreenHeight() * 3 / 10);
         frame.setLayout(new GridLayout(2, 1));
         this.saveable = saveable;
     }
 
+    // MODIFIES: this
+    // EFFECTS: process action event command
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -41,6 +47,7 @@ public class NewPetWindow extends Window implements ActionListener {
         }
     }
 
+    // EFFECTS: processes user selection
     private Pet getPet(String cmd, String name) {
         Pet pet;
         switch (cmd) {
@@ -67,12 +74,15 @@ public class NewPetWindow extends Window implements ActionListener {
         return pet;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates window frame
     @Override
     protected void createFrame() {
         frame.add(buttonPanel());
         frame.add(picturePanel());
     }
 
+    // EFFECTS: creates a JPanel with buttons for each type of pet
     private JPanel buttonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -85,6 +95,7 @@ public class NewPetWindow extends Window implements ActionListener {
         return buttonPanel;
     }
 
+    // EFFECTS: creates a JPanel with an image
     private JPanel picturePanel() {
         JPanel picPanel = new JPanel();
         try {

@@ -10,17 +10,22 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * A class representing main menu GUI elements for the application
+ */
 public class MainMenuWindow extends Window implements ActionListener {
     private Saveable saveable;
+    private JProgressBar levels;
 
+    // EFFECTS: creates a new MainMenuWindow
     public MainMenuWindow(Saveable s) {
         super("Main Menu", getScreenWidth() * 3 / 10, (int) (getScreenHeight() * 0.7));
         saveable = s;
 //        frame.setLayout(new BorderLayout());
     }
 
-    //TODO: ADD METHOD SPECIFICATION
-
+    // MODIFIES: this
+    // EFFECTS: adds elements to window
     @Override
     public void createFrame() {
         frame.setLayout(new GridLayout(3, 1));
@@ -29,6 +34,7 @@ public class MainMenuWindow extends Window implements ActionListener {
         frame.add(buttonPanel());
     }
 
+    // EFFECTS: creates a user info JPanel
     public JPanel userInfoPanel() {
         JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new GridLayout(4, 1));
@@ -36,13 +42,14 @@ public class MainMenuWindow extends Window implements ActionListener {
         welcomePanel.add(createLabel("User since " + saveable.getStart()));
 
         welcomePanel.add(createLabel("Level Progress:"));
-        JProgressBar levels = new JProgressBar(0, 1000);
+        levels = new JProgressBar(0, 1000);
         levels.setValue(Math.toIntExact(saveable.getPoints()));
         levels.setStringPainted(true);
         welcomePanel.add(levels);
         return welcomePanel;
     }
 
+    // EFFECTS: creates a JPanel with buttons
     public JPanel buttonPanel() {
         JPanel buttonsPanel = new JPanel();
         //rows equal to num of buttons:
@@ -67,26 +74,64 @@ public class MainMenuWindow extends Window implements ActionListener {
         return buttonsPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action command
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("quit")) {
-            try {
-                saveable.write();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            frame.dispose();
-        } else if (e.getActionCommand().equals("writingDesk")) {
-            WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
-            writeDesk.displayFrame();
-        } else if (e.getActionCommand().equals("petMenu")) {
-            selectPet();
-        } else if (e.getActionCommand().equals("4menu")) {
-            ConnectWindow connect = new ConnectWindow(saveable);
-            connect.displayFrame();
+        switch (e.getActionCommand()) {
+            case "quit":
+                try {
+                    saveable.write();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                frame.dispose();
+                break;
+            case "writingDesk":
+                WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
+                writeDesk.displayFrame();
+                levels.setValue(Math.toIntExact(saveable.getPoints()));
+                break;
+            case "petMenu":
+                selectPet();
+                break;
+            case "4menu":
+                chooseColor();
+//                ConnectWindow connect = new ConnectWindow(saveable);
+//                connect.displayFrame();
+                break;
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: allows player to select blue or red as their color
+    private void chooseColor() {
+        Object[] colors = {"<Select a color>", "RED", "BLUE"};
+        String colorName = (String) JOptionPane.showInputDialog(frame, createLabel("Select a color:"), "Select",
+                JOptionPane.QUESTION_MESSAGE, null, colors, colors[0]);
+        if (colorName != null) {
+            if (colorName.equals("<Select a color>")) {
+                JLabel msg = createLabel("Please select a color!");
+                JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+                        JOptionPane.ERROR_MESSAGE);
+                chooseColor();
+            } else if (colorName.equals("RED")) {
+                ConnectWindow connect = new ConnectWindow(saveable, Color.RED);
+                connect.displayFrame();
+            } else {
+                ConnectWindow connect = new ConnectWindow(saveable, Color.BLUE);
+                connect.displayFrame();
+            }
+        }
+        /*else {
+            JLabel msg = createLabel("Please select a color!");
+            JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+                    JOptionPane.ERROR_MESSAGE);
+            chooseColor();
+        }*/
+    }
+
+    // EFFECTS: returns a generic array of pet names
     private Object[] getPetNames() {
         ArrayList<Pet> pets = saveable.getPets();
         Object[] petNames = new Object[pets.size() + 2];
@@ -98,6 +143,7 @@ public class MainMenuWindow extends Window implements ActionListener {
         return petNames;
     }
 
+    // EFFECTS: enables user to select a pet to interact with
     private void selectPet() {
         Object[] petNames = getPetNames();
         String petName = (String) JOptionPane.showInputDialog(frame, createLabel("Select a pet:"), "Select",

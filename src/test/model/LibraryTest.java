@@ -109,7 +109,7 @@ public class LibraryTest {
         try {
             library.addStory(story4);
             assertEquals(1, library.getSize());
-            System.out.println(library.getStoryText(story4));
+            assertEquals("", library.getStoryText(story4));
         } catch (EmptyLibraryException e) {
             fail();
         } catch (NotAStoryException e) {
@@ -124,9 +124,7 @@ public class LibraryTest {
         Story story;
         try {
             story = new Story("VIEW_STORY_TEST", "./data/VIEW_STORY_TEST.txt");
-            StringBuilder temp = new StringBuilder();
-            temp.append("\n");
-            assertEquals(temp.toString(), library.getStoryText(story));
+            assertEquals("\n", library.getStoryText(story));
             fail();
         } catch (NotAStoryException | IOException e) {
             fail();
@@ -146,9 +144,7 @@ public class LibraryTest {
             library.addStory(story2);
             story = new Story("VIEW_STORY_TEST", "./data/VIEW_STORY_TEST.txt");
             library.getStoryText(story);
-            StringBuilder temp = new StringBuilder();
-            temp.append("\n");
-            assertEquals(temp.toString(), library.getStoryText(story));
+            assertEquals("\n", library.getStoryText(story));
         } catch (IOException | EmptyLibraryException e) {
             fail();
         } catch (NotAStoryException e) {
@@ -195,7 +191,7 @@ public class LibraryTest {
             story1.write("this is a test!");
             StringBuilder sb = new StringBuilder();
             sb.append("this is a test!\n");
-            assertEquals(sb.substring(0), library.getStoryText(story1).substring(0));
+            assertEquals(sb.substring(0), library.getStoryText(story1));
             fail();
         } catch (EmptyLibraryException e) {
             System.out.println("caught library error :|!");
@@ -212,7 +208,7 @@ public class LibraryTest {
             story2.write("this is a test!");
             StringBuilder sb = new StringBuilder();
             sb.append("this is a test!\n");
-            assertEquals(sb.substring(0), library.getStoryText(story2).substring(0));
+            assertEquals(sb.substring(0), library.getStoryText(story2));
             fail();
         } catch (NotAStoryException e) {
             System.out.println("caught story error :|!");
@@ -238,7 +234,7 @@ public class LibraryTest {
             library.addStory(testStory);
             StringBuilder sb = new StringBuilder();
             sb.append("this is a test!\n");
-            assertEquals(sb.substring(0), library.getStoryText(testStory).substring(0));
+            assertEquals(sb.substring(0), library.getStoryText(testStory));
             fail();
         } catch (NotAStoryException | EmptyLibraryException e) {
             fail();

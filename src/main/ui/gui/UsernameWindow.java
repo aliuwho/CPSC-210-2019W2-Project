@@ -9,11 +9,15 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalDateTime;
 
+/**
+ * class representing a window for user to enter username to access the application
+ */
 public class UsernameWindow extends Window implements ActionListener {
     private Saveable saveable;
     private JTextField field;
     private String username;
 
+    // EFFECTS: creates a new username window
     public UsernameWindow() {
         super("Welcome", (int) (getScreenWidth() * 0.2), (int) (getScreenHeight() * 0.15));
 //        frame.setLayout(new GridBagLayout());
@@ -22,6 +26,8 @@ public class UsernameWindow extends Window implements ActionListener {
 //        this.saveable = saveable;
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads user file
     private void setFile() {
         File file = new File("./data/" + username + ".json");
         try {
@@ -32,7 +38,7 @@ public class UsernameWindow extends Window implements ActionListener {
             }
         } catch (Exception e) {
             //(ParseException | IOException e) {
-            /*//TODO add window to deal with this.....
+            /*
           if (input.next().equals("y")) {
                 if (file.delete()) {
                     System.out.println("Okay! A new user profile has been created for " + username + ".");
@@ -54,6 +60,8 @@ public class UsernameWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action event
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("submit")) {
@@ -71,6 +79,8 @@ public class UsernameWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates window frame
     @Override
     public void createFrame() {
         GridBagConstraints constraints = new GridBagConstraints();
@@ -97,6 +107,7 @@ public class UsernameWindow extends Window implements ActionListener {
 //        displayFrame();
     }
 
+    // EFFECTS: handles errors with username
     private void dealWithError() {
         String msg = "The data for that user could not be loaded.\nWould you like to write a new "
                 + "profile with the username '" + username + "'?";

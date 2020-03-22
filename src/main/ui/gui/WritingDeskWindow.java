@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * a class representing a GUI window for the writing desk functions
+ */
 public class WritingDeskWindow extends Window implements ActionListener {
 
     private Saveable saveable;
@@ -20,6 +23,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
     private JList<Object> storyList;
     private DefaultListModel<Object> storyListModel;
 
+    // EFFECTS: creates a new WritingDeskWindow
     public WritingDeskWindow(Saveable saveable) {
         super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 2 / 10);
         this.saveable = saveable;
@@ -27,6 +31,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
         frame.setLayout(new BorderLayout());
     }
 
+    // EFFECTS: creates window frame
     @Override
     public void createFrame() {
         frame.add(buttonPanel(), BorderLayout.WEST);
@@ -34,6 +39,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
         frame.add(imagePanel(), BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action event
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -55,12 +62,14 @@ public class WritingDeskWindow extends Window implements ActionListener {
 
     }
 
+    // EFFECTS: creates a panel with an image
     public JPanel imagePanel() {
         JPanel imagePanel = new JPanel();
         imagePanel.add(createLabel(new ImageIcon("./data/tobs.jpg")));
         return imagePanel;
     }
 
+    // EFFECTS: creates a JPanel with buttons for writing desk options
     public JPanel buttonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
@@ -78,6 +87,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
         return buttonPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: enables user to view a list of their stories
     public JPanel viewPanel() {
         JPanel viewPanel = new JPanel();
 //        JList<Object> storyList;
@@ -100,6 +111,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
         return viewPanel;
     }
 
+    // EFFECTS: handles user selection for viewing a story
     public void selectStory() {
         if (library.getSize() != 0) {
             try {
@@ -127,6 +139,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes story from library
     private void deleteStory() {
         int index = storyList.getSelectedIndex();
         if (index != -1) {
@@ -142,6 +156,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: enables user to create a story for the library
     private void createStory(String storyName) {
         if (storyName != null && storyName.length() > 0) {
             storyName = removeSpaces(storyName);

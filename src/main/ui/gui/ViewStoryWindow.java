@@ -10,15 +10,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * a class representing a window to view txt files
+ */
 public class ViewStoryWindow extends Window implements ActionListener {
     private Story story;
 
+    // EFFECTS: creates a new view story window with a story
     public ViewStoryWindow(Saveable save, String storyName) {
         super("View Story", getScreenWidth() * 4 / 10, getScreenHeight() * 4 / 10);
         Library library = save.getLibrary();
         this.story = library.findStory(storyName);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action event
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("return")) {
@@ -26,12 +32,15 @@ public class ViewStoryWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates window frame
     @Override
     protected void createFrame() {
         frame.add(viewPanel());
         frame.add(createButton("Return to Desk", "return", this));
     }
 
+    // EFFECTS: creates a panel with the story
     private JPanel viewPanel() {
         JPanel writePanel = new JPanel();
         writePanel.setLayout(new GridBagLayout());

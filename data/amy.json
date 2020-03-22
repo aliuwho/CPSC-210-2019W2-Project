@@ -1,1 +1,1 @@
-{"pets":[{"hungry":false,"species":"horse","name":"black beauty","tired":false},{"hungry":true,"species":"dog","name":"tobs","tired":true}],"library":[],"name":"amy","start":"23:47, March 12, 2020","points":0}
+{"pets":[{"hungry":false,"species":"horse","name":"black beauty","tired":false},{"hungry":true,"species":"dog","name":"tobs","tired":true}],"library":[{"path":".\/data\/help.txt","name":"help"}],"name":"amy","start":"23:47, March 12, 2020","points":2025}

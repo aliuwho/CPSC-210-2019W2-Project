@@ -9,12 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * a class representing a text editor to create stories for a library
+ */
 public class WriteStoryWindow extends Window implements ActionListener {
     //    private String storyName;
     private Saveable saveable;
     private Story story;
     private JTextArea textArea;
 
+    // EFFECTS: creates a new WriteStory Window
     public WriteStoryWindow(Saveable saveable, Story story) {
         super(story.getName() + ".txt", getScreenWidth() * 5 / 10, getScreenHeight() * 5 / 10);
         this.saveable = saveable;
@@ -24,6 +28,8 @@ public class WriteStoryWindow extends Window implements ActionListener {
         frame.setLayout(new BorderLayout());
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action event
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("save")) {
@@ -41,12 +47,15 @@ public class WriteStoryWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame for window
     @Override
     protected void createFrame() {
         frame.add(writePanel(), BorderLayout.NORTH);
         frame.add(buttonPanel(), BorderLayout.SOUTH);
     }
 
+    // EFFECTS: creates panel with buttons
     public JPanel buttonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
@@ -59,6 +68,7 @@ public class WriteStoryWindow extends Window implements ActionListener {
         return buttonPanel;
     }
 
+    // EFFECTS: creates panel with text editor
     public JPanel writePanel() {
         JPanel writePanel = new JPanel();
         writePanel.setLayout(new GridBagLayout());

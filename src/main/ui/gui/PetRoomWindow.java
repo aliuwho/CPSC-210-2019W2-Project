@@ -12,12 +12,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * a class representing a window to interact with pets
+ */
 public class PetRoomWindow extends Window implements ActionListener {
     private Saveable saveable;
     private Pet pet;
     private JLabel hungry;
     private JLabel tired;
 
+    // EFFECTS: creates a new pet room window
     public PetRoomWindow(Saveable saveable, Pet pet) {
         super("Pet Room", getScreenWidth() * 5 / 10, getScreenHeight() * 5 / 10);
         this.saveable = saveable;
@@ -26,6 +30,8 @@ public class PetRoomWindow extends Window implements ActionListener {
         this.pet = pet;
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes action event
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -47,17 +53,19 @@ public class PetRoomWindow extends Window implements ActionListener {
         tired.setText("tired = " + pet.isTired());
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates window frame
     @Override
     protected void createFrame() {
         frame.add(statusPanel());
         frame.add(buttonPanel());
     }
 
+    // EFFECTS: creates a status panel
     private JPanel statusPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 1));
         panel.add(createLabel(pet.getName() + ", " + pet.getSpecies()));
-        //TODO: add icon to pet?
         panel.add(createLabel("this is filler text :("));
         hungry = createLabel("hunger: = " + pet.isHungry());
         panel.add(hungry);
@@ -66,6 +74,7 @@ public class PetRoomWindow extends Window implements ActionListener {
         return panel;
     }
 
+    // EFFECTS: creates buttons to interact with pet
     private JPanel buttonPanel() {
         JPanel panel = new JPanel();
         panel.add(createButton("Feed", "feed", this));
@@ -75,9 +84,12 @@ public class PetRoomWindow extends Window implements ActionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: play with pet
     private void play() {
         try {
             pet.play();
+            saveable.addPoints(10);
             JOptionPane.showMessageDialog(frame, pet.getName() + " enjoyed playing with you!");
         } catch (TiredException ex) {
 //                    ex.printStackTrace();
@@ -86,9 +98,12 @@ public class PetRoomWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIE: this
+    // EFFECTS: feed pet
     private void feed() {
         try {
             pet.feed();
+            saveable.addPoints(10);
             JOptionPane.showMessageDialog(frame, pet.getName() + " enjoyed the meal. Yummy!");
         } catch (NotHungryException ex) {
 //            ex.printStackTrace();
@@ -97,9 +112,12 @@ public class PetRoomWindow extends Window implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: nap with pet
     private void nap() {
         try {
             pet.sleep();
+            saveable.addPoints(10);
             JOptionPane.showMessageDialog(frame, pet.getName() + " took a lovely nap and feels well-rested.");
         } catch (NotTiredException e) {
 //            e.printStackTrace();
