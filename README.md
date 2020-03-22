@@ -59,3 +59,6 @@ Instructions for Grader
     
     You can reload the state of my application by entering a username with no existing data. (anything except "amy"
     or whatever username you have been using up till now)
+    
+    
+Note: all images used are open source from the internet!

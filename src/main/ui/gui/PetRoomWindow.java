@@ -26,7 +26,7 @@ public class PetRoomWindow extends Window implements ActionListener {
         super("Pet Room", getScreenWidth() * 5 / 10, getScreenHeight() * 5 / 10);
         this.saveable = saveable;
 //        this.pet = saveable.findPet(pet.getName());
-        frame.setLayout(new GridLayout());
+        frame.setLayout(new GridLayout(1, 2));
         this.pet = pet;
     }
 
@@ -49,8 +49,23 @@ public class PetRoomWindow extends Window implements ActionListener {
                 ex.printStackTrace();
             }
         }
-        hungry.setText("hungry = " + pet.isHungry());
-        tired.setText("tired = " + pet.isTired());
+        updateStatus();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates hunger and tired status of pet
+    private void updateStatus() {
+        if (pet.isHungry()) {
+            hungry.setText("Your pet is hungry! Please feed " + pet.getName() + "...");
+        } else {
+            hungry.setText("Your pet is full :)");
+        }
+        if (pet.isTired()) {
+            tired.setText("Your pet is tired. Take a nap!");
+        } else {
+            tired.setText(pet.getName() + " is full of energy!");
+        }
+//        hungry.setText("hungry = " + pet.isHungry());
     }
 
     // MODIFIES: this
@@ -64,19 +79,21 @@ public class PetRoomWindow extends Window implements ActionListener {
     // EFFECTS: creates a status panel
     private JPanel statusPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
-        panel.add(createLabel(pet.getName() + ", " + pet.getSpecies()));
-        panel.add(createLabel("this is filler text :("));
-        hungry = createLabel("hunger: = " + pet.isHungry());
+        panel.setLayout(new GridLayout(3, 1));
+        panel.add(createLabel("Current Pet: " + pet.getName() + " (" + pet.getSpecies() + ")"));
+//        panel.add(createLabel(pet.getName() + " (" + pet.getSpecies() + ")"));
+        hungry = createLabel("hunger");
         panel.add(hungry);
-        tired = createLabel("tired = " + pet.isTired());
+        tired = createLabel("tired");
         panel.add(tired);
+        updateStatus();
         return panel;
     }
 
     // EFFECTS: creates buttons to interact with pet
     private JPanel buttonPanel() {
         JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
         panel.add(createButton("Feed", "feed", this));
         panel.add(createButton("Play", "play", this));
         panel.add(createButton("Nap", "nap", this));
@@ -98,7 +115,7 @@ public class PetRoomWindow extends Window implements ActionListener {
         }
     }
 
-    // MODIFIE: this
+    // MODIFIES: this
     // EFFECTS: feed pet
     private void feed() {
         try {

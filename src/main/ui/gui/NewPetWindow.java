@@ -98,26 +98,41 @@ public class NewPetWindow extends Window implements ActionListener {
     // EFFECTS: creates a JPanel with an image
     private JPanel picturePanel() {
         JPanel picPanel = new JPanel();
-        try {
-            File f = new File("./data/tobs2.jpg");
-            if (f.setReadable(true)) {
-                JImageComponent ic = new JImageComponent();
-                ic.loadImage(f);
-//                System.out.println("all good");
-                BufferedImage myPicture = ImageIO.read(f);
-                JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-                picPanel.add(picLabel);
-//                picPanel.add(createLabel(new ImageIcon(myPicture)));
-//                picPanel.add(createLabel(new ImageIcon(myPicture)));
-//                picPanel.add(createLabel(new ImageIcon(myPicture)));
-//                picPanel.add(createLabel(new ImageIcon(myPicture)));
-//                picPanel.add(createLabel(new ImageIcon(myPicture)));
+        String[] animals = {"bird", "cat", "dog", "horse", "lizard"};
+        for (String animal : animals) {
+            try {
+                JImageComponent temp = new JImageComponent();
+                Image img = getScaledImage(ImageIO.read(new File("./data/" + animal + ".jpg")),
+                        getScreenWidth() / 15, getScreenHeight() / 15);
+                temp.setBufferedImage((BufferedImage) img);
+                picPanel.add(temp);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            JImageComponent ic = new JImageComponent();
-            ic.loadImage(f);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+//        try {
+//            JImageComponent bird = new JImageComponent();
+//            Image birdImage = getScaledImage(ImageIO.read(new File("./data/bird.jpg")),
+//                    getScreenWidth() / 10, getScreenHeight() / 10);
+//            bird.setBufferedImage((BufferedImage) birdImage);
+//            JImageComponent cat = new JImageComponent();
+//            Image catImage = getScaledImage(ImageIO.read(new File("./data/cat.jpg")),
+//                    getScreenWidth() / 10, getScreenHeight() / 10);
+//            cat.setBufferedImage((BufferedImage) catImage);
+//            JImageComponent dog = new JImageComponent();
+//            dog.loadImage(new File("./data/dog.jpg"));
+//            JImageComponent horse = new JImageComponent();
+//            horse.loadImage(new File("./data/horse.jpg"));
+//            JImageComponent lizard = new JImageComponent();
+//            lizard.loadImage(new File("./data/lizard.jpg"));
+//            frame.add(bird);
+//            frame.add(cat);
+//            frame.add(dog);
+//            frame.add(horse);
+//            frame.add(lizard);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return picPanel;
     }

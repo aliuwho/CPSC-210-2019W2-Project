@@ -4,10 +4,13 @@ import model.Library;
 import model.Story;
 import persistence.Saveable;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -65,7 +68,16 @@ public class WritingDeskWindow extends Window implements ActionListener {
     // EFFECTS: creates a panel with an image
     public JPanel imagePanel() {
         JPanel imagePanel = new JPanel();
-        imagePanel.add(createLabel(new ImageIcon("./data/tobs.jpg")));
+        try {
+            JImageComponent books = new JImageComponent();
+            Image bookImage = getScaledImage(ImageIO.read(new File("./data/books.jpeg")),
+                    getScreenWidth() / 10, getScreenHeight() / 10);
+            books.setBufferedImage((BufferedImage) bookImage);
+            imagePanel.add(books);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        imagePanel.add(createLabel(new ImageIcon("./data/books.jpeg")));
         return imagePanel;
     }
 

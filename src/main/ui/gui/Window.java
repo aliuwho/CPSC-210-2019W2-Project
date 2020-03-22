@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -69,12 +70,12 @@ public abstract class Window {
         return label;
     }
 
-    // EFFECTS: creates label with image and text
-    protected JLabel createLabel(String text, ImageIcon img) {
-        JLabel label = new JLabel(text, img, JLabel.CENTER);
-        label.setFont(font);
-        return label;
-    }
+//    // EFFECTS: creates label with image and text
+//    protected JLabel createLabel(String text, ImageIcon img) {
+//        JLabel label = new JLabel(text, img, JLabel.CENTER);
+//        label.setFont(font);
+//        return label;
+//    }
 
     // EFFECTS: returns screen width
     public static int getScreenWidth() {
@@ -106,4 +107,20 @@ public abstract class Window {
         JOptionPane.showMessageDialog(frame, message);
         frame.dispose();
     }
+
+    /**
+     * taken from https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+     **/
+    // EFFECTS: rescales srcImage to a width of w and height of h
+    protected Image getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
 }
