@@ -1,9 +1,6 @@
 package model;
 
-import model.pets.Pet;
-import model.pets.Bird;
-import model.pets.Horse;
-import model.pets.Lizard;
+import model.pets.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -194,6 +191,34 @@ public class SaveableTest {
         } finally {
             File temp = new File("./data/TEST_WNE.json");
             assertTrue(temp.setWritable(true));
+        }
+    }
+
+    @Test
+    public void testFindPetTrue() {
+        try {
+            Saveable s = new Saveable(file1.getPath());
+            Pet horse = new Horse("yee haw");
+            s.getPets().add(new Dog("hello"));
+            s.getPets().add(new Cat("hello2"));
+            s.getPets().add(horse);
+            assertEquals(horse, s.findPet("hello"));
+        } catch (IOException | ParseException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testFindPetNope() {
+        try {
+            Saveable s = new Saveable(file1.getPath());
+            Pet horse = new Horse("yee haw");
+            s.getPets().add(new Dog("hello"));
+            s.getPets().add(new Cat("hello2"));
+            s.getPets().add(horse);
+            assertNull(s.findPet("not existing"));
+        } catch (IOException | ParseException e) {
+            fail();
         }
     }
 }

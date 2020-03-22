@@ -38,3 +38,24 @@ as well as care for a pet.
 6. As a user, I want to be able to save my stories to file.
 7. As a user, I want to be able to resume my profile where I left off.
 8. As a user, I want to be able to earn points and levels.
+9. As a user, I want to be able to play Connect 4.
+
+Instructions for Grader
+
+    You can generate the first required event by entering any username and pressing submit.
+    The username you choose should appear in the window.
+    
+    You can generate the second required event by selecting the Writing Desk.
+    Add one or two stories to your library (or if you're feeling lazy, use "amy" as your username).
+    You should be able to select from the stories and choose to delete or view the story you select.
+    
+    You can locate my visual component by heading to the Connect 4 game. As you play, chips will update their colors,
+    and the arrow should move to indicate your position on the screen.
+    
+    You can save the state of my application by quitting and re-entering with the same username.
+    You may also note that as you enter and exit the Writing Desk and Pet Room windows, your stories and 
+    pets/pet states will be stoed throughout the process. 
+    Also, there's a "save" button when you write a new story.
+    
+    You can reload the state of my application by entering a username with no existing data. (anything except "amy"
+    or whatever username you have been using up till now)
