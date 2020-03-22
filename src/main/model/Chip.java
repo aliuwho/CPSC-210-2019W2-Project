@@ -12,7 +12,7 @@ public class Chip {
 //        EMPTY, RED, BLUE;
 //    }
 
-    private Color type;
+    private final Color type;
 
 //    private String type;
 

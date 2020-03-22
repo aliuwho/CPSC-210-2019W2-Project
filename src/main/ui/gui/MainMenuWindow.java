@@ -87,9 +87,6 @@ public class MainMenuWindow extends Window implements ActionListener {
         }
     }
 
-    //TODO: alphabetize pets
-    //TODO: add timedate stamps to pets
-    //TODO: if no timedate given, default to jan 1, 2020
     private Object[] getPetNames() {
         ArrayList<Pet> pets = saveable.getPets();
         Object[] petNames = new Object[pets.size() + 2];

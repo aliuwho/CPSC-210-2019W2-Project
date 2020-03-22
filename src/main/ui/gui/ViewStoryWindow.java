@@ -11,13 +11,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class ViewStoryWindow extends Window implements ActionListener {
-    private Saveable saveable;
     private Story story;
 
     public ViewStoryWindow(Saveable save, String storyName) {
         super("View Story", getScreenWidth() * 4 / 10, getScreenHeight() * 4 / 10);
-        this.saveable = save;
-        Library library = saveable.getLibrary();
+        Library library = save.getLibrary();
         this.story = library.findStory(storyName);
     }
 

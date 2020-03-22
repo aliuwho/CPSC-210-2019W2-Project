@@ -126,7 +126,7 @@ public class LibraryTest {
             story = new Story("VIEW_STORY_TEST", "./data/VIEW_STORY_TEST.txt");
             StringBuilder temp = new StringBuilder();
             temp.append("\n");
-            assertEquals(temp, library.getStoryText(story));
+            assertEquals(temp.toString(), library.getStoryText(story));
             fail();
         } catch (NotAStoryException | IOException e) {
             fail();
@@ -148,7 +148,7 @@ public class LibraryTest {
             library.getStoryText(story);
             StringBuilder temp = new StringBuilder();
             temp.append("\n");
-            assertEquals(temp, library.getStoryText(story));
+            assertEquals(temp.toString(), library.getStoryText(story));
         } catch (IOException | EmptyLibraryException e) {
             fail();
         } catch (NotAStoryException e) {
@@ -247,35 +247,35 @@ public class LibraryTest {
         }
     }
 
-    @Test
-    public void testGetStoriesNoException() {
-        library.addStory(story1);
-        library.addStory(story2);
-        library.addStory(story3);
-        library.addStory(story4);
-        StringBuilder sb = new StringBuilder();
-        sb.append("\t- ");
-        sb.append(story1.getName());
-        sb.append("\t- ");
-        sb.append(story2.getName());
-        sb.append("\t- ");
-        sb.append(story3.getName());
-        sb.append("\t- ");
-        sb.append(story4.getName());
+//    @Test
+//    public void testGetStoriesNoException() {
+//        library.addStory(story1);
+//        library.addStory(story2);
+//        library.addStory(story3);
+//        library.addStory(story4);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("\t- ");
+//        sb.append(story1.getName());
+//        sb.append("\t- ");
+//        sb.append(story2.getName());
+//        sb.append("\t- ");
+//        sb.append(story3.getName());
+//        sb.append("\t- ");
+//        sb.append(story4.getName());
+//
+////        try {
+////            assertEquals(sb.substring(0), library.getStories().substring(0));
+////        } catch (EmptyLibraryException e) {
+////            fail();
+////        }
+//    }
 
-//        try {
-//            assertEquals(sb.substring(0), library.getStories().substring(0));
-//        } catch (EmptyLibraryException e) {
-//            fail();
-//        }
-    }
-
-    @Test
-    public void testGetStoriesEmptyLibException() {
+//    @Test
+//    public void testGetStoriesEmptyLibException() {
 //        try {
 //            library.getStories().substring(0);
 //        } catch (EmptyLibraryException e) {
 //            System.out.println("library is empty");
 //        }
-    }
+//    }
 }

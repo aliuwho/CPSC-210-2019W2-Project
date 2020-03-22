@@ -3,7 +3,6 @@ package model;
 import model.exceptions.ColumnFullException;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * represents a Connect4 board and status
@@ -18,14 +17,16 @@ public class FourBoard {
     private Chip[][] chips;
     public static final int ROWS = 6;
     public static final int COLS = 7;
-    private static Color EMPTY_CHIP = Color.LIGHT_GRAY;
+    private static Color EMPTY_CHIP = Color.BLACK;
     public static Color[] TYPES = {Color.RED, Color.BLUE};
 
     // EFFECTS: creates a new, empty board
     public FourBoard() {
         chips = new Chip[ROWS][COLS];
-        for (Chip[] rows : chips) {
-            Arrays.fill(rows, new Chip(EMPTY_CHIP));
+        for (int r = 0; r < chips.length; r++) {
+            for (int c = 0; c < chips[r].length; c++) {
+                chips[r][c] = new Chip(EMPTY_CHIP);
+            }
         }
     }
 
@@ -161,6 +162,24 @@ public class FourBoard {
     //EFFECTS: returns chips in board
     public Chip[][] getChips() {
         return chips;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets chips to given chips layout
+    public void setChips(Chip[][] chips) {
+        this.chips = chips;
+    }
+
+    // EFFECTS: if the game is over, returns the winning color; else, returns null
+    public Color isGameOver() {
+        if (isFourAcross() != null) {
+            return isFourAcross();
+        } else if (isFourUpDown() != null) {
+            return isFourUpDown();
+        } else {
+            return isFourDiagonal();
+        }
+
     }
 
 }

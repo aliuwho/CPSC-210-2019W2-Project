@@ -90,6 +90,8 @@ public class FourBoardTest {
             fail("unexpected column full error");
         }
         assertEquals(BLUE, board.isFourAcross());
+        assertEquals(BLUE, board.isGameOver());
+
     }
 
     @Test
@@ -103,6 +105,8 @@ public class FourBoardTest {
             fail("unexpected column full exception");
         }
         assertNull(board.isFourAcross());
+        assertNull(board.isGameOver());
+
     }
 
     @Test
@@ -116,6 +120,8 @@ public class FourBoardTest {
             fail("unexpected column full exception");
         }
         assertNull(board.isFourUpDown());
+        assertNull(board.isGameOver());
+
     }
 
     @Test
@@ -129,6 +135,8 @@ public class FourBoardTest {
             fail();
         }
         assertEquals(RED, board.isFourUpDown());
+        assertEquals(RED, board.isGameOver());
+
 
         board = new FourBoard();
         try {
@@ -140,6 +148,9 @@ public class FourBoardTest {
             fail();
         }
         assertEquals(BLUE, board.isFourUpDown());
+        assertEquals(BLUE, board.isGameOver());
+
+
     }
 
     @Test
@@ -163,6 +174,8 @@ public class FourBoardTest {
             fail();
         }
         assertEquals(RED, board.isFourDiagonal());
+        assertEquals(RED, board.isGameOver());
+
     }
 
     @Test
@@ -186,6 +199,7 @@ public class FourBoardTest {
             fail();
         }
         assertEquals(RED, board.isFourDiagonal());
+        assertEquals(RED, board.isGameOver());
     }
 
     @Test
@@ -209,6 +223,29 @@ public class FourBoardTest {
             fail();
         }
         assertNull(board.isFourDiagonal());
+        assertEquals(RED, board.isGameOver());
+
+        board = new FourBoard();
+        try {
+            board.addChip(new Chip(RED), 0);
+            board.addChip(new Chip(BLUE), 1);
+            board.addChip(new Chip(RED), 2);
+            board.addChip(new Chip(RED), 3);
+
+            board.addChip(new Chip(RED), 0);
+            board.addChip(new Chip(BLUE), 1);
+            board.addChip(new Chip(BLUE), 0);
+            board.addChip(new Chip(RED), 3);
+
+            board.addChip(new Chip(RED), 2);
+            board.addChip(new Chip(BLUE), 3);
+            board.addChip(new Chip(RED), 3);
+            board.addChip(new Chip(BLUE), 2);
+        } catch (ColumnFullException e) {
+            fail();
+        }
+        assertNull(board.isFourDiagonal());
+        assertNull(board.isGameOver());
     }
 
 //    @Test

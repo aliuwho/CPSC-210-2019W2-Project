@@ -108,9 +108,8 @@ public class UsernameWindow extends Window implements ActionListener {
                     createLabel("Okay! A new user profile has been created for " + username + "."),
                     "Overwriting...", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            String input = JOptionPane.showInputDialog(frame, createLabel("Enter a different username:"),
+            username = JOptionPane.showInputDialog(frame, createLabel("Enter a different username:"),
                     "New Username!", JOptionPane.QUESTION_MESSAGE);
-            username = input;
             setFile();
         }
     }
