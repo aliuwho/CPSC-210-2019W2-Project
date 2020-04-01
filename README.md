@@ -64,4 +64,14 @@ Instructions for Grader (Phase 3)
 Note: all images used are open source from the internet!
 
 **PHASE 4**
+
 Task 2:
+
+"Test and design a class that is robust.  You must have at least one method that throws a checked exception.
+  You must have one test for the case where the exception is expected and another where the exception is not expected."
+
+My Pet.java class is robust; sleep() and play() each throw a specific exception.
+Both of these methods are thoroughly tested in PetTest.java
+
+Task 3:
+
