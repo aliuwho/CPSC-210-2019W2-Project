@@ -80,17 +80,13 @@ public class MainMenuWindow extends Window implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "quit":
-                try {
-                    saveable.write();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                updateInfo();
                 frame.dispose();
                 break;
             case "writingDesk":
-                WritingDeskWindow writeDesk = new WritingDeskWindow(saveable);
+                WritingDeskWindow writeDesk = new WritingDeskWindow(saveable.getLibrary());
                 writeDesk.displayFrame();
-                levels.setValue(Math.toIntExact(saveable.getPoints()));
+//                updateInfo();
                 break;
             case "petMenu":
                 selectPet();
@@ -100,6 +96,20 @@ public class MainMenuWindow extends Window implements ActionListener {
 //                ConnectWindow connect = new ConnectWindow(saveable);
 //                connect.displayFrame();
                 break;
+        }
+        updateInfo();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates information for user
+    public void updateInfo() {
+        levels.setValue(Math.toIntExact(saveable.getPoints())); //update levels progress
+        try {
+            saveable.write();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(frame, "Uh oh..."
+                            + " your data couldn't be saved. Press 'ok' to close the application.",
+                    "CRASH and BURN", JOptionPane.ERROR_MESSAGE);
         }
     }
 

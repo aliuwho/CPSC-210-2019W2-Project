@@ -17,10 +17,10 @@ public class ViewStoryWindow extends Window implements ActionListener {
     private final Story story;
 
     // EFFECTS: creates a new view story window with a story
-    public ViewStoryWindow(Saveable save, String storyName) {
+    public ViewStoryWindow(Story story) {
         super("View Story", getScreenWidth() * 4 / 10, getScreenHeight() * 4 / 10);
-        Library library = save.getLibrary();
-        this.story = library.findStory(storyName);
+//        Library library = save.getLibrary();
+        this.story = story;
     }
 
     // MODIFIES: this

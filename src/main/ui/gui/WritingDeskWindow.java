@@ -3,7 +3,6 @@ package ui.gui;
 import model.Library;
 import model.Story;
 import model.WritingPrompt;
-import persistence.Saveable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,17 +18,18 @@ import java.io.IOException;
  */
 public class WritingDeskWindow extends Window implements ActionListener {
 
-    private final Saveable saveable;
+    //    private final Saveable saveable;
     //    private JPanel panel;
     private final Library library;
     private JList<Object> storyList;
     private DefaultListModel<Object> storyListModel;
 
     // EFFECTS: creates a new WritingDeskWindow
-    public WritingDeskWindow(Saveable saveable) {
+    public WritingDeskWindow(Library library) {
         super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 3 / 10);
-        this.saveable = saveable;
-        this.library = saveable.getLibrary();
+//        this.saveable = saveable;
+//        this.library = saveable.getLibrary();
+        this.library = library;
         frame.setLayout(new BorderLayout());
     }
 
@@ -50,11 +50,11 @@ public class WritingDeskWindow extends Window implements ActionListener {
             String storyName = JOptionPane.showInputDialog(createLabel("What would you like to call your story?"));
             createStory(storyName);
         } else if ("quit".equals(cmd)) {
-            try {
-                saveable.write();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                saveable.write();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
             frame.dispose();
         } else if ("view".equals(cmd)) {
             selectStory();
@@ -114,7 +114,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
         } else {
 //            String[] storyNames = saveable.getLibrary().getStoryNames();
             storyListModel = new DefaultListModel<>();
-            for (String storyName : saveable.getLibrary().getStoryNames()) {
+            for (String storyName : library.getStoryNames()) {
                 storyListModel.addElement(storyName);
             }
             storyList = new JList<>(storyListModel);
@@ -135,16 +135,15 @@ public class WritingDeskWindow extends Window implements ActionListener {
                 String storyName = (String) storyListModel.get(index);
                 if (storyName != null) {
                     if (!storyName.equals("<Select a story>")) {
-                        ViewStoryWindow view = new ViewStoryWindow(saveable, storyName);
+                        Story story = library.findStory(storyName);
+                        ViewStoryWindow view = new ViewStoryWindow(story);
                         view.displayFrame();
                     } else {
-                        JLabel msg = createLabel("Please select a story!");
-                        JOptionPane.showMessageDialog(frame, msg, "Selection Error",
+                        JOptionPane.showMessageDialog(frame, "Please select a story!", "Selection Error",
                                 JOptionPane.ERROR_MESSAGE);
                         selectStory();
                     }
                 }
-
             } catch (HeadlessException e) {
                 e.printStackTrace();
                 frame.dispose();
@@ -166,8 +165,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
                     "Deleting...?", JOptionPane.YES_NO_OPTION);
             if (delete == 0) {
                 storyListModel.remove(index);
-                Story story = saveable.getLibrary().findStory(storyName);
-                saveable.getLibrary().getStories().remove(story);
+                Story story = library.findStory(storyName);
+                library.getStories().remove(story);
             }
         }
     }
@@ -180,8 +179,16 @@ public class WritingDeskWindow extends Window implements ActionListener {
             Story story = new Story(storyName, "./data/" + storyName + ".txt");
             if (library.addStory(story)) {
                 storyListModel.addElement(story.getName());
-                WriteStoryWindow wsw = new WriteStoryWindow(saveable, story);
+                WriteStoryWindow wsw = new WriteStoryWindow(story);
                 wsw.displayFrame();
+//                try {
+//                    saveable.getLibrary().addStory(story);
+//                    saveable.write();
+//
+//                } catch (IOException ex) {
+//                    JOptionPane.showMessageDialog(frame, "Uh oh... your story couldn't be saved",
+//                            "Error!", JOptionPane.ERROR_MESSAGE);
+//                }
 //            frame.dispose();
             } else {
                 String newName = JOptionPane.showInputDialog(createLabel("A story with that name already exists!"

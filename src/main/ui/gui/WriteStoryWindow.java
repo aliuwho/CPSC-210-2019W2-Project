@@ -15,14 +15,14 @@ import java.io.IOException;
  */
 public class WriteStoryWindow extends Window implements ActionListener {
     //    private String storyName;
-    private final Saveable saveable;
+//    private final Saveable saveable;
     private final Story story;
     private JTextArea textArea;
 
     // EFFECTS: creates a new WriteStory Window
-    public WriteStoryWindow(Saveable saveable, Story story) {
+    public WriteStoryWindow(Story story) {
         super(story.getName() + ".txt", getScreenWidth() * 5 / 10, getScreenHeight() * 5 / 10);
-        this.saveable = saveable;
+//        this.saveable = saveable;
 //        this.story = new Story(storyName, "./data/" + storyName + ".txt");
         this.story = story;
         frame.setLayout(new GridBagLayout());
@@ -42,16 +42,17 @@ public class WriteStoryWindow extends Window implements ActionListener {
             case "save":
                 try {
                     story.write(textArea.getText());
-                    saveable.getLibrary().addStory(story);
-                    saveable.write();
-
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, "Uh oh... your story couldn't be saved",
+                            "Error!", JOptionPane.ERROR_MESSAGE);
                 }
                 frame.dispose();
                 break;
             case "quit":
-                frame.dispose();
+                int select = JOptionPane.showConfirmDialog(frame, "Are you sure? Your story won't be saved.");
+                if (select == 0) {
+                    frame.dispose();
+                }
                 break;
         }
     }
