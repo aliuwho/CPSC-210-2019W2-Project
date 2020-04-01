@@ -3,7 +3,7 @@ package ui.gui;
 import model.Chip;
 import model.FourBoard;
 import model.exceptions.ColumnFullException;
-import model.exceptions.EndGameException;
+import ui.gui.exceptions.EndGameException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
