@@ -75,3 +75,8 @@ Both of these methods are thoroughly tested in PetTest.java
 
 Task 3:
 
+Issue 1 - Too much coupling with the Saveable class. Refactored WritingDeskWindow,
+WriteStoryWindow, ViewStoryWindow, and ConnectWindow by removing association with Saveable.
+(See attached UML)
+
+Issue 2 - 

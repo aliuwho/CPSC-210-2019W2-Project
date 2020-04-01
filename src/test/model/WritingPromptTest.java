@@ -15,7 +15,15 @@ class WritingPromptTest {
     @BeforeEach
     public void runBefore() {
         p1 = new WritingPrompt();
+        // ensure it is a short prompt
+        while(p1.getType()!=0) {
+            p1 = new WritingPrompt();
+        }
         p2 = new WritingPrompt();
+        // ensure it is a long prompt
+        while(p2.getType()!=1) {
+            p2 = new WritingPrompt();
+        }
 //        shortP = new WritingPrompt("short");
 //        longP = new WritingPrompt("long");
     }

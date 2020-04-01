@@ -4,10 +4,10 @@ package model;
  * represents a random writing prompt
  */
 public class WritingPrompt {
-    private String noun1 = selectNoun();
+    private String noun1;
     private String noun2;
-    private String verb = selectVerb();
-    private String location = selectLocation();
+    private String verb;
+    private String location;
     private final int type = (int) (Math.random() * 2);
 
     public static final String[] ANIMALS = {"dog", "cat", "horse", "fox", "hamster", "turtle", "dinosaur", "bird"};
@@ -29,13 +29,10 @@ public class WritingPrompt {
 
     // EFFECTS: creates a random prompt
     public WritingPrompt() {
-//        prompt = this.makePrompt();
-//        noun1 = selectNoun();
-        if (type == 1) {
-            noun2 = selectNoun();
-        }
-//        verb = selectVerb();
-//        location = selectLocation();
+        noun1 = selectNoun();
+        noun2 = selectNoun();
+        verb = selectVerb();
+        location = selectLocation();
     }
 
 
@@ -136,5 +133,8 @@ public class WritingPrompt {
         return ret;
     }
 
-
+    // EFFECTS: returns prompt type
+    public int getType() {
+        return type;
+    }
 }
