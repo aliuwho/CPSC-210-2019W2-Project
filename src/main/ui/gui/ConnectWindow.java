@@ -4,7 +4,6 @@ import model.Chip;
 import model.FourBoard;
 import model.exceptions.ColumnFullException;
 import model.exceptions.EndGameException;
-import persistence.Saveable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,7 +21,7 @@ import java.util.HashMap;
  * A class representing an game of Connect4 against a computer
  */
 public class ConnectWindow extends Window implements ActionListener, KeyListener {
-    private final Saveable saveable;
+    //    private final Saveable saveable;
     private final FourBoard board;
     private int column = 0;
     //    private JLabel label = createLabel("temp");
@@ -34,9 +33,10 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     private final JImageComponent[][] components = new JImageComponent[7][7];
     private final Color playerColor;
     private Color enemyColor;
+    private Color winner;
 
     // EFFECTS: creates a new Connect4 game
-    public ConnectWindow(Saveable saveable, Color player) {
+    public ConnectWindow(Color player) {
         super("Connect 4", 1, 1);
         if (getScreenHeight() > getScreenWidth()) {
             dimension = getScreenHeight() * 7 / 10;
@@ -44,7 +44,7 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
             dimension = getScreenWidth() * 7 / 10;
         }
         frame.setPreferredSize(new Dimension(dimension, dimension));
-        this.saveable = saveable;
+//        this.saveable = saveable;
         this.board = new FourBoard();
         playerColor = player;
         initEnemy();
@@ -313,21 +313,22 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     //          if game is over, closes window and allots points.
     public void updateBoard(int newCol) {
         if (board.isGameOver() != null) {
-            if (playerColor.equals(board.isGameOver())) {
-                JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
-                saveable.addPoints(20);
-            } else {
-                JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
-                saveable.addPoints(1);
-            }
+//            if (playerColor.equals(board.isGameOver())) {
+//                JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
+//                saveable.addPoints(20);
+//            } else {
+//                JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
+//                saveable.addPoints(1);
+//            }
+            winner = board.isGameOver();
             frame.dispose();
-            try {
-                saveable.write();
-            } catch (IOException e) {
-//                    e.printStackTrace();
-                JOptionPane.showMessageDialog(frame, "An error occurred while saving.",
-                        "Uh oh", JOptionPane.ERROR_MESSAGE);
-            }
+//            try {
+//                saveable.write();
+//            } catch (IOException e) {
+////                    e.printStackTrace();
+//                JOptionPane.showMessageDialog(frame, "An error occurred while saving.",
+//                        "Uh oh", JOptionPane.ERROR_MESSAGE);
+//            }
         }
         if (column != newCol) {
             components[0][newCol].setVisible(true);
@@ -343,6 +344,11 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
             System.arraycopy(initial[r], 0, ret[r], 0, initial[r].length);
         }
         return ret;
+    }
+
+    // EFFECTS: returns winning color of game
+    public Color getWinner() {
+        return winner;
     }
 //
 //    public static void main(String[] args) {

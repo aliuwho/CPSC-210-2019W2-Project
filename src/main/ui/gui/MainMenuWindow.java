@@ -125,20 +125,30 @@ public class MainMenuWindow extends Window implements ActionListener {
                 JOptionPane.showMessageDialog(frame, msg, "Selection Error",
                         JOptionPane.ERROR_MESSAGE);
                 chooseColor();
-            } else if (colorName.equals("RED")) {
-                ConnectWindow connect = new ConnectWindow(saveable, Color.RED);
-                connect.displayFrame();
             } else {
-                ConnectWindow connect = new ConnectWindow(saveable, Color.BLUE);
+                Color player;
+                if (colorName.equals("RED")) {
+                    player = Color.RED;
+                } else {
+                    player = Color.BLUE;
+                }
+                ConnectWindow connect = new ConnectWindow(player);
                 connect.displayFrame();
+                checkWinner(connect, player);
             }
         }
-        /*else {
-            JLabel msg = createLabel("Please select a color!");
-            JOptionPane.showMessageDialog(frame, msg, "Selection Error",
-                    JOptionPane.ERROR_MESSAGE);
-            chooseColor();
-        }*/
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if player won, award 20 points; else, award 1 point
+    private void checkWinner(ConnectWindow connect, Color player) {
+        if (connect.getWinner().equals(player)) {
+            JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
+            saveable.addPoints(20);
+        } else {
+            JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
+            saveable.addPoints(1);
+        }
     }
 
     // EFFECTS: returns a generic array of pet names

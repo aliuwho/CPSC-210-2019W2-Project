@@ -189,7 +189,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
 //                    JOptionPane.showMessageDialog(frame, "Uh oh... your story couldn't be saved",
 //                            "Error!", JOptionPane.ERROR_MESSAGE);
 //                }
-//            frame.dispose();
+//                frame.dispose();
             } else {
                 String newName = JOptionPane.showInputDialog(createLabel("A story with that name already exists!"
                         + " Choose a different name:"));
