@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * A class representing main menu GUI elements for the application
  */
 public class MainMenuWindow extends Window implements ActionListener {
-    private Saveable saveable;
+    private final Saveable saveable;
     private JProgressBar levels;
 
     // EFFECTS: creates a new MainMenuWindow

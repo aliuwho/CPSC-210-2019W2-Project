@@ -8,10 +8,10 @@ import model.exceptions.TiredException;
  * Represents an animal with a name, a hunger status, and an energy status
  */
 public class Pet {
-    protected boolean hungry;
-    protected final String name;
-    protected boolean tired;
-    protected String species;
+    private boolean hungry;
+    private final String name;
+    private boolean tired;
+    private final String species;
 
     // EFFECTS: creates a new animal with a name which is:
     //          - hungry

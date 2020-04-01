@@ -19,7 +19,7 @@ public abstract class Window {
     public static final int FONT_SIZE = 16;
     public static final String FONT_NAME = "Comic Sans MS";
     public static final int FONT_TYPE = Font.PLAIN;
-    protected Font font;
+    protected final Font font;
 
     //EFFECTS: creates a new window with a given name and size and a grid bag layout
     public Window(String name, int width, int height) {

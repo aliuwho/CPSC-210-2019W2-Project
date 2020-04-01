@@ -32,7 +32,7 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     private Image arrow;
     private final int dimension;
     private final JImageComponent[][] components = new JImageComponent[7][7];
-    private Color playerColor;
+    private final Color playerColor;
     private Color enemyColor;
 
     // EFFECTS: creates a new Connect4 game

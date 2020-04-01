@@ -90,7 +90,7 @@ public class Library {
     //          if library is not empty but Story is not in library, throw NotAStoryException;
     //          else returns the text;
     public String getStoryText(Story story) throws EmptyLibraryException, NotAStoryException, IOException {
-        String fullText = "";
+        String fullText;
         if (getSize() == 0) {
             throw new EmptyLibraryException();
         } else if (findStory(story.getName()) != null) {

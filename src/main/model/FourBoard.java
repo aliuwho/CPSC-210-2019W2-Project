@@ -17,8 +17,8 @@ public class FourBoard {
     private Chip[][] chips;
     public static final int ROWS = 6;
     public static final int COLS = 7;
-    private static Color EMPTY_CHIP = Color.BLACK;
-    public static Color[] TYPES = {Color.RED, Color.BLUE};
+    private static final Color EMPTY_CHIP = Color.BLACK;
+    public static final Color[] TYPES = {Color.RED, Color.BLUE};
 
     // EFFECTS: creates a new, empty board
     public FourBoard() {

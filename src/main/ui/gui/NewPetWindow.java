@@ -16,7 +16,7 @@ import java.io.IOException;
  * A class representing GUI to get a new pet
  */
 public class NewPetWindow extends Window implements ActionListener {
-    private Saveable saveable;
+    private final Saveable saveable;
 
     // EFFECTS: creates new pet window
     public NewPetWindow(Saveable saveable) {

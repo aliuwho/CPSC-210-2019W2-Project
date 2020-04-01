@@ -2,6 +2,7 @@ package ui.gui;
 
 import model.Library;
 import model.Story;
+import model.WritingPrompt;
 import persistence.Saveable;
 
 import javax.imageio.ImageIO;
@@ -18,17 +19,15 @@ import java.io.IOException;
  */
 public class WritingDeskWindow extends Window implements ActionListener {
 
-    private Saveable saveable;
-    //    private String storyName;
-    private JTextField enterName;
+    private final Saveable saveable;
     //    private JPanel panel;
-    private Library library;
+    private final Library library;
     private JList<Object> storyList;
     private DefaultListModel<Object> storyListModel;
 
     // EFFECTS: creates a new WritingDeskWindow
     public WritingDeskWindow(Saveable saveable) {
-        super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 2 / 10);
+        super("Writing Desk", getScreenWidth() * 4 / 10, getScreenHeight() * 3 / 10);
         this.saveable = saveable;
         this.library = saveable.getLibrary();
         frame.setLayout(new BorderLayout());
@@ -61,6 +60,9 @@ public class WritingDeskWindow extends Window implements ActionListener {
             selectStory();
         } else if ("delete".equals(cmd)) {
             deleteStory();
+        } else if ("prompt".equals(cmd)) {
+            JOptionPane.showMessageDialog(frame, new WritingPrompt(),
+                    "Here's an idea?", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -95,6 +97,8 @@ public class WritingDeskWindow extends Window implements ActionListener {
         constraints.gridy = 2;
         buttonPanel.add(createButton("Delete Selected Story", "delete", this), constraints);
         constraints.gridy = 3;
+        buttonPanel.add(createButton("Generate a Writing Prompt", "prompt", this), constraints);
+        constraints.gridy = 4;
         buttonPanel.add(createButton("Return to Main Menu", "quit", this), constraints);
         return buttonPanel;
     }
@@ -118,7 +122,7 @@ public class WritingDeskWindow extends Window implements ActionListener {
         storyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane storyViewer = new JScrollPane(storyList);
         storyViewer.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        storyViewer.setPreferredSize(new Dimension(200, 120));
+        storyViewer.setPreferredSize(new Dimension(getScreenWidth() * 4 / 3 / 10, getScreenHeight() * 5 / 2 / 10));
         viewPanel.add(storyViewer);
         return viewPanel;
     }

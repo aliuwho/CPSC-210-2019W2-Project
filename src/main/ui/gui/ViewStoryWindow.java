@@ -14,7 +14,7 @@ import java.io.IOException;
  * a class representing a window to view txt files
  */
 public class ViewStoryWindow extends Window implements ActionListener {
-    private Story story;
+    private final Story story;
 
     // EFFECTS: creates a new view story window with a story
     public ViewStoryWindow(Saveable save, String storyName) {

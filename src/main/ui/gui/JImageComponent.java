@@ -154,8 +154,8 @@ public class JImageComponent extends javax.swing.JComponent {
         }
 
         // Calculate the rectangle of the image that should be rendered.
-        int x1 = x < 0 ? 0 : x;
-        int y1 = y < 0 ? 0 : y;
+        int x1 = Math.max(x, 0);
+        int y1 = Math.max(y, 0);
         int x2 = x + width - 1;
         int y2 = y + height - 1;
 

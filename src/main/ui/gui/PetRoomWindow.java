@@ -16,8 +16,8 @@ import java.io.IOException;
  * a class representing a window to interact with pets
  */
 public class PetRoomWindow extends Window implements ActionListener {
-    private Saveable saveable;
-    private Pet pet;
+    private final Saveable saveable;
+    private final Pet pet;
     private JLabel hungry;
     private JLabel tired;
 
