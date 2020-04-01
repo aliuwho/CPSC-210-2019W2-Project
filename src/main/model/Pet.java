@@ -1,4 +1,4 @@
-package model.pets;
+package model;
 
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
@@ -7,7 +7,7 @@ import model.exceptions.TiredException;
 /**
  * Represents an animal with a name, a hunger status, and an energy status
  */
-public abstract class Pet {
+public class Pet {
     protected boolean hungry;
     protected final String name;
     protected boolean tired;
@@ -16,19 +16,19 @@ public abstract class Pet {
     // EFFECTS: creates a new animal with a name which is:
     //          - hungry
     //          - not tired
-    public Pet(String name) {
+    public Pet(String name, String species) {
         this.name = name;
         this.hungry = true;
         this.tired = false;
-        this.species = null;
+        this.species = species;
     }
 
     // EFFECTS: creates a new animal with a name with a certain hunger and energy status
-    public Pet(String name, boolean hungry, boolean tired) {
+    public Pet(String name, String species, boolean hungry, boolean tired) {
         this.name = name;
         this.hungry = hungry;
         this.tired = tired;
-        this.species = null;
+        this.species = species;
     }
 
     // EFFECTS: returns the pet's name
@@ -56,9 +56,6 @@ public abstract class Pet {
     public boolean isTired() {
         return tired;
     }
-
-    // EFFECTS: makes an animal noise
-    public abstract String speak();
 
     // MODIFIES: this
     // EFFECTS: if animal is tired,

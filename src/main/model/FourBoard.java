@@ -140,7 +140,6 @@ public class FourBoard {
 
     // EFFECTS: returns true if there is a left 4 diagonal from given row, col; false otherwise
     public boolean isLeftDiagonal(int row, int col, Color target) {
-        boolean ret = false;
         int r = row;
         int c = col;
         int count = 0;
@@ -151,12 +150,12 @@ public class FourBoard {
                 count = 0;
             }
             if (count == 4) {
-                ret = true;
+                return true;
             }
             r++;
             c--;
         }
-        return ret;
+        return false;
     }
 
     //EFFECTS: returns chips in board

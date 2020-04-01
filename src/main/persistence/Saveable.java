@@ -2,7 +2,7 @@ package persistence;
 
 import model.Library;
 import model.Story;
-import model.pets.*;
+import model.Pet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -194,15 +194,15 @@ public class Saveable {
         boolean hungry = (boolean) o.get("hungry");
         boolean tired = (boolean) o.get("tired");
         if ("bird".equals(species)) {
-            return new Bird(name, hungry, tired);
+            return new Pet(name, "bird", hungry, tired);
         } else if ("cat".equals(species)) {
-            return new Cat(name, hungry, tired);
+            return new Pet(name, "cat", hungry, tired);
         } else if ("dog".equals(species)) {
-            return new Dog(name, hungry, tired);
+            return new Pet(name, "dog", hungry, tired);
         } else if ("horse".equals(species)) {
-            return new Horse(name, hungry, tired);
+            return new Pet(name, "horse", hungry, tired);
         } else {
-            return new Lizard(name, hungry, tired);
+            return new Pet(name, "lizard", hungry, tired);
         }
 //            default:
 //                System.out.println("Unexpected value: " + species);

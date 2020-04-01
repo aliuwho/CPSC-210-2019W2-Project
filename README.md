@@ -40,7 +40,7 @@ as well as care for a pet.
 8. As a user, I want to be able to earn points and levels.
 9. As a user, I want to be able to play Connect 4.
 
-Instructions for Grader
+Instructions for Grader (Phase 3)
 
     You can generate the first required event by entering any username and pressing submit.
     The username you choose should appear in the window.
@@ -62,3 +62,6 @@ Instructions for Grader
     
     
 Note: all images used are open source from the internet!
+
+**PHASE 4**
+Task 2:

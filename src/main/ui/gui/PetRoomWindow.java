@@ -3,7 +3,7 @@ package ui.gui;
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
-import model.pets.Pet;
+import model.Pet;
 import persistence.Saveable;
 
 import javax.swing.*;

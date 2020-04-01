@@ -1,6 +1,5 @@
 package model;
 
-import model.pets.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -154,9 +153,9 @@ public class SaveableTest {
         try {
             Saveable s = new Saveable("./data/TEST_WNE.json", "TEST_WRITE_NO_E", LocalDateTime.now());
 
-            Bird jarod = new Bird("jarod");
-            Horse suzie = new Horse("suzie");
-            Lizard anushka = new Lizard("Anushka");
+            Pet jarod = new Pet("jarod", "bird");
+            Pet suzie = new Pet("suzie", "horse");
+            Pet anushka = new Pet("Anushka", "lizard");
             ArrayList<Pet> pets = s.getPets();
             pets.add(jarod);
             pets.add(suzie);
@@ -198,11 +197,11 @@ public class SaveableTest {
     public void testFindPetTrue() {
         try {
             Saveable s = new Saveable(file1.getPath());
-            Pet horse = new Horse("yee haw");
-            s.getPets().add(new Dog("hello"));
-            s.getPets().add(new Cat("hello2"));
+            Pet horse = new Pet("yee haw", "horse");
+            s.getPets().add(new Pet("sully", "dog"));
+            s.getPets().add(new Pet("beepo", "cat"));
             s.getPets().add(horse);
-            assertEquals(horse, s.findPet("hello"));
+            assertEquals(horse, s.findPet("yee haw"));
         } catch (IOException | ParseException e) {
             fail();
         }
@@ -212,9 +211,9 @@ public class SaveableTest {
     public void testFindPetNope() {
         try {
             Saveable s = new Saveable(file1.getPath());
-            Pet horse = new Horse("yee haw");
-            s.getPets().add(new Dog("hello"));
-            s.getPets().add(new Cat("hello2"));
+            Pet horse = new Pet("yee haw", "horse");
+            s.getPets().add(new Pet("sully", "dog"));
+            s.getPets().add(new Pet("beepo", "cat"));
             s.getPets().add(horse);
             assertNull(s.findPet("not existing"));
         } catch (IOException | ParseException e) {

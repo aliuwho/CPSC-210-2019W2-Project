@@ -1,6 +1,6 @@
 package ui.gui;
 
-import model.pets.*;
+import model.Pet;
 import persistence.Saveable;
 
 import javax.imageio.ImageIO;
@@ -52,19 +52,19 @@ public class NewPetWindow extends Window implements ActionListener {
         Pet pet;
         switch (cmd) {
             case "bird":
-                pet = new Bird(name);
+                pet = new Pet(name, "bird");
                 break;
             case "cat":
-                pet = new Cat(name);
+                pet = new Pet(name, "cat");
                 break;
             case "dog":
-                pet = new Dog(name);
+                pet = new Pet(name, "dog");
                 break;
             case "horse":
-                pet = new Horse(name);
+                pet = new Pet(name, "horse");
                 break;
             case "lizard":
-                pet = new Lizard(name);
+                pet = new Pet(name, "lizard'");
                 break;
             default:
 //                System.out.println("Selection not valid... Try again!");

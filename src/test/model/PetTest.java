@@ -1,6 +1,5 @@
 package model;
 
-import model.pets.*;
 import model.exceptions.NotHungryException;
 import model.exceptions.NotTiredException;
 import model.exceptions.TiredException;
@@ -18,31 +17,31 @@ public class PetTest {
 
     @BeforeEach
     public void runBefore() {
-        bird = new Bird("Astryd");
+        bird = new Pet("Astryd", "bird");
         assertEquals("Astryd", bird.getName());
         assertEquals("bird", bird.getSpecies());
         assertTrue(bird.isHungry());
         assertFalse(bird.isTired());
 
-        cat = new Cat("Rai");
+        cat = new Pet("Rai", "cat");
         assertEquals("Rai", cat.getName());
         assertEquals("cat", cat.getSpecies());
         assertTrue(cat.isHungry());
         assertFalse(cat.isTired());
 
-        dog = new Dog("Hachi");
+        dog = new Pet("Hachi", "dog");
         assertEquals("Hachi", dog.getName());
         assertEquals("dog", dog.getSpecies());
         assertTrue(dog.isHungry());
         assertFalse(dog.isTired());
 
-        horse = new Horse("Billy");
+        horse = new Pet("Billy", "horse");
         assertEquals("Billy", horse.getName());
         assertEquals("horse", horse.getSpecies());
         assertTrue(horse.isHungry());
         assertFalse(horse.isTired());
 
-        lizard = new Lizard("Mocha");
+        lizard = new Pet("Mocha", "lizard");
         assertEquals("Mocha", lizard.getName());
         assertEquals("lizard", lizard.getSpecies());
         assertTrue(lizard.isHungry());
@@ -52,26 +51,26 @@ public class PetTest {
 
     @Test
     public void testOtherConstructor() {
-        Bird bird1 = new Bird("Astryd", true, true);
+        Pet bird1 = new Pet("Astryd", "bird", true, true);
 //        assertEquals("Astryd", bird1.getName());
         assertTrue(bird1.isSad());
 
-        Cat cat1 = new Cat("Rai", true, false);
+        Pet cat1 = new Pet("Rai", "cat", true, false);
 //        assertEquals("Rai", cat.getName());
         assertTrue(cat1.isHungry());
         assertFalse(cat1.isTired());
 
-        Dog dog1 = new Dog("Hachi", false, false);
+        Pet dog1 = new Pet("Hachi", "dog", false, false);
 //        assertEquals("Hachi", dog.getName());
         assertTrue(dog1.isHappy());
 //        assertFalse(dog.isTired());
 
-        Horse horse1 = new Horse("Billy", false, true);
+        Pet horse1 = new Pet("Billy", "horse", false, true);
 //        assertEquals("Billy", horse.getName());
         assertFalse(horse1.isHungry());
         assertTrue(horse1.isTired());
 
-        Lizard lizard1 = new Lizard("Mocha", true, false);
+        Pet lizard1 = new Pet("Mocha", "lizard", true, false);
 //        assertEquals("Mocha", lizard.getName());
         assertTrue(lizard1.isHungry());
         assertFalse(lizard1.isTired());
@@ -92,15 +91,6 @@ public class PetTest {
         } catch (NotHungryException e) {
             System.out.println("error caught!");
         }
-    }
-
-    @Test
-    public void testSpeak() {
-        bird.speak();
-        cat.speak();
-        dog.speak();
-        horse.speak();
-        lizard.speak();
     }
 
     @Test

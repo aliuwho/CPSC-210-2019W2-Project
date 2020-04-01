@@ -1,6 +1,6 @@
 package ui.gui;
 
-import model.pets.Pet;
+import model.Pet;
 import persistence.Saveable;
 
 import javax.swing.*;

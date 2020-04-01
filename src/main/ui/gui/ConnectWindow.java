@@ -104,7 +104,8 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
                 frame.dispose();
                 break;
             case "help":
-                JOptionPane.showMessageDialog(frame, "this is the help window");
+                JOptionPane.showMessageDialog(frame, "Use the arrow keys to select a column to place a "
+                        + "chip.\nPress enter to place the chip.");
                 break;
         }
         updateBoard(column);
@@ -147,7 +148,7 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
         int k = 0;
         for (int i = 0; i < 48; i++) {
             if (i == 7) {
-                frame.add(createButton("How to Play,", "help", this));
+                frame.add(createButton("How to Play", "help", this));
             } else if (i == 31 | i == 23 | i == 39 | i == 47) {
                 frame.add(new JPanel());
             } else if (i == 15) {
@@ -240,10 +241,12 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
             try {
                 next.addChip(new Chip(playerColor), i);
 //                options[i] = next.isGameOver() != null;
-                if (next.isGameOver() != null) {
+                if (next.isGameOver() != null && options.get(2) == -1) {
                     options.put(2, i);
                 } else {
-                    options.put(1, i);
+                    if (options.get(1) == -1) {
+                        options.put(1, i);
+                    }
                 }
             } catch (ColumnFullException e) {
                 //do nothing
