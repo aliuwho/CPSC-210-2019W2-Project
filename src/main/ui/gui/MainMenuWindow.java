@@ -174,8 +174,9 @@ public class MainMenuWindow extends Window implements ActionListener {
                     NewPetWindow newPet = new NewPetWindow(saveable);
                     newPet.displayFrame();
                 } else {
-                    PetRoomWindow room = new PetRoomWindow(saveable, saveable.findPet(petName));
+                    PetRoomWindow room = new PetRoomWindow(saveable.findPet(petName));
                     room.displayFrame();
+                    saveable.addPoints(room.getInteractions() * 20);
                 }
             } else {
                 JLabel msg = createLabel("Please select a pet!");
