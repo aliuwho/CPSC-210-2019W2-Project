@@ -20,14 +20,6 @@ public class Story {
         this.path = path;
 //        File f = new File(path);
         this.name = name;
-       /* if (f.createNewFile()) {
-            this.name = name;
-        } else if (!f.createNewFile()) {
-            this.name = "error";
-            this.path = "";
-            throw new StoryNameDuplicateException();
-            // TO-DO: remove storyname duplicate from story constructor
-        }*/
     }
 
     // EFFECTS: adds substance to a new line of your story!

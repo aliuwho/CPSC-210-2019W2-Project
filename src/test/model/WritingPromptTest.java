@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class WritingPromptTest {
     private WritingPrompt p1;
@@ -16,12 +15,12 @@ class WritingPromptTest {
     public void runBefore() {
         p1 = new WritingPrompt();
         // ensure it is a short prompt
-        while(p1.getType()!=0) {
+        while (p1.getType() != 0) {
             p1 = new WritingPrompt();
         }
         p2 = new WritingPrompt();
         // ensure it is a long prompt
-        while(p2.getType()!=1) {
+        while (p2.getType() != 1) {
             p2 = new WritingPrompt();
         }
 //        shortP = new WritingPrompt("short");
@@ -34,6 +33,14 @@ class WritingPromptTest {
         assertEquals(" " + p2.getVerb() + " " + p2.getLocation() + ".", p2.makePreposition());
 //        assertEquals(" " + shortP.getVerb() + " " + shortP.getLocation() + ".", shortP.makePreposition());
 //        assertEquals(" " + longP.getVerb() + " " + longP.getLocation() + ".", longP.makePreposition());
+    }
+
+    @Test
+    public void testToString() {
+        WritingPrompt prompt = new WritingPrompt();
+        int len = "Here's your prompt:\nWrite about a ".length();
+        assertEquals("Here's your prompt:\nWrite about a ", prompt.toString().substring(0, len));
+//        assertEquals();
     }
 
 //    @Test

@@ -70,13 +70,18 @@ Task 2:
 "Test and design a class that is robust.  You must have at least one method that throws a checked exception.
   You must have one test for the case where the exception is expected and another where the exception is not expected."
 
-My Pet.java class is robust; sleep() and play() each throw a specific exception.
-Both of these methods are thoroughly tested in PetTest.java
+My Story.java class is robust; getStoryText() and write() both throw an IO exception.
+Both of these methods are thoroughly tested in StoryTest.java
 
 Task 3:
 
 Issue 1 - Too much coupling with the Saveable class. Refactored WritingDeskWindow,
 WriteStoryWindow, ViewStoryWindow, and ConnectWindow by removing association with Saveable.
-(See attached UML)
+(Changes shown in attached UML for clarity)
 
-Issue 2 - 
+Issue 2 - Pet and Pet subclasses were not cohesive; the subclasses lacked a purpose in the module since
+all the functionality could have been refactored into a single Pet class. Now, there is a single Pet class instead of a
+Pet parent class and 5 subclasses.
+
+Note: this commit does not have a completely fixed Connect4 game, but look forward
+if you want to try one out...

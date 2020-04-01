@@ -4,10 +4,10 @@ package model;
  * represents a random writing prompt
  */
 public class WritingPrompt {
-    private String noun1;
-    private String noun2;
-    private String verb;
-    private String location;
+    private final String noun1;
+    private final String noun2;
+    private final String verb;
+    private final String location;
     private final int type = (int) (Math.random() * 2);
 
     public static final String[] ANIMALS = {"dog", "cat", "horse", "fox", "hamster", "turtle", "dinosaur", "bird"};
