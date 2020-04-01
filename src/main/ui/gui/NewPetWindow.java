@@ -37,7 +37,7 @@ public class NewPetWindow extends Window implements ActionListener {
                 saveable.getPets().add(pet);
 //                saveable.write();
                 frame.dispose();
-                PetRoomWindow room = new PetRoomWindow(saveable, pet);
+                PetRoomWindow room = new PetRoomWindow(pet);
                 room.displayFrame();
             } else {
                 JOptionPane.showMessageDialog(frame, "That's not a valid name!", "error", JOptionPane.ERROR_MESSAGE);
