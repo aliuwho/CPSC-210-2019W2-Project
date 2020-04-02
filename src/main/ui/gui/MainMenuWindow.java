@@ -42,7 +42,7 @@ public class MainMenuWindow extends Window implements ActionListener {
         welcomePanel.add(createLabel("User since " + saveable.getStart()));
 
         welcomePanel.add(createLabel("Level Progress:"));
-        levels = new JProgressBar(0, 1000);
+        levels = new JProgressBar(0, 500);
         levels.setValue(Math.toIntExact(saveable.getPoints()));
         levels.setStringPainted(true);
         welcomePanel.add(levels);
@@ -104,6 +104,7 @@ public class MainMenuWindow extends Window implements ActionListener {
     // EFFECTS: updates information for user
     public void updateInfo() {
         levels.setValue(Math.toIntExact(saveable.getPoints())); //update levels progress
+//        levels.;
         try {
             saveable.write();
         } catch (IOException ex) {
@@ -132,24 +133,41 @@ public class MainMenuWindow extends Window implements ActionListener {
                 } else {
                     player = Color.BLUE;
                 }
-                ConnectWindow connect = new ConnectWindow(player);
-                connect.displayFrame();
-                checkWinner(connect, player);
+                playConnect(player);
             }
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: if player won, award 20 points; else, award 1 point
-    private void checkWinner(ConnectWindow connect, Color player) {
-        if (connect.getWinner().equals(player)) {
-            JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
-            saveable.addPoints(20);
-        } else {
-            JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
-            saveable.addPoints(1);
-        }
+    // EFFECTS: plays connect4 game
+    public void playConnect(Color player) {
+        ConnectWindow connect = new ConnectWindow(player);
+        connect.displayFrame();
+//        System.out.println("not ongoing");
+//        if (connect.getWinner() != null) {
+//            if (connect.getWinner().equals(player)) {
+//                saveable.addPoints(20);
+//            } else {
+//                saveable.addPoints(1);
+//            }
+//        }
+        saveable.addPoints(10);
+
     }
+
+    // MODIFIES: this
+    // EFFECTS: if player won, award 20 points; else, award 1 point
+//    private void checkWinner(ConnectWindow connect, Color player) {
+//        if (connect.getWinner() != null) {
+//            if (connect.getWinner().equals(player)) {
+////                JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
+//                saveable.addPoints(20);
+//            } else {
+////                JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
+//                saveable.addPoints(1);
+//            }
+//        }
+//    }
 
     // EFFECTS: returns a generic array of pet names
     private Object[] getPetNames() {

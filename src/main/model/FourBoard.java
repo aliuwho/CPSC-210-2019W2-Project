@@ -77,7 +77,7 @@ public class FourBoard {
         for (Color type : TYPES) {
             for (int c = 0; c < COLS; c++) {
                 for (int r = 0; r < ROWS; r++) {
-                    if (chips[r][c].getType() == type) {
+                    if (chips[r][c].getType().equals(type)) {
                         count++;
                     } else {
                         count = 0;
@@ -86,6 +86,7 @@ public class FourBoard {
                         return type;
                     }
                 }
+                count = 0;
             }
         }
         return null;

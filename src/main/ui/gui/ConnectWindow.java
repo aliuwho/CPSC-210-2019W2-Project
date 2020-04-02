@@ -219,12 +219,16 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     // EFFECTS: creates a move for the computer
     private void computerPlay() throws EndGameException {
         int i = firstMove(tryMoves());
-        try {
-            board.addChip(new Chip(enemyColor), i);
-            placePiece(enemyColor, i);
-        } catch (ColumnFullException e) {
-            System.out.println("Something failed in computer play");
-            e.printStackTrace();
+        if (i == -1) {
+            throw new EndGameException();
+        } else {
+            try {
+                board.addChip(new Chip(enemyColor), i);
+                placePiece(enemyColor, i);
+            } catch (ColumnFullException e) {
+                System.out.println("Something failed in computer play");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -261,18 +265,12 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
 
     // EFFECTS: selects the "best" move from given options
     //          if no moves are possible, throws EndGameException
-    private int firstMove(HashMap<Integer, Integer> options) throws EndGameException {
-//        ArrayList<Integer> moves = new ArrayList<>();
-        if (options.size() > 0) {
-            if (options.get(2) != -1) {
-                return options.get(2);
-            } else if (options.get(1) != -1) {
-                return options.get(1);
-            } else {
-                throw new EndGameException();
-            }
+    private int firstMove(HashMap<Integer, Integer> options) {
+        if (options.get(2) != -1) {
+            return options.get(2);
+        } else {
+            return options.get(1);
         }
-        throw new EndGameException();
     }
 
 
@@ -313,22 +311,17 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
     //          if game is over, closes window and allots points.
     public void updateBoard(int newCol) {
         if (board.isGameOver() != null) {
-//            if (playerColor.equals(board.isGameOver())) {
-//                JOptionPane.showMessageDialog(frame, "The player won! You earned 20 points.");
-//                saveable.addPoints(20);
-//            } else {
-//                JOptionPane.showMessageDialog(frame, "The player lost... You earned 1 point.");
-//                saveable.addPoints(1);
-//            }
             winner = board.isGameOver();
+            if (winner.equals(playerColor)) {
+                JOptionPane.showMessageDialog(frame, "The player won!");
+//            saveable.addPoints(20);
+//                return true;
+            } else {
+                JOptionPane.showMessageDialog(frame, "The player lost....");
+//            saveable.addPoints(1);
+//                return false;
+            }
             frame.dispose();
-//            try {
-//                saveable.write();
-//            } catch (IOException e) {
-////                    e.printStackTrace();
-//                JOptionPane.showMessageDialog(frame, "An error occurred while saving.",
-//                        "Uh oh", JOptionPane.ERROR_MESSAGE);
-//            }
         }
         if (column != newCol) {
             components[0][newCol].setVisible(true);
@@ -360,5 +353,11 @@ public class ConnectWindow extends Window implements ActionListener, KeyListener
 //        } catch (IOException | ParseException e) {
 //            e.printStackTrace();
 //        }
+//    }
+
+//    // EFFECTS: if game in progress, returns true;
+//    //          else, returns false
+//    public boolean isOngoing() {
+//        return board.isGameOver() == null;
 //    }
 }
