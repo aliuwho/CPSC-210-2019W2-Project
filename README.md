@@ -82,6 +82,3 @@ WriteStoryWindow, ViewStoryWindow, and ConnectWindow by removing association wit
 Issue 2 - Pet and Pet subclasses were not cohesive; the subclasses lacked a purpose in the module since
 all the functionality could have been refactored into a single Pet class. Now, there is a single Pet class instead of a
 Pet parent class and 5 subclasses.
-
-Note: this commit does not have a completely fixed Connect4 game, but look forward
-if you want to try one out...
