@@ -34,7 +34,7 @@ At the current stage, the project allows users to write & save stories (although
 as well as care for a pet.
 
 
-####User Stories
+#### User Stories
 1. As a user, I want to be remembered by name.
 2. As a user, I want to be receive a writing prompt.
 3. As a user, I want to be able to care for/interact with pets.
