@@ -1,5 +1,9 @@
 # 1-2-3, play with me!
 
+This project was created and developed individually for CPSC 210 at UBC. Below are specifications for different phases of the project.
+The focus of this project was to become familiar with Java AWT (most significantly, creating and utilizing a variety UI elements).
+Any and all feedback is welcome and appreciated!
+
 *Games targeting child development!*
 
 Featuring:
