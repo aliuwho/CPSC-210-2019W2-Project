@@ -28,11 +28,10 @@ My intended audience is children in elementary school, but anybody can play.
 
 I always enjoyed the idea of making games, but I wanted to create something with more utility than the average game.
 This project was inspired by many of the children I've seen playing on phones or tablets; I know technology can have a
-huge impact on people, and I want to mitigate its impact on a developing brain.
+huge impact on people, and I want to improve its benefits on a developing brain.
 The initial games/activities I've selected are accessible in a console program, and they also help 
 introduce creativity and responsibility in children.
-At the current stage, the project allows users to write & save stories (although not yet with persistence),
-as well as care for a pet.
+At the current stage, the project allows users to write & save stories, as well as care for a pet.
 
 
 #### User Stories
